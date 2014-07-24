@@ -1,0 +1,9 @@
+/* line 1, ../sass/ui.scss */
+#actions {
+  -webkit-app-region: drag;
+}
+
+/* line 2, ../sass/ui.scss */
+#actions > ul > li {
+  -webkit-app-region: no-drag;
+}

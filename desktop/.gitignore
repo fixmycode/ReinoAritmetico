@@ -30,3 +30,12 @@ node_modules
 # Users Environment Variables
 .lock-wscript
 
+### CodeKit ###
+*/codekit-config.json
+
+### Sass ###
+.sass-cache
+
+# Releases
+webkitbuilds
+node-webkit.app

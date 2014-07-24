@@ -1,0 +1,28 @@
+{
+  "main": "./html/index.html",
+  "name": "Reino-Aritmetico",
+  "description": "Reino Aritmético",
+  "version": "0.0.1",
+  "keywords": [
+    "game",
+    "math"
+  ],
+  "window": {
+    "title": "Reino Aritmético",
+    "icon": "./html/favicon.ico",
+    "toolbar": false,
+    "frame": false,
+    "width": 800,
+    "height": 500,
+    "position": "mouse",
+    "min_width": 800,
+    "min_height": 500
+  },
+  "webkit": {
+    "plugin": true
+  },
+  "dependencies": {
+    "express": "3.x",
+    "request": "~2.36.0"
+  }
+}

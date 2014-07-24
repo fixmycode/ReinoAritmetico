@@ -1,0 +1,252 @@
+@import "compass/reset";
+@import "compass/css3";
+
+$blue: #0897e2;
+$red: #dc3a34;
+$gray: #999;
+$white: #f4f4f4;
+$black: black;
+$dark: lighten($black, 10%);
+$light: darken($white, 1%);
+$green: rgb(116, 175, 63);
+$menuBg: rgb(191, 178, 114);
+
+* { box-sizing: border-box; cursor: default; } /* Awesome! */
+
+body {
+    background: $white;
+    color: $black;
+    font-family: 'Raleway', sans-serif;
+    padding-top: 40px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+
+h1 { font-size: 36px; }
+h2 { font-size: 30px; }
+h3 { font-size: 24px; }
+h4 { font-size: 18px; }
+h5 { font-size: 14px; }
+h6 { font-size: 12px; }
+
+p {
+    margin-bottom: 5px;
+}
+
+a {
+    color: $black;
+}
+
+strong { font-weight: 500; }
+pre {white-space: pre;}
+
+#actions {
+    background: lighten($black, 12%);
+    padding: 10px 10px;
+    text-align: center;
+    color: $light;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+
+    ul {
+        float: left;
+        cursor: default;
+    }
+    ul li {
+        display: inline-block;
+        cursor: default;
+    }
+
+    .title {
+        font-size: 13px;
+        cursor: default;
+        display: inline-block;
+        margin: 0;
+        margin-left: -100px;
+        opacity: .75;
+    }
+}
+
+#actions .close-app,
+#actions .minimize-app,
+#actions .maximize-app {
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+    margin: 0 2px;
+    display: block;
+    cursor: default;
+    @include box-shadow(inset rgba(0,0,0,.7) 1px 1px 3px);
+    @include transition(.4s linear box-shadow);
+
+    &:hover {
+        @include box-shadow(none);
+    }
+}
+
+.close-app {
+    background: #ff403d;
+}
+
+.minimize-app {
+    background: #e1ec17;
+}
+
+.maximize-app {
+    background: yellowgreen;
+}
+
+#logo {
+    font-weight: 200;
+    text-transform: uppercase;
+}
+
+.welcome-small {
+    position: absolute;
+    right: 8px;
+    top: 12px;
+    opacity: .2;
+    h1 { font-size: 14px; margin: 0; cursor: default; }
+    @include transition(.3s linear all);
+    &:hover {
+        opacity: .9;
+    }
+}
+
+#status {
+    position: absolute;
+    bottom: 0;
+    height: 20px;
+    background: black;
+    left: 0;
+    right: 0;
+    font-size: 12px;
+    padding: 5px 10px;
+    color: darken(#eee, 10%);
+}
+
+.actions {
+    width: 150px;
+    background: lighten($black, 12%);
+    float: left;
+    li {
+        width: 150px;
+        padding: 9px 10px;
+        a {
+            color: white;
+            font-weight: 200;
+            text-decoration: none;
+        }
+        &:hover {
+            background: $dark;
+            a {
+                color: $blue;
+            }
+        }
+    }
+}
+
+a.right {
+    float: right;
+    color: white;
+}
+
+.data {
+    font-family: Consolas,monospace;
+}
+
+.info { color: $blue; }
+.error { color: $red; }
+.success { color: yellowGreen; }
+
+#content {
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+    height: 100%;
+
+    h1 {
+        font-size: 100px;
+    }
+}
+
+.join-code {
+    background: rgb(116, 175, 63);
+    width: 200px;
+    font-size: 30px;
+    padding: 20px 30px;
+    margin: 30px auto;
+    color: $black;
+}
+
+.client {
+    border: 3px solid $black;
+    border-radius: 12px;
+    width: 150px;
+    margin: auto 4px;
+    padding: 12px;
+    display: inline-block;
+    
+    i {
+        font-size: 80px;
+        color: lighten(black, 20%);
+    }
+
+    small {
+        font-size: .6em;
+        padding: 6px 0;
+        display: block;
+    }
+}
+
+.waiting {
+    opacity: .5;
+}
+
+#panel {
+    background: $menuBg;
+    position: absolute;
+    right: -200px;
+    width: 200px;
+    top: 0;
+    bottom: 0;
+    padding: 36px 0;
+
+    .menu > li {
+        text-align: center;
+        
+        a {
+            text-decoration: none;
+            padding: 20px 20px;
+            font-size: 20px;
+            display: block;
+            &:hover {
+                background: darken($menuBg, 10%);
+            }
+        }
+    }
+    .active {
+        background: darken($menuBg, 10%);
+    }
+
+    .sub-menu input[type=text]{
+        display: block;
+        width: 100%;
+        margin: auto;
+        outline: none;
+        padding: 5px 6px;
+        border: none;
+        font-size: 15px;
+    }
+}

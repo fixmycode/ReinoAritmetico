@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es" ng-app="ReinoAritmetio">
+<head>
+    <meta charset="UTF-8">
+    <title>Reino Aritmético</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Raleway:200,500' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/screen.css">
+    <link rel="stylesheet" href="css/ui.css">
+    <link rel="stylesheet" href="css/packages/font-awesome/css/font-awesome.min.css">
+    
+</head>
+<body>
+    <header id="actions">
+        <ul>
+            <li><a class="close-app"></a></li>
+            <li><a class="minimize-app"></a></li>
+            <li><a class="maximize-app"></a></li>
+        </ul>
+        <h2 class="title">Reino Aritmético</h2>
+        <a href="#" id="panel-toggle" class="right"><i class="fa fa-bars"></i></a>
+    </header>
+    
+    <div id="content">
+        <h1>Reino<br>Aritmético</h1>
+        <p>Ingresa el codigo para entrar al juego:</p>
+        <p class="join-code">
+            abcdefgh
+        </p>
+
+        <div id="clients">
+            <div class="client">
+                <i class="fa fa-male"></i> <br>
+                <small>Jugador 1</small>
+                <span class="player">Pablo</span>
+            </div>
+            <div class="client">
+                <i class="fa fa-male"></i> <br>
+                <small>Jugador 2</small>
+                <span class="player">Carlos</span>
+            </div>
+            <div class="client">
+                <i class="fa fa-male"></i> <br>
+                <small>Jugador 3</small> 
+                <span class="player">Nico</span>
+            </div>
+            <div class="client waiting">
+                <i class="fa fa-male"></i> <br>
+                <small>Jugador 4</small> 
+                <span class="player">Esperando&hellip;</span>
+            </div>
+        </div>
+    </div>
+    
+    <div id="panel">
+        <ul class="menu">
+            <li>
+                <a href="#">Iniciar Partida</a>
+                <div class="sub-menu">
+                    <input type="text" placeholder="Jugadores">
+                    <input type="submit" value="Iniciar Partida">
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div id="status"></div>
+    <script src="js/packages/jquery-2.1.0.min.js"></script>
+    <script>
+    var panelState = "-250px";
+    var $panel = $('#panel');
+    var $content = $('#content');
+
+    $('#panel-toggle').on('click', function(e){
+        e.preventDefault();
+        panelState = panelState == "0" ? "-250px" : "0";
+        $panel.animate({
+            right: panelState
+        }, 350);
+    });
+
+    $('.sub-menu').hide();
+
+    $('.menu > li > a').on('click', function(e){
+        e.preventDefault();
+        var $this = $(this);
+        $this.next('.sub-menu').slideToggle(350, function(){
+            $this.next('.sub-menu').find('input[type=text]').focus();
+        });
+        $this.toggleClass('active');
+
+
+    });
+
+    // $(window).on('load resize', function(){ // On load
+    //     $content.css({'height':(($(window).height()))+'px'});
+    // });
+    </script>
+    <script src="../app.js"></script>
+    <script src="js/ui.js"></script>
+
+    
+</body>
+</html>
