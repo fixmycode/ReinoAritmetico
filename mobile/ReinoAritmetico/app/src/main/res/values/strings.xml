@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Reino</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+	<string-array name="Select_colegio">
+		<item>Rubén Dario</item>
+		<item >hola </item>
+	</string-array>
+	<string-array name="Select_curso">
+	    <item>3º</item>
+	    <item>4º</item>
+	    <item>5º</item>
+	    <item>6º</item>
+	    
+	</string-array>
+</resources>
