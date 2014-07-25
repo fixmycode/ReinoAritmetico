@@ -37,11 +37,10 @@ public class RegistroAsyncSender extends AsyncTask<RegistroDataMessage, Void, Bo
             HttpPost postData = new HttpPost(url);
             try {
                 List<NameValuePair> urls = new ArrayList<NameValuePair>();
-                urls.add(new BasicNameValuePair("msg", message.getContent()));
                 urls.add(new BasicNameValuePair("name", message.getNombre()));
-                urls.add(new BasicNameValuePair("class", message.getCurso()));
+                urls.add(new BasicNameValuePair("android_id",message.getId()));
+                urls.add(new BasicNameValuePair("classroom", message.getCurso()));
                 urls.add(new BasicNameValuePair("school", message.getColegio()));
-
                 postData.setEntity(new UrlEncodedFormEntity(urls, HTTP.UTF_8));
                 HttpResponse response = client.execute(postData);
                 int responseCode = response.getStatusLine().getStatusCode();
