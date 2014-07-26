@@ -1,17 +1,24 @@
-<!DOCTYPE html>
-<html lang="es" ng-app="ReinoAritmetio">
-<head>
-    <meta charset="UTF-8">
+<!doctype html>
+<html ng-app="ReinoAritmetico">
+  <head>
+    <meta charset="utf-8">
     <title>Reino Aritmético</title>
-
+    
     <link href='http://fonts.googleapis.com/css?family=Raleway:200,500' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/screen.css">
     <link rel="stylesheet" href="css/ui.css">
     <link rel="stylesheet" href="css/packages/font-awesome/css/font-awesome.min.css">
+
+    <script src="../app.js"></script>
+    <script src="js/packages/jquery-2.1.0.min.js"></script>
     <script src="../bower_components/angular/angular.js"></script>
-    <script src="../bower_components/angular-route/angular-route.js"></script>
-</head>
-<body>
+    <script src="../bower_components/angular-pageslide-directive/dist/angular-pageslide-directive.js"></script>
+    <script src="../bower_components/socket.io-client/socket.io.js"></script>
+    <script src="../bower_components/angular-socket-io/socket.js"></script>
+    <script src="js/ui.js"></script>
+    
+  </head>
+  <body ng-controller="MainCtrl">
     <header id="actions">
         <ul>
             <li><a class="close-app"></a></li>
@@ -19,89 +26,54 @@
             <li><a class="maximize-app"></a></li>
         </ul>
         <h2 class="title">Reino Aritmético</h2>
-        <a href="#" id="panel-toggle" class="right"><i class="fa fa-bars"></i></a>
+        <a class="right" ng-init="checked=false" ng-click="checked = ! checked"><i class="fa fa-bars"></i></a>
     </header>
     
     <div id="content">
-        <div ng-view></div>
+      <div ng-show="playing">
+        <h1>Reino<br>Aritmético</h1>
+        <p>Ingresa el codigo para entrar al juego:</p>
+        <p class="join-code">
+            {{ joinCode }}
+        </p>
+
+        <div id="clients">
+            <div class="client" ng-repeat="player in players track by $index">
+                <i class="fa fa-male"></i> <br>
+                <small>Jugador {{ $index + 1 }}</small>
+                <span class="player">{{ player.name }}</span>
+            </div>
+            <div class="client waiting" ng-repeat="i in [] | range: (totalPlayers - players.length)">
+                <i class="fa fa-male"></i> <br>
+                <small>Jugador</small> 
+                <span class="player">Esperando&hellip;</span>
+            </div>
+        </div>
+      </div>
+      <div ng-show=" ! playing">
+        <h1>Reino<br>Aritmético</h1>
+        <p>Bienvenido humano, Porfavor inicia una partida indicando el número de jugadores</p>
+
+        <form ng-submit="initGame()" class="start-game">
+            <input type="text" ng-model="numberPlayers"><br />
+            <input type="submit" value="Iniciar Partida">
+        </form>
+      </div>
     </div>
-    
-    <div id="panel">
+
+    <pageslide ps-open="checked" ps-target="#right-panel"></pageslide> 
+    <div id="right-panel">
         <ul class="menu">
-            <li>
-                <a href="#">Iniciar Partida</a>
-                <div class="sub-menu">
-                    <input type="text" placeholder="Jugadores">
-                    <input type="submit" value="Iniciar Partida">
-                </div>
-            </li>
+          <li ng-show="playing">
+            <a href="#" ng-click="stopGame(); checked = false"><i class="fa fa-fw fa-pause"></i> Detener Partida</a>
+          </li>
+          <li>
+            <a ng-click="checked = false">Cerrar</a>
+          </li>
         </ul>
     </div>
+
     <div id="status"></div>
-
-    <script src="js/packages/jquery-2.1.0.min.js"></script>
-    <script>
-        var panelState = "-250px";
-        var $panel = $('#panel');
-        var $content = $('#content');
-
-        $('#panel-toggle').on('click', function(e){
-            e.preventDefault();
-            panelState = panelState == "0" ? "-250px" : "0";
-            $panel.animate({
-                right: panelState
-            }, 350);
-        });
-
-        $('.sub-menu').hide();
-
-        $('.menu > li > a').on('click', function(e){
-            e.preventDefault();
-            var $this = $(this);
-            $this.next('.sub-menu').slideToggle(350, function(){
-                $this.next('.sub-menu').find('input[type=text]').focus();
-            });
-            $this.toggleClass('active');
-        });
-
-        // $(window).on('load resize', function(){ // On load
-        //     $content.css({'height':(($(window).height()))+'px'});
-        // });
-    </script>
-    <script>
-        var ngApp = angular.module('ReinoAritmetio', ['ngRoute']);
-        ngApp.config(function($routeProvider) {
-          $routeProvider
-            .when('/esperando', {
-              controller: 'WaitingPlayersController',
-              templateUrl: 'views/waitingPlayers.html'
-            })
-            .when('/edit/:projectId', {
-              controller:'EditCtrl',
-              templateUrl:'detail.html'
-            })
-            .otherwise({
-              redirectTo:'/esperando'
-            });
-        });
-
-        ngApp.controller('WaitingPlayersController', function($scope){
-            $scope.totalPlayers =  5;
-            $scope.clients = clients; // Esta variable viene de express!!
-            $scope.joinCode = 'asdfqwer';
-            console.log(clients);
-        });
-
-        ngApp.filter('range', function() {
-          return function(val, range) {
-            range = parseInt(range);
-            for (var i=0; i<range; i++)
-              val.push(i);
-            return val;
-          };
-        });
-    </script>
-    <script src="../app.js"></script>
-    <script src="js/ui.js"></script>
-</body>
+    
+  </body>
 </html>
