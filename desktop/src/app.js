@@ -72,8 +72,9 @@ var server = app.listen(defaultPort, function () {
     });
 
     app.get('/clearPlayers', function(req,res) {
-      players.length = 0;
-      io.sockets.emit('players list', game.players);
+      game.players.length = 0;
+      status('Se ha vaciado la lista de jugadores');
+      showPlayers();
       res.end();
     });
   });
