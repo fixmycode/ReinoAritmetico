@@ -1,17 +1,21 @@
 {
+  "name": "experimento1",
+  "version": "0.0.0",
+  "description": "Ttrying Nodejs with express backend and angular for front end comunicated using socket.io",
   "main": "./html/index.html",
-  "name": "Reino-Aritmetico",
-  "description": "Reino Aritmético",
-  "version": "0.0.1",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "keywords": [
-    "game",
-    "math"
+    "nodejs",
+    "express",
+    "socket.io"
   ],
   "window": {
     "title": "Reino Aritmético",
     "icon": "./html/favicon.ico",
-    "toolbar": true,
-    "frame": true,
+    "toolbar": false,
+    "frame": false,
     "width": 800,
     "height": 600,
     "position": "mouse",
@@ -19,12 +23,14 @@
     "min_height": 600
   },
   "webkit": {
-    "plugin": true
+    "plugin": false
   },
+  "private": true,
   "dependencies": {
     "express": "3.x",
-    "socket.io": "~1.0.6",
     "body-parser": "~1.5.0",
     "ip": "~0.3.0"
-  }
+  },
+  "author": "jpeg",
+  "license": "MIT"
 }
