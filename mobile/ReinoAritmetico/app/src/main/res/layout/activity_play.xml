@@ -9,28 +9,12 @@
         android:gravity="center_vertical|center_horizontal"
         android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="x+3=-2"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <EditText
-            android:id="@+id/editText1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10" >
-
-            <requestFocus />
-        </EditText>
-
         <Button
             android:id="@+id/button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="enviar"
-            android:text="Enviar" />
+            android:onClick="salir"
+            android:text="Salir de la partida" />
 
     </LinearLayout>
 

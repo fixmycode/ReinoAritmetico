@@ -16,19 +16,22 @@ import cl.blackbird.reino.JoinActivity;
 /**
  * Created by carlos on 24/7/2014.
  */
-public class RemoveAsyncSender extends AsyncTask<InitialDataMessage, Void, Boolean> {
+public class RemoveAsyncSender extends AsyncTask<GameDataMessage, Void, Boolean> {
 
     private final String baseRoute;
     private final Context context;
+    String name, address;
 
     public RemoveAsyncSender(Context context, String baseRoute){
         this.baseRoute = baseRoute;
         this.context = context.getApplicationContext();
     }
     @Override
-    protected Boolean doInBackground(InitialDataMessage... params) {
-        for(InitialDataMessage message : params){
+    protected Boolean doInBackground(GameDataMessage... params) {
+        for(GameDataMessage message : params){
             String url = message.getRoute();
+            name = message.getName();
+            address = message.getAddress();
             try {
                 HttpClient client = new DefaultHttpClient();
                 HttpGet getData = new HttpGet(url);
@@ -52,6 +55,7 @@ public class RemoveAsyncSender extends AsyncTask<InitialDataMessage, Void, Boole
         super.onPostExecute(result);
         if(result){
             Intent intent = new Intent(context, JoinActivity.class);
+            intent.putExtra("name",name);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         }else{

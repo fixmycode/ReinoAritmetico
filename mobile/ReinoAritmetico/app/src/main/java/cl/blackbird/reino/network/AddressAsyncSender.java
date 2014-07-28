@@ -3,7 +3,10 @@ package cl.blackbird.reino.network;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.provider.Settings;
 import android.util.Log;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -18,26 +21,30 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import cl.blackbird.reino.GameActivity;
 import cl.blackbird.reino.JoinActivity;
+import cl.blackbird.reino.R;
 
 /**
- * Created by carlos on 23/7/2014.
+ * Created by carlos on 26/7/2014.
  */
-public class InitialAsyncSender extends AsyncTask<InitialDataMessage, Void, Boolean> {
+public class AddressAsyncSender extends AsyncTask<AddressDataMessage, Void, Boolean> {
 
     private final String baseRoute;
     private final Context context;
+    String address;
     String name;
-    String classroom;
-    String school;
+    String ANDROID_ID;
 
-    public InitialAsyncSender(Context context, String baseRoute){
+    public AddressAsyncSender(Context context, String baseRoute){
         this.baseRoute = baseRoute;
         this.context = context.getApplicationContext();
     }
     @Override
-    protected Boolean doInBackground(InitialDataMessage... params) {
-        for(InitialDataMessage message : params){
+    protected Boolean doInBackground(AddressDataMessage... params) {
+        for(AddressDataMessage message : params){
+            name = message.getName();
+            ANDROID_ID = message.getANDROID_ID();
             String url = message.getRoute();
             StringBuilder builder = new StringBuilder();
             try {
@@ -61,9 +68,7 @@ public class InitialAsyncSender extends AsyncTask<InitialDataMessage, Void, Bool
                         try {
 
                             JSONObject jsonObj = new JSONObject(jsonStr);
-                            name = jsonObj.getString("name");
-                            classroom = jsonObj.getString("classroom");
-                            school = jsonObj.getString("school");
+                            address = jsonObj.getString("address");
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -84,19 +89,13 @@ public class InitialAsyncSender extends AsyncTask<InitialDataMessage, Void, Bool
     }
     protected void onPostExecute(Boolean result) {
         super.onPostExecute(result);
-        Intent intent;
         if(result){
-            intent = new Intent(context, JoinActivity.class);
-            intent.putExtra("name",name);
-            intent.putExtra("classroom",classroom);
-            intent.putExtra("school",school);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
+            GameDataMessage message = new GameDataMessage(address+"/join", name, ANDROID_ID, address);
+            GameAsyncSender sender = new GameAsyncSender(context, message.getRoute().toString());
+            sender.execute(message);
 
         }else{
-            InitialDataMessage message = new InitialDataMessage("", "exito");
-            Parser sender = new Parser(context,"http://ludus.noip.me/clients");
-            sender.execute(message);
+            Toast.makeText(this.context, "Ha ocurrido un error \n Intente nuevamente", Toast.LENGTH_SHORT).show();
         }
     }
 }
