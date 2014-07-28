@@ -22,14 +22,12 @@ public class LoadActivity extends Activity {
             @Override
             public void run(){
                 InitialDataMessage message = new InitialDataMessage("http://ludus.noip.me/identify?id="+ANDROID_ID, "existe");
-
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-
                 InitialAsyncSender sender = new InitialAsyncSender(LoadActivity.this, message.getRoute().toString());
                 sender.execute(message);
             }

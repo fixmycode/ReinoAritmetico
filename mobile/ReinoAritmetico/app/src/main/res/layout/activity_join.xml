@@ -20,7 +20,11 @@
             <EditText
                 android:layout_width="246dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/editText" />
+                android:id="@+id/editText"
+                android:inputType="text"
+                android:textColorHint="#fffaffea"
+                android:hint="Ingrese el código"
+                android:gravity="center_horizontal" />
 
             <Button
                 android:id="@+id/button1"
@@ -30,13 +34,6 @@
                 android:text="Entrar a la partida"
                 android:layout_gravity="center_horizontal" />
 
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="183dp"
-                android:layout_height="wrap_content"
-                android:onClick="salir"
-                android:text="Salir de la partida"
-                android:layout_gravity="center_horizontal" />
         </LinearLayout>
 
     </FrameLayout>

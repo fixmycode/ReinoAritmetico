@@ -18,40 +18,38 @@ import org.apache.http.protocol.HTTP;
 import java.util.ArrayList;
 import java.util.List;
 
-import cl.blackbird.reino.JoinActivity;
+import cl.blackbird.reino.GameActivity;
 
-public class RegistroAsyncSender extends AsyncTask<RegistroDataMessage, Void, Boolean> {
+/**
+ * Created by carlos on 26/7/2014.
+ */
+public class GameAsyncSender extends AsyncTask<GameDataMessage, Void, Boolean> {
 
     private final String baseRoute;
     private final Context context;
-    private String successText;
-    private String name,classroom,school;
+    String name, address;
 
-    public RegistroAsyncSender(Context context, String baseRoute, String successText){
+    public GameAsyncSender(Context context, String baseRoute){
         this.baseRoute = baseRoute;
-        this.successText = successText;
         this.context = context;
     }
 
     @Override
-    protected Boolean doInBackground(RegistroDataMessage... params) {
-        for(RegistroDataMessage message : params){
-            String url = this.baseRoute+message.getRoute();
+    protected Boolean doInBackground(GameDataMessage... params) {
+        for(GameDataMessage message : params){
+            name = message.getName();
+            address = message.getAddress();
+            String url = message.getRoute();
             HttpClient client = new DefaultHttpClient();
             HttpPost postData = new HttpPost(url);
             try {
                 List<NameValuePair> urls = new ArrayList<NameValuePair>();
-                name= message.getNombre();
-                classroom= message.getCurso();
-                school= message.getColegio();
-                urls.add(new BasicNameValuePair("name", name));
-                urls.add(new BasicNameValuePair("android_id",message.getId()));
-                urls.add(new BasicNameValuePair("classroom", classroom));
-                urls.add(new BasicNameValuePair("school", school));
+                urls.add(new BasicNameValuePair("name", message.getName()));
+                urls.add(new BasicNameValuePair("android_id",message.getANDROID_ID()));
                 postData.setEntity(new UrlEncodedFormEntity(urls, HTTP.UTF_8));
                 HttpResponse response = client.execute(postData);
                 int responseCode = response.getStatusLine().getStatusCode();
-                if(responseCode < 400){
+                if(responseCode == 200){
                     return true;
                 } else {
                     Log.e("ASYNC", "Error "+responseCode+" al conectar con "+url);
@@ -66,17 +64,16 @@ public class RegistroAsyncSender extends AsyncTask<RegistroDataMessage, Void, Bo
 
     @Override
     protected void onPostExecute(Boolean result) {
-        if(!result){
-            this.successText = "Ocurrió un error";
+        Intent intent;
+        if(result){
+            intent = new Intent(context, GameActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("name", name);
+            intent.putExtra("address", address);
+            context.startActivity(intent);
         }
         else {
-            Intent i = new Intent(context, JoinActivity.class);
-            i.putExtra("name",name);
-            i.putExtra("classroom",classroom);
-            i.putExtra("school",school);
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(i);
-            Toast.makeText(this.context, this.successText, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.context, "No ha sido posible ingresar a la partida.", Toast.LENGTH_SHORT).show();
         }
     }
 }

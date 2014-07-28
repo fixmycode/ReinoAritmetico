@@ -200,27 +200,32 @@ pre {
 }
 
 /* line 99, ../sass/screen.scss */
+.play {
+  background: #0897e2 !important;
+}
+
+/* line 103, ../sass/screen.scss */
 .close-app {
   background: #ff403d;
 }
 
-/* line 103, ../sass/screen.scss */
+/* line 107, ../sass/screen.scss */
 .minimize-app {
   background: #e1ec17;
 }
 
-/* line 107, ../sass/screen.scss */
+/* line 111, ../sass/screen.scss */
 .maximize-app {
   background: yellowgreen;
 }
 
-/* line 111, ../sass/screen.scss */
+/* line 115, ../sass/screen.scss */
 #logo {
   font-weight: 200;
   text-transform: uppercase;
 }
 
-/* line 116, ../sass/screen.scss */
+/* line 120, ../sass/screen.scss */
 .welcome-small {
   position: absolute;
   right: 8px;
@@ -231,18 +236,18 @@ pre {
   -o-transition: 0.3s linear all;
   transition: 0.3s linear all;
 }
-/* line 121, ../sass/screen.scss */
+/* line 125, ../sass/screen.scss */
 .welcome-small h1 {
   font-size: 14px;
   margin: 0;
   cursor: default;
 }
-/* line 123, ../sass/screen.scss */
+/* line 127, ../sass/screen.scss */
 .welcome-small:hover {
   opacity: .9;
 }
 
-/* line 128, ../sass/screen.scss */
+/* line 132, ../sass/screen.scss */
 #status {
   position: absolute;
   bottom: 0;
@@ -253,73 +258,74 @@ pre {
   font-size: 12px;
   padding: 5px 10px;
   color: #d4d4d4;
+  z-index: 99999;
 }
 
-/* line 140, ../sass/screen.scss */
+/* line 145, ../sass/screen.scss */
 .actions {
   width: 150px;
   background: #1f1f1f;
   float: left;
 }
-/* line 144, ../sass/screen.scss */
+/* line 149, ../sass/screen.scss */
 .actions li {
   width: 150px;
   padding: 9px 10px;
 }
-/* line 147, ../sass/screen.scss */
+/* line 152, ../sass/screen.scss */
 .actions li a {
   color: white;
   font-weight: 200;
   text-decoration: none;
 }
-/* line 152, ../sass/screen.scss */
+/* line 157, ../sass/screen.scss */
 .actions li:hover {
   background: #1a1a1a;
 }
-/* line 154, ../sass/screen.scss */
+/* line 159, ../sass/screen.scss */
 .actions li:hover a {
   color: #0897e2;
 }
 
-/* line 161, ../sass/screen.scss */
+/* line 166, ../sass/screen.scss */
 a.right {
   float: right;
   color: white;
 }
 
-/* line 166, ../sass/screen.scss */
+/* line 171, ../sass/screen.scss */
 .data {
   font-family: Consolas,monospace;
 }
 
-/* line 170, ../sass/screen.scss */
+/* line 175, ../sass/screen.scss */
 .info {
   color: #0897e2;
 }
 
-/* line 171, ../sass/screen.scss */
+/* line 176, ../sass/screen.scss */
 .error {
   color: #dc3a34;
 }
 
-/* line 172, ../sass/screen.scss */
+/* line 177, ../sass/screen.scss */
 .success {
   color: yellowGreen;
 }
 
-/* line 174, ../sass/screen.scss */
+/* line 179, ../sass/screen.scss */
 #content {
-  position: relative;
+  padding-top: 40px;
   text-align: center;
   overflow: hidden;
   height: 100%;
 }
-/* line 180, ../sass/screen.scss */
+/* line 185, ../sass/screen.scss */
 #content h1 {
   font-size: 100px;
 }
 
-/* line 185, ../sass/screen.scss */
+/* line 190, ../sass/screen.scss */
 .join-code {
   background: #74af3f;
   width: 200px;
@@ -329,7 +335,7 @@ a.right {
   color: black;
 }
 
-/* line 194, ../sass/screen.scss */
+/* line 199, ../sass/screen.scss */
 .client {
   border: 3px solid black;
   border-radius: 12px;
@@ -338,65 +344,99 @@ a.right {
   padding: 12px;
   display: inline-block;
 }
-/* line 202, ../sass/screen.scss */
+/* line 207, ../sass/screen.scss */
 .client i {
   font-size: 80px;
   color: #333333;
 }
-/* line 207, ../sass/screen.scss */
+/* line 212, ../sass/screen.scss */
 .client small {
   font-size: .6em;
   padding: 6px 0;
   display: block;
 }
 
-/* line 214, ../sass/screen.scss */
+/* line 219, ../sass/screen.scss */
 .waiting {
   opacity: .5;
 }
 
-/* line 218, ../sass/screen.scss */
-.ng-pageslide {
-  background: #bfb272;
-  padding: 36px 0;
+/* line 223, ../sass/screen.scss */
+.sb-slidebar {
+  background: #bfb272 !important;
+  padding: 36px 0 !important;
 }
-
-/* line 224, ../sass/screen.scss */
-.ng-pageslide {
-  background: #bfb272;
-  padding: 36px 0;
-}
-/* line 228, ../sass/screen.scss */
-.ng-pageslide .menu > li {
+/* line 227, ../sass/screen.scss */
+.sb-slidebar .menu > li {
   text-align: center;
 }
-/* line 231, ../sass/screen.scss */
-.ng-pageslide .menu > li a {
+/* line 230, ../sass/screen.scss */
+.sb-slidebar .menu > li a {
   text-decoration: none;
   padding: 20px 20px;
   font-size: 20px;
   display: block;
 }
-/* line 236, ../sass/screen.scss */
-.ng-pageslide .menu > li a:hover {
+/* line 235, ../sass/screen.scss */
+.sb-slidebar .menu > li a:hover {
   background: #af9f4f;
 }
-/* line 241, ../sass/screen.scss */
-.ng-pageslide .active {
+/* line 240, ../sass/screen.scss */
+.sb-slidebar .active {
   background: #af9f4f;
 }
-/* line 245, ../sass/screen.scss */
-.ng-pageslide .sub-menu input[type=text] {
+/* line 244, ../sass/screen.scss */
+.sb-slidebar .input-block {
   display: block;
   width: 100%;
+  outline: none;
+  padding: 5px 0;
+  background: #bfb272;
+  border: none;
+  font-size: 16px;
+  text-align: left;
+}
+/* line 254, ../sass/screen.scss */
+.sb-slidebar .input-block input[type=text] {
   margin: auto;
   outline: none;
-  padding: 5px 6px;
+  padding: 0;
+  text-align: left;
+  background: none;
   border: none;
-  font-size: 15px;
+  border-bottom: 1px dashed #1a1a1a;
+  font-size: 16px;
+  width: 140px;
+}
+/* line 268, ../sass/screen.scss */
+.sb-slidebar .input-block:hover, .sb-slidebar .input-block:focus {
+  background: #af9f4f;
+}
+/* line 271, ../sass/screen.scss */
+.sb-slidebar .input-block button {
+  border: none;
+  background: none;
+  font-size: 16px;
+  outline: 0;
+}
+/* line 278, ../sass/screen.scss */
+.sb-slidebar .input-block label {
+  width: 100px;
+  display: inline-block;
+  text-align: right;
+  margin-right: 10px;
+}
+/* line 286, ../sass/screen.scss */
+.sb-slidebar ::-webkit-input-placeholder {
+  color: black;
 }
 
-/* line 257, ../sass/screen.scss */
+/* line 290, ../sass/screen.scss */
+.short {
+  width: 53px !important;
+}
+
+/* line 295, ../sass/screen.scss */
 .start-game input[type=text] {
   font-size: 40px;
   padding: 6px 4px;
@@ -409,7 +449,7 @@ a.right {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   text-align: center;
 }
-/* line 270, ../sass/screen.scss */
+/* line 308, ../sass/screen.scss */
 .start-game input[type=submit] {
   border: 0;
   background: #0897e2;

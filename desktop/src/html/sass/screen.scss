@@ -96,6 +96,10 @@ pre {white-space: pre;}
     }
 }
 
+.play {
+    background: $blue !important;
+}
+
 .close-app {
     background: #ff403d;
 }
@@ -135,6 +139,7 @@ pre {white-space: pre;}
     font-size: 12px;
     padding: 5px 10px;
     color: darken(#eee, 10%);
+    z-index: 99999;
 }
 
 .actions {
@@ -172,7 +177,7 @@ a.right {
 .success { color: yellowGreen; }
 
 #content {
-    position: relative;
+    padding-top: 40px;
     text-align: center;
     overflow: hidden;
     height: 100%;
@@ -215,15 +220,9 @@ a.right {
     opacity: .5;
 }
 
-.ng-pageslide {
-    background: $menuBg;
-    padding: 36px 0;
-}
-
-
-.ng-pageslide {
-    background: $menuBg;
-    padding: 36px 0;
+.sb-slidebar {
+    background: $menuBg !important;
+    padding: 36px 0 !important;
 
     .menu > li {
         text-align: center;
@@ -242,15 +241,54 @@ a.right {
         background: darken($menuBg, 10%);
     }
 
-    .sub-menu input[type=text]{
+    .input-block {
         display: block;
         width: 100%;
-        margin: auto;
         outline: none;
-        padding: 5px 6px;
+        padding: 5px 0;
+        background: $menuBg;
         border: none;
-        font-size: 15px;
+        font-size: 16px;
+        text-align: left;
+
+        input[type=text]{
+            margin: auto;
+            outline: none;
+            padding: 0;
+            text-align: left;
+            background: none;
+            border: none;
+            border-bottom: 1px dashed $dark;
+            font-size: 16px;
+            width: 140px;
+        }
+
+
+        &:hover,
+        &:focus {
+            background: darken($menuBg, 10%);
+        }
+        button {
+            border: none;
+            background: none;
+            font-size: 16px;
+            outline: 0;
+        }
+
+        label {
+            width: 100px;
+            display: inline-block;
+            text-align: right;
+            margin-right: 10px;
+        }
+        
     }
+    ::-webkit-input-placeholder {
+       color: black;
+    }
+}
+.short {
+    width: 53px !important;
 }
 
 .start-game {

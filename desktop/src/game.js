@@ -2,28 +2,25 @@ var http = require('http');
 var querystring = require('querystring');
 var   ip = require('ip');
 
-function Game(maxPlayers){
+function Game(maxPlayers, port, serverIpAddress, serverPort){
   this.players = [];
   this.maxPlayers = maxPlayers || 5;
   this.joinCode = "none";
   this.playing = false;
+  var p = port || 80;
+  this.address = ip.address() + ':' + p;
+  this.serverIpAddress = serverIpAddress || "127.0.0.1";
+  this.serverPort = serverPort || 80;
+};
 
-  this.setup = function(port, serverAddress, serverPort) {
-    this.address = ip.address() + ':' + port;
-    this.serverAddress = serverAddress || "120.0.0.1";
-    this.serverPort = serverPort || 80;
-  };
-
-  this.init = function($this, maxPly, callback){
-    console.log("==> Doing HTTP request to server for the game join code");
-
+Game.prototype.init = function(self, maxPly, callback){
     var data = querystring.stringify({
-      address: $this.address
+      address: self.address
     });
 
     var options = {
-        host: $this.serverAddress,
-        port: $this.serverPort,
+        host: self.serverIpAddress,
+        port: self.serverPort,
         path: '/start',
         method: 'POST',
         headers: {
@@ -35,41 +32,44 @@ function Game(maxPlayers){
     var req = http.request(options, function(res) {
         res.setEncoding('utf8');
         var body = "";
+
         res.on('data', function (chunk) {
           body += chunk;
-        });
-
-        res.on('end', function() {
+        })
+        .on('end', function() {
           var a = JSON.parse(body);
           console.log(a.uid);
-          $this.joinCode   = a.uid;
-          $this.maxPlayers = maxPly;
-          $this.playing    = true;
-          callback($this);
-        });
+          self.joinCode   = a.uid;
+          self.maxPlayers = maxPly;
+          self.playing    = true;
+          callback();
+        })
+        .on('error', console.log);
     });
 
+    // Esto no funciona muy bien
+    req.setTimeout(5000, function(){
+      callback("No se puede comunicar con el servidor "+ self.serverIpAddress+':'+self.serverPort);
+      req.abort();
+    });
+    
     req.write(data);
     req.end();
   };
 
-  this.end = function($this, callback) {
-    console.log("==> Telling the server to stop the game");
-
+Game.prototype.end = function(self, callback) {
     var options = {
-        host: $this.serverAddress,
-        port: $this.serverPort,
-        path: '/end?uid=' + $this.joinCode,
+        host: self.serverAddress,
+        port: self.serverPort,
+        path: '/end?uid=' + self.joinCode,
     };
 
     http.get(options, function(res){
-      $this.joinCode = "none";
-      $this.players.length = 0;
-      $this.playing = false;
-      console.log("Game Stoped");
-      callback($this);
+      self.joinCode = "none";
+      self.players.length = 0;
+      self.playing = false;
+      callback();
     }).on('error', console.log);
   }
-};
 
-module.exports = new Game();
+module.exports = Game;

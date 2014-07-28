@@ -7,3 +7,8 @@
 #actions > ul > li {
   -webkit-app-region: no-drag;
 }
+
+/* line 3, ../sass/ui.scss */
+* {
+  -webkit-user-select: none;
+}
