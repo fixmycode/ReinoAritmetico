@@ -9,6 +9,7 @@ function changeState(callback){
     $content.load('_partials/welcome.html', callback);
     $notPlaying.show();
     $playing.hide();
+    setTimeout(function(){$('#numberPlayers').focus();}, 500);
   }else {
     $content.load('_partials/waitingPlayers.html', callback);
     $playing.show();
@@ -65,7 +66,7 @@ $('.serverPort').val(game.serverPort);
 
 $(document).on('submit', '.start-game', function(e){
   e.preventDefault();
-  var numberPlayers = parseInt($(this).find('.numberPlayers').val());
+  var numberPlayers = parseInt($(this).find('#numberPlayers').val());
 
   if (numberPlayers <= 0 || isNaN(numberPlayers)) {
     status("Debe ingresar un número mayor que 0");
