@@ -1,4 +1,4 @@
-/* line 17, ../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 17, ../../../../../../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -20,45 +20,45 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 22, ../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 22, ../../../../../../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1;
 }
 
-/* line 24, ../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 24, ../../../../../../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 26, ../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 26, ../../../../../../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 28, ../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 28, ../../../../../../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 30, ../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 30, ../../../../../../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
-/* line 103, ../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 103, ../../../../../../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 32, ../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 32, ../../../../../../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none;
 }
 
-/* line 116, ../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 116, ../../../../../../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
   display: block;
 }
@@ -72,7 +72,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 /* Awesome! */
 /* line 16, ../sass/screen.scss */
 body {
-  background: #f4f4f4;
+  background: white;
   color: black;
   font-family: 'Raleway', sans-serif;
   padding-top: 40px;
@@ -141,28 +141,33 @@ pre {
 }
 
 /* line 52, ../sass/screen.scss */
+.sb-site {
+  height: 100% !important;
+}
+
+/* line 56, ../sass/screen.scss */
 #actions {
   background: #1f1f1f;
   padding: 10px 10px;
   text-align: center;
   color: #f1f1f1;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 9999;
 }
-/* line 63, ../sass/screen.scss */
+/* line 67, ../sass/screen.scss */
 #actions ul {
   float: left;
   cursor: default;
 }
-/* line 67, ../sass/screen.scss */
+/* line 71, ../sass/screen.scss */
 #actions ul li {
   display: inline-block;
   cursor: default;
 }
-/* line 72, ../sass/screen.scss */
+/* line 76, ../sass/screen.scss */
 #actions .title {
   font-size: 13px;
   cursor: default;
@@ -172,7 +177,7 @@ pre {
   opacity: .75;
 }
 
-/* line 84, ../sass/screen.scss */
+/* line 88, ../sass/screen.scss */
 #actions .close-app,
 #actions .minimize-app,
 #actions .maximize-app {
@@ -190,7 +195,7 @@ pre {
   -o-transition: 0.4s linear box-shadow;
   transition: 0.4s linear box-shadow;
 }
-/* line 94, ../sass/screen.scss */
+/* line 98, ../sass/screen.scss */
 #actions .close-app:hover,
 #actions .minimize-app:hover,
 #actions .maximize-app:hover {
@@ -199,33 +204,33 @@ pre {
   box-shadow: none;
 }
 
-/* line 99, ../sass/screen.scss */
+/* line 103, ../sass/screen.scss */
 .play {
   background: #0897e2 !important;
 }
 
-/* line 103, ../sass/screen.scss */
+/* line 107, ../sass/screen.scss */
 .close-app {
   background: #ff403d;
 }
 
-/* line 107, ../sass/screen.scss */
+/* line 111, ../sass/screen.scss */
 .minimize-app {
   background: #e1ec17;
 }
 
-/* line 111, ../sass/screen.scss */
+/* line 115, ../sass/screen.scss */
 .maximize-app {
   background: yellowgreen;
 }
 
-/* line 115, ../sass/screen.scss */
+/* line 119, ../sass/screen.scss */
 #logo {
   font-weight: 200;
   text-transform: uppercase;
 }
 
-/* line 120, ../sass/screen.scss */
+/* line 124, ../sass/screen.scss */
 .welcome-small {
   position: absolute;
   right: 8px;
@@ -236,20 +241,20 @@ pre {
   -o-transition: 0.3s linear all;
   transition: 0.3s linear all;
 }
-/* line 125, ../sass/screen.scss */
+/* line 129, ../sass/screen.scss */
 .welcome-small h1 {
   font-size: 14px;
   margin: 0;
   cursor: default;
 }
-/* line 127, ../sass/screen.scss */
+/* line 131, ../sass/screen.scss */
 .welcome-small:hover {
   opacity: .9;
 }
 
-/* line 132, ../sass/screen.scss */
+/* line 136, ../sass/screen.scss */
 #status {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   height: 20px;
   background: black;
@@ -261,71 +266,71 @@ pre {
   z-index: 99999;
 }
 
-/* line 145, ../sass/screen.scss */
+/* line 149, ../sass/screen.scss */
 .actions {
   width: 150px;
   background: #1f1f1f;
   float: left;
 }
-/* line 149, ../sass/screen.scss */
+/* line 153, ../sass/screen.scss */
 .actions li {
   width: 150px;
   padding: 9px 10px;
 }
-/* line 152, ../sass/screen.scss */
+/* line 156, ../sass/screen.scss */
 .actions li a {
   color: white;
   font-weight: 200;
   text-decoration: none;
 }
-/* line 157, ../sass/screen.scss */
+/* line 161, ../sass/screen.scss */
 .actions li:hover {
   background: #1a1a1a;
 }
-/* line 159, ../sass/screen.scss */
+/* line 163, ../sass/screen.scss */
 .actions li:hover a {
   color: #0897e2;
 }
 
-/* line 166, ../sass/screen.scss */
+/* line 170, ../sass/screen.scss */
 a.right {
   float: right;
   color: white;
 }
 
-/* line 171, ../sass/screen.scss */
+/* line 175, ../sass/screen.scss */
 .data {
   font-family: Consolas,monospace;
 }
 
-/* line 175, ../sass/screen.scss */
+/* line 179, ../sass/screen.scss */
 .info {
   color: #0897e2;
 }
 
-/* line 176, ../sass/screen.scss */
+/* line 180, ../sass/screen.scss */
 .error {
   color: #dc3a34;
 }
 
-/* line 177, ../sass/screen.scss */
+/* line 181, ../sass/screen.scss */
 .success {
   color: yellowGreen;
 }
 
-/* line 179, ../sass/screen.scss */
+/* line 183, ../sass/screen.scss */
 #content {
   padding-top: 40px;
   text-align: center;
   overflow: hidden;
   height: 100%;
 }
-/* line 185, ../sass/screen.scss */
+/* line 189, ../sass/screen.scss */
 #content h1 {
   font-size: 100px;
 }
 
-/* line 190, ../sass/screen.scss */
+/* line 194, ../sass/screen.scss */
 .join-code {
   background: #74af3f;
   width: 200px;
@@ -335,57 +340,60 @@ a.right {
   color: black;
 }
 
-/* line 199, ../sass/screen.scss */
+/* line 203, ../sass/screen.scss */
 .client {
   border: 3px solid black;
   border-radius: 12px;
-  width: 150px;
   margin: auto 4px;
   padding: 12px;
   display: inline-block;
 }
-/* line 207, ../sass/screen.scss */
+/* line 211, ../sass/screen.scss */
 .client i {
   font-size: 80px;
   color: #333333;
 }
-/* line 212, ../sass/screen.scss */
+/* line 216, ../sass/screen.scss */
 .client small {
   font-size: .6em;
   padding: 6px 0;
   display: block;
 }
+/* line 222, ../sass/screen.scss */
+.client img {
+  width: 120px;
+}
 
-/* line 219, ../sass/screen.scss */
+/* line 227, ../sass/screen.scss */
 .waiting {
   opacity: .5;
 }
 
-/* line 223, ../sass/screen.scss */
+/* line 231, ../sass/screen.scss */
 .sb-slidebar {
   background: #bfb272 !important;
   padding: 36px 0 !important;
 }
-/* line 227, ../sass/screen.scss */
+/* line 235, ../sass/screen.scss */
 .sb-slidebar .menu > li {
   text-align: center;
 }
-/* line 230, ../sass/screen.scss */
+/* line 238, ../sass/screen.scss */
 .sb-slidebar .menu > li a {
   text-decoration: none;
   padding: 20px 20px;
   font-size: 20px;
   display: block;
 }
-/* line 235, ../sass/screen.scss */
+/* line 243, ../sass/screen.scss */
 .sb-slidebar .menu > li a:hover {
   background: #af9f4f;
 }
-/* line 240, ../sass/screen.scss */
+/* line 248, ../sass/screen.scss */
 .sb-slidebar .active {
   background: #af9f4f;
 }
-/* line 244, ../sass/screen.scss */
+/* line 252, ../sass/screen.scss */
 .sb-slidebar .input-block {
   display: block;
   width: 100%;
@@ -396,7 +404,7 @@ a.right {
   font-size: 16px;
   text-align: left;
 }
-/* line 254, ../sass/screen.scss */
+/* line 262, ../sass/screen.scss */
 .sb-slidebar .input-block input[type=text] {
   margin: auto;
   outline: none;
@@ -408,35 +416,35 @@ a.right {
   font-size: 16px;
   width: 140px;
 }
-/* line 268, ../sass/screen.scss */
+/* line 276, ../sass/screen.scss */
 .sb-slidebar .input-block:hover, .sb-slidebar .input-block:focus {
   background: #af9f4f;
 }
-/* line 271, ../sass/screen.scss */
+/* line 279, ../sass/screen.scss */
 .sb-slidebar .input-block button {
   border: none;
   background: none;
   font-size: 16px;
   outline: 0;
 }
-/* line 278, ../sass/screen.scss */
+/* line 286, ../sass/screen.scss */
 .sb-slidebar .input-block label {
   width: 100px;
   display: inline-block;
   text-align: right;
   margin-right: 10px;
 }
-/* line 286, ../sass/screen.scss */
+/* line 294, ../sass/screen.scss */
 .sb-slidebar ::-webkit-input-placeholder {
   color: black;
 }
 
-/* line 290, ../sass/screen.scss */
+/* line 298, ../sass/screen.scss */
 .short {
   width: 53px !important;
 }
 
-/* line 295, ../sass/screen.scss */
+/* line 303, ../sass/screen.scss */
 .start-game input[type=text] {
   font-size: 40px;
   padding: 6px 4px;
@@ -449,7 +457,7 @@ a.right {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   text-align: center;
 }
-/* line 308, ../sass/screen.scss */
+/* line 316, ../sass/screen.scss */
 .start-game input[type=submit] {
   border: 0;
   background: #0897e2;

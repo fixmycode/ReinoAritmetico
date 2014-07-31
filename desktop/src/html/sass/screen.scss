@@ -14,7 +14,7 @@ $menuBg: rgb(191, 178, 114);
 * { box-sizing: border-box; cursor: default; } /* Awesome! */
 
 body {
-    background: $white;
+    background: white;
     color: $black;
     font-family: 'Raleway', sans-serif;
     padding-top: 40px;
@@ -49,12 +49,16 @@ a {
 strong { font-weight: 500; }
 pre {white-space: pre;}
 
+.sb-site {
+    height: 100% !important;
+}
+
 #actions {
     background: lighten($black, 12%);
     padding: 10px 10px;
     text-align: center;
     color: $light;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
@@ -130,7 +134,7 @@ pre {white-space: pre;}
 }
 
 #status {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     height: 20px;
     background: black;
@@ -199,7 +203,7 @@ a.right {
 .client {
     border: 3px solid $black;
     border-radius: 12px;
-    width: 150px;
+    // width: 150px;
     margin: auto 4px;
     padding: 12px;
     display: inline-block;
@@ -213,6 +217,10 @@ a.right {
         font-size: .6em;
         padding: 6px 0;
         display: block;
+    }
+
+    img {
+        width: 120px;
     }
 }
 
