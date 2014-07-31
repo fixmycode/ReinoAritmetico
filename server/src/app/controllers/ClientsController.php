@@ -13,7 +13,7 @@ class ClientsController extends \BaseController {
 
 		return View::make('clients.index')
 							->with('clients', $clients)
-							->with('title', 'Colegios')
+							->with('title', 'Clientes')
 							->with('subtitle', 'Ver Todos')
 							->with('breadcrumbs', Breadcrumbs::render('clientss.index'));
 	}
@@ -55,9 +55,7 @@ class ClientsController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		$client = Client::findOrFail($id);
-
-		return View::make('clients.show', compact('client'));
+		return Redirect::route('clientss.classrooms.index', $id);
 	}
 
 	/**
@@ -70,7 +68,7 @@ class ClientsController extends \BaseController {
 	{
 		$client = Client::find($id);
 
-		return View::make('clients.edit', compact('client'));
+		return View::make('clients.partials.edit', compact('client'));
 	}
 
 	/**

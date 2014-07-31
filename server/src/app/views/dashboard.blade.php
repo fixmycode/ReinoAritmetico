@@ -8,7 +8,7 @@
     <div class="box box-primary">
       <div class="box-body">
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam dolores perferendis vero nisi, repellat maxime explicabo culpa iure, quod. Ab magnam esse soluta aperiam a numquam, delectus sequi. Exercitationem, ducimus.
+          <h4>Bienvenido!</h4> hoy no tenemos ninguna noticia que reportar
         </p>
       </div>
     </div>

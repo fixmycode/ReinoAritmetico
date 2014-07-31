@@ -1,12 +1,12 @@
 <?php
 
 Breadcrumbs::register('dashboard', function($breadcrumbs) {
-    $breadcrumbs->push('Home', url('dashboard'));
+    $breadcrumbs->push('Dashboard', url('dashboard'));
 });
 
 Breadcrumbs::register('clientss.index', function($breadcrumbs) {
     $breadcrumbs->parent('dashboard');
-    $breadcrumbs->push('Colegios', route('clientss.index'));
+    $breadcrumbs->push('Clientes', route('clientss.index'));
 });
 
 Breadcrumbs::register('clientss.classrooms.index', function($breadcrumbs, $client) {

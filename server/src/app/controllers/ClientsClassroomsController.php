@@ -26,7 +26,6 @@ class ClientsClassroomsController extends \BaseController {
 	 */
 	public function create()
 	{
-
 		return View::make('course/create');
 	}
 
@@ -75,13 +74,14 @@ class ClientsClassroomsController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function edit($client_id, $id)
 	{
-		$course = Course::find($id);
-		return View::make("course/edit")->with('course',$course);
+		$classroom = Client::findOrFail($client_id)->classrooms()->with('client')->findOrFail($id);
 
+		return View::make("clients.classrooms.partials.edit")
+							->with('classroom', $classroom)
+							->with('client', $classroom->client);
 	}
-
 
 	/**
 	 * Update the specified resource in storage.
@@ -89,15 +89,20 @@ class ClientsClassroomsController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update($client_id, $id)
 	{
-		$name = Input::get('name');
-    $course = Course::find($id);
-    $course->name = $name;
-    $course->save();
+    $classroom = Client::findOrFail($client_id)->classrooms()->findOrFail($id);
 
-    return Redirect::to('course');
+    $validator = Validator::make($data = Input::all(), Classroom::$rules);
 
+    if ($validator->fails())
+    {
+    	return Redirect::back()->withErrors($validator)->withInput();
+    }
+
+    $classroom->update($data);
+
+    return Redirect::back();
 	}
 
 
