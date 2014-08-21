@@ -1,0 +1,50 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context="cl.blackbird.reino.fragment.LobbyFragment">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/warrior_anim"
+        android:contentDescription="@string/character"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/activity_horizontal_margin"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lobby_instructions"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:layout_gravity="center_horizontal">
+        <EditText
+            android:layout_width="@dimen/lobby_game_field"
+            android:layout_height="wrap_content"
+            android:id="@+id/lobby_code"
+            android:hint="@string/enter_code"
+            android:inputType="textNoSuggestions"
+            android:singleLine="true" />
+
+        <ToggleButton
+            android:id="@+id/join_button"
+            android:layout_width="@dimen/join_game_button"
+            android:layout_height="wrap_content"
+            android:textOff="@string/join_game"
+            android:textOn="@string/leave_game"
+            android:enabled="false"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

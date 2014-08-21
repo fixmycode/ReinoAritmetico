@@ -1,18 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Reino</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
-	<string-array name="Select_colegio">
-		<item>Rubén Dario</item>
-		<item >hola </item>
-	</string-array>
-	<string-array name="Select_curso">
-	    <item>3º</item>
-	    <item>4º</item>
-	    <item>5º</item>
-	    <item>6º</item>
-	    
-	</string-array>
+    <string name="app_name">Arithmetic Kingdom</string>
+    <string name="action_settings">Settings</string>
+    <string name="loading">Loading…</string>
+    <string name="title_activity_register">Register to play</string>
+    <string name="register_first">To be able to play with your friends, you need to register in the
+    system first. This is a one-time step, you won\'t be asked to register in this device ever again.</string>
+    <string name="register_and_play">Register and play!</string>
+    <string name="select_school">Select your school</string>
+    <string name="select_class">Select your class</string>
+    <string name="full_name_hint">Your full name</string>
+    <string name="server_error">There was an error with the server, please restart the application.</string>
+    <string name="welcome_player">It\'s nice to see you again, %s!</string>
+    <string name="welcome_player_error">Something weird happened and I didn\'t catch your name…</string>
+    <string name="register_dialog" formatted="false">Your name is %s, you go to %s and you\'re currently on %s class, is this correct?</string>
+    <string name="register_error">There was a problem with your registration, care to try again?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="character">This is your character</string>
+    <string name="title_activity_lobby">Preparing to join</string>
+    <string name="enter_code">Enter the code</string>
+    <string name="join_game">Join the game!</string>
+    <string name="erase_registration">Erase Registration</string>
+    <string name="erase_confirmation">This will erase your character from the system, with your records, and everything. Is this OK?</string>
+    <string name="customize_character">Customize my Character</string>
+    <string name="lobby_instructions">Type the code that is shown in the screen to join the game with your teammates and press the button below.</string>
+    <string name="preparing_clients">Preparing Clients…</string>
+    <string name="checking_status">Checking device status…</string>
+    <string name="saving_player">Saving the player\'s information…</string>
+    <string name="checking_game">Checking for game…</string>
+    <string name="joining_game">Joining the game…</string>
+    <string name="leave_game">Leave game</string>
+    <string name="join_error">There was an error joining the game, please check the code and try again</string>
+    <string name="server_error_retrying" formatted="false">There was a problem connecting to the
+        server, retrying in %d seconds…</string>
+    <string name="press_twice">Press twice to exit</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="server_address">Server Address</string>
+    <string name="default_server">http://192.168.0.101</string>
+
 </resources>

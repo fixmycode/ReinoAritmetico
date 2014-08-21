@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Reino Aritmético</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="loading">Cargando…</string>
+    <string name="title_activity_register">Regístrate para jugar</string>
+    <string name="register_first">Para poder jugar con tus amigos, primero debes registrarte en
+        nuestro sistema. Este paso se hace una vez y nunca más se te pedirá registrarte en este
+        dispositivo.</string>
+    <string name="register_and_play">Regístrate y juega!</string>
+    <string name="select_school">Selecciona tu colegio</string>
+    <string name="select_class">Selecciona tu clase</string>
+    <string name="full_name_hint">Tu nombre completo</string>
+    <string name="server_error">Ocurrió un error en el servidor, por favor reinicia la
+        aplicación.</string>
+    <string name="welcome_player">Que bueno verte de nuevo, %s!</string>
+    <string name="welcome_player_error">Algo extraño pasó y no pude leer tu nombre…</string>
+    <string name="register_dialog" formatted="false">Tu nombre es %s, estudiante del %s y
+        actualmente estás en %s, ¿correcto?</string>
+    <string name="register_error">Ocurrió un problema con tu registro, ¿te importaría intentarlo de
+        nuevo?</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+    <string name="character">Este es tu personaje</string>
+    <string name="title_activity_lobby">Preparándose para ingresar</string>
+    <string name="enter_code">Ingresa el código</string>
+    <string name="join_game">Entra al juego!</string>
+    <string name="erase_registration">Borrar registro</string>
+    <string name="erase_confirmation">Esto eliminará tu personaje del registro, ¿estás de
+        acuerdo?</string>
+    <string name="customize_character">Personalizar mi personaje</string>
+    <string name="lobby_instructions">Escribe el código que aparece en la pantalla para entrar en la
+        partida con tus compañeros</string>
+    <string name="preparing_clients">Preparando clientes…</string>
+    <string name="checking_status">Revisando estado del dispositivo…</string>
+    <string name="saving_player">Guardando la información del jugador…</string>
+    <string name="checking_game">Consultando por el juego…</string>
+    <string name="joining_game">Ingresando al juego…</string>
+    <string name="leave_game">Abandonar partida</string>
+    <string name="join_error">Error al entrar al juego, revisa el código e intentalo de
+        nuevo</string>
+    <string name="server_error_retrying" formatted="false">Ocurrió un error conectado con el
+        servidor, reintentando en %d segundos…</string>
+    <string name="press_twice">Presiona nuevamente para salir</string>
+    <string name="server_address">Dirección del Servidor</string>
+
+</resources>
