@@ -1,17 +1,13 @@
 <?php
-Route::get('users', function()
-{
-    return 'Users!';
-});
 
+Route::get('dashboard', ['as' => 'dashboard', function(){
+  return View::make('dashboard')
+          ->with('breadcrumbs', Breadcrumbs::render('dashboard'))
+          ->with('title', 'Dashboard');
+}]);
 
-Route::resource('school', 'SchoolController');
-Route::resource('course', 'CourseController');
-
-
+Route::resource('clientss', 'ClientsController');
+Route::resource('clientss.classrooms', 'ClientsClassroomsController');
 
 Route::controller('/', 'APIController');
-
-
-
 

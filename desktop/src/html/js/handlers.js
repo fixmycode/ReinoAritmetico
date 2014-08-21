@@ -27,15 +27,18 @@ function status(msg) {
 
 function tag(number, playerName, waiting) {
   if (waiting) {
-    wt = " waiting";
-  }else {
-    wt = '';
-  }
-  return '<div class="client'+wt+'">\
-                <i class="fa fa-male"></i> <br> \
+    return '<div class="client waiting">\
+                <img src="img/not-connected.gif"> <br> \
                 <small>Jugador ' + number + '</small> \
                 <span class="player">' + playerName + '</span> \
             </div>';
+  }else {
+    return '<div class="client">\
+                <img src="img/warrior.gif"> <br> \
+                <small>Jugador ' + number + '</small> \
+                <span class="player">' + playerName + '</span> \
+            </div>';
+  }
 }
 
 function showPlayers(){
@@ -60,6 +63,10 @@ function showPlayers(){
 // Init ui
 $.slidebars();
 changeState();
+
+$(window).resize(function() {
+  $('#sb-site').height($(window).height());
+});
 
 $('.serverIpAddress').val(game.serverIpAddress);
 $('.serverPort').val(game.serverPort);

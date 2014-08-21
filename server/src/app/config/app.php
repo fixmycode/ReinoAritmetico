@@ -122,6 +122,7 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
+		'DaveJamesMiller\Breadcrumbs\ServiceProvider',
 
 	),
 
@@ -189,6 +190,7 @@ return array(
 		'URL'             => 'Illuminate\Support\Facades\URL',
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
+		'Breadcrumbs' => 'DaveJamesMiller\Breadcrumbs\Facade',
 
 	),
 

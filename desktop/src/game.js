@@ -59,7 +59,7 @@ Game.prototype.init = function(self, maxPly, callback){
 
 Game.prototype.end = function(self, callback) {
     var options = {
-        host: self.serverAddress,
+        host: self.serverIpAddress,
         port: self.serverPort,
         path: '/end?uid=' + self.joinCode,
     };
