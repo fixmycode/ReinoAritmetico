@@ -174,7 +174,7 @@ class APIController extends \BaseController {
 	    App::abort(404);
 
 
-	  return Response::json(['address' => $game->address]);
+	  return Response::json(['address' => 'http://'.$game->address]);
 	}
 
 	public function missingMethod($parameters = array()) {

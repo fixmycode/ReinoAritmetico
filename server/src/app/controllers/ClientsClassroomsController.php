@@ -62,7 +62,7 @@ class ClientsClassroomsController extends \BaseController {
 	 */
 	public function show($client_id, $id)
 	{
-		$classroom = Client::findOrFail($client_id)->classrooms()->with('client')->findOrFail($id);
+		$classroom = Client::findOrFail($client_id)->classrooms()->with('students')->findOrFail($id);
 
 		return View::make("clients.classrooms.show")->with('classroom', $classroom);
 	}

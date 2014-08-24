@@ -7,11 +7,11 @@ class ClassroomsTableSeeder extends Seeder {
 		DB::table('classrooms')->delete();
 
     $classrooms = array(
-        new Classroom(['name' => '1ro Basico']),
-        new Classroom(['name' => '2ro Basico']),
-        new Classroom(['name' => '3ro Basico']),
-        new Classroom(['name' => '4ro Basico']),
-        new Classroom(['name' => '5ro Basico'])
+        new Classroom(['name' => '1ro Básico']),
+        new Classroom(['name' => '2do Básico']),
+        new Classroom(['name' => '3ro Básico']),
+        new Classroom(['name' => '4to Básico']),
+        new Classroom(['name' => '5to Básico'])
     );
 
     Client::whereName('Ruben Dario')->first()->classrooms()->saveMany($classrooms);
