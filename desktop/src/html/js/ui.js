@@ -20,6 +20,8 @@
     });
 
     $('.maximize-app').on('click', function () {
+        win.showDevTools();
+        return;
         if(win.isFullscreen){
             win.toggleFullscreen();
         }else{

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+    <form action="">
+      <label>Android ID</label> <input type="text" id="androidId">
+      <label>Name</label> <input type="text" id="name">
+      <button>Join</button> <br>
+    </form>
+    <button id="leave">Salir</button>
+
+    <div id="log"></div>
+
+    <script src="node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+      var socket = io.connect('http://ludus.noip.me:3000');
+
+      socket.on('error', function(data){
+        $('#log').append('<p>' + data.msg + '</p>');
+        console.error(data);
+      });
+
+      socket.on('info', function(data){
+        $('#log').append('<p>' + data.msg + '</p>');
+        console.info(data);
+      });
+
+      $('#leave').on('click', function(){
+        socket.emit('leave', {android_id: $('#androidId').val()});
+      });
+
+      $('form').submit(function(){
+        socket.emit('join', {
+          android_id: $('#androidId').val(),
+          name: $('#name').val()
+        });
+        return false;
+      });
+    </script>
+</body>
+</html>
