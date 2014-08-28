@@ -322,3 +322,15 @@ a.right {
         margin: 40px;
     }
 }
+
+#pauseMsg {
+    background: rgba(0, 0, 0, .8);
+    color: white;
+    text-align: center;
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 0; right: 0;
+    z-index: 99999999999;
+    padding-top: 160px;
+    display: none;
+}

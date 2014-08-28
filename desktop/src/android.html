@@ -3,6 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
+
+  <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <style>
+  body {
+    font-family: 'Open Sans', sans-serif;
+  }
+  #log p {
+    margin: 0 0 5px 0;
+  }
+    #log p.info {
+      color: #2e6be6;
+    }
+
+    #log p.error {
+      color: #ff4347;
+    }
+
+    span.timestamp {
+      float: right;
+      color: #aaa;
+    }
+  </style>
 </head>
 <body>
     <form action="">
@@ -17,15 +40,15 @@
     <script src="node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-      var socket = io.connect('http://ludus.noip.me:3000');
+      var socket = io.connect('http://localhost:3000');
 
       socket.on('error', function(data){
-        $('#log').append('<p>' + data.msg + '</p>');
+        $('#log').prepend('<p class="error"><i class="fa fa-fw fa-warning"></i> ' + data.msg + '<span class="timestamp">' + (new Date()).toLocaleTimeString() + '</span></p>');
         console.error(data);
       });
 
       socket.on('info', function(data){
-        $('#log').append('<p>' + data.msg + '</p>');
+        $('#log').prepend('<p class="info"><i class="fa fa-fw fa-info"></i> ' + data.msg + '<span class="timestamp">' + (new Date()).toLocaleTimeString() + '</span></p>');
         console.info(data);
       });
 

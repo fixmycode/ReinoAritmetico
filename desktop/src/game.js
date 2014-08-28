@@ -3,14 +3,15 @@ var querystring = require('querystring');
 var   ip = require('ip');
 
 function Game(maxPlayers, port, serverIpAddress, serverPort){
-  this.players = [];
+  this.players = {};
   this.maxPlayers = maxPlayers || 5;
   this.joinCode = "none";
   this.playing = false;
-  var p = port || 80;
+  this.waiting = false;
+  var p = port || 8000;
   this.address = ip.address() + ':' + p;
   this.serverIpAddress = serverIpAddress || "127.0.0.1";
-  this.serverPort = serverPort || 80;
+  this.serverPort = serverPort || 8000;
 };
 
 Game.prototype.init = function(self, maxPly, callback){
@@ -41,7 +42,7 @@ Game.prototype.init = function(self, maxPly, callback){
           console.log(a.uid);
           self.joinCode   = a.uid;
           self.maxPlayers = maxPly;
-          self.playing    = true;
+          self.waiting    = true;
           callback();
         })
         .on('error', console.log);
@@ -57,6 +58,10 @@ Game.prototype.init = function(self, maxPly, callback){
     req.end();
   };
 
+Game.prototype.start = function(self) {
+  self.playing = true;
+}
+
 Game.prototype.end = function(self, callback) {
     var options = {
         host: self.serverIpAddress,
@@ -66,7 +71,7 @@ Game.prototype.end = function(self, callback) {
 
     http.get(options, function(res){
       self.joinCode = "none";
-      self.players.length = 0;
+      for (var player in self.players) delete self.players[player];
       self.playing = false;
       callback();
     }).on('error', console.log);

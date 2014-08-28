@@ -19,12 +19,12 @@ io.sockets.on('connection', function (socket) {
 
     var exists = false;
 
-    if ( newPlayer.name === undefined || newPlayer.android_id === undefined) {
+    if ( newPlayer.name === '' || newPlayer.android_id === undefined) {
       socket.emit('error', {msg: "Error! Android ID o Name no presentes"} );
       return;
     }
 
-    if ( ! game.playing) {
+    if ( ! game.waiting) {
       socket.emit('error', {msg: "Error! No hay un juego actualmente"} );
       return;
     }
@@ -34,46 +34,54 @@ io.sockets.on('connection', function (socket) {
       return;
     }
 
-    for (var i = 0; i < game.players.length; i++) {
-      if (game.players[i].name === newPlayer.name || game.players[i].android_id === newPlayer.android_id) {
+    for (var socketId in game.players) {
+      if (game.players[socketId].android_id === newPlayer.android_id){
         exists = true;
+        game.players[socket.id] = game.players[socketId];
+        game.players[socket.id].name = newPlayer.name;
+        if (socket.id !== socketId) {
+          $('#pauseMsg').hide(); // El usuario se cayo y vuelve a unirse
+          delete game.players[socketId];
+        } 
         break;
       }
     }
-    
+
     if ( ! exists ) {
-      game.players.push(newPlayer);
-      showPlayers();
+      game.players[socket.id] = newPlayer;
       socket.emit('info', {msg: 'Te as unido a la partida como ' + newPlayer.name});
       socket.broadcast.emit('info', {msg: newPlayer.name + ' se ha unido a la partida'});
     }else {
-      socket.emit('error', {msg: "Error! The player\'s name or Android ID already exists"} );
+      socket.emit('info', {msg: "Te has vuelto a unir como " + newPlayer.name} );
     }
+    showPlayers();
   });
 
   socket.on('leave', function(player) {
-    var index;
-
-    for (var i = 0; i < game.players.length; i++) {
-      if (game.players[i].android_id == player.android_id) {
-        index = i;
-        break;
-      }
-    }
-    if (index !== undefined) {
-      socket.broadcast.emit('info', {msg: game.players[index].name + ' ha abandonado la partida'});
-      status(game.players[index].name + ' ha dejado la partida');
-      game.players.splice(index, 1);
+    if (game.players[socket.id].android_id === player.android_id) {
+      socket.broadcast.emit('info', {msg: game.players[socket.id].name + ' ha abandonado la partida'});
+      status(game.players[socket.id].name + ' ha dejado la partida');
+      delete game.players[socket.id];
       showPlayers();
       socket.emit('info', {msg: 'Has abandonado la partida'});
-      socket.broadcast.emit('info', {msg: newPlayer.name + ' ha abandonado la partida'});
     }else {
       socket.emit('error', {msg: "Error! jugador no encontrado"});
+    }
+
+    // Si no quedan jugadores
+    if (Object.keys(game.players).length === 0 && game.playing) {
+      game.waiting = false;
+      game.end(game, changeState);
     }
   });
 
   socket.on('disconnect', function(data) {
     console.info(socket.id + ' Just disconected');
+
+    if (game.playing && game.players[socket.id] !== undefined) {
+      console.log('Juego Pausado! esperando a ' + game.players[socket.id].name);
+      $('#pauseMsg').show();
+    }
   });
 });
 

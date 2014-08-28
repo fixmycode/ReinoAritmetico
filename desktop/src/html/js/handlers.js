@@ -6,11 +6,11 @@
     var statusTimeout = '';
 
     function changeState(callback){
-      if ( ! game.playing) {
+      if ( ! game.waiting) {
         $content.load('_partials/welcome.html', callback);
         $notPlaying.show();
         $playing.hide();
-        setTimeout(function(){$('#numberPlayers').focus();}, 500);
+        setTimeout(function(){ $('#numberPlayers').focus(); }, 500);
       }else {
         $content.load('_partials/waitingPlayers.html', callback);
         $playing.show();
@@ -44,17 +44,21 @@
 
     function showPlayers(){
       var playerList = "";
-      for (var i = 0; i < game.players.length; i++) {
-        playerList += tag(i+1, game.players[i].name);
+      var i = 0;
+
+      for (var value in game.players){
+        console.log(value + " -> " + game.players[value].name);
+        playerList += tag(i+1, game.players[value].name);
+        i++;
       }
 
-      for (var i = 0; i < game.maxPlayers - game.players.length; i++) {
+      for (var j = 0; j < game.maxPlayers - i; j++) {
         playerList += tag('', 'Esperando ...', true);
       }
 
       $('#players').html(playerList);
 
-      if (game.players.length === game.maxPlayers) {
+      if (Object.keys(game.players).length === game.maxPlayers) {
         $('.join-code').html("Iniciar Partida").addClass('play');
       }else {
         $('.join-code').html(game.joinCode).removeClass('play');
@@ -92,10 +96,14 @@
       });
     });
 
+    $(document).on('click', '.play', function(e) {
+      e.preventDefault();
+      $content.load('_partials/game.html');
+      game.start(game);
+    })
+
     $('#stopGame').on('click', function(){
-      game.end(game, function(){
-        changeState();
-      });
+      game.end(game, changeState);
     });
 
     $('.serverIpAddress').keyup(function(){
