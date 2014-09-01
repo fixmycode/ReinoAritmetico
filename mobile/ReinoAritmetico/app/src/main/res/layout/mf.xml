@@ -1,15 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="250dp"
     android:orientation="vertical"
-    android:gravity="top">
+    android:gravity="top"
+    tools:context= "cl.blackbird.reino.personaje.ViewPagerFragment">
 
-    <cl.blackbird.reino.fragment.MyLinearLayout
-        android:id="@+id/root"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:orientation="vertical"
-        android:gravity="center">
 
         <TextView
             android:id="@+id/text"
@@ -24,7 +20,5 @@
             android:id="@+id/imageView"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/ro_mage_male"/>
-
-    </cl.blackbird.reino.fragment.MyLinearLayout>
 
 </LinearLayout>

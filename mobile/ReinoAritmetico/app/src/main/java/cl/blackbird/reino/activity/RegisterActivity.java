@@ -1,5 +1,6 @@
 package cl.blackbird.reino.activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -8,7 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.widget.Toast;
-
+import android.support.v7.app.ActionBarActivity;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -24,17 +25,18 @@ import java.util.Map;
 import cl.blackbird.reino.Config;
 import cl.blackbird.reino.R;
 import cl.blackbird.reino.ReinoApplication;
+import cl.blackbird.reino.personaje.ViewPageAdapter;
 import cl.blackbird.reino.fragment.LoadingFragment;
-import cl.blackbird.reino.fragment.MyPagerAdapter;
 import cl.blackbird.reino.fragment.RegisterFragment;
 import cl.blackbird.reino.model.Player;
+import cl.blackbird.reino.personaje.ViewPagerFragment;
 
 /**
  * This activity takes care of the user registry. This is a result activity, and generates a result
  * when it's finish. Main Activity handles this result.
  * REMINDER: Activities don't interact with the UI, only the fragments can interact with the UI.
  */
-public class RegisterActivity extends Activity implements RegisterFragment.RegisterListener {
+public class RegisterActivity extends ActionBarActivity implements RegisterFragment.RegisterListener {
 
     private long back_pressed;
 
@@ -47,33 +49,15 @@ public class RegisterActivity extends Activity implements RegisterFragment.Regis
     public final static float SMALL_SCALE = 0.7f;
     public final static float DIFF_SCALE = BIG_SCALE - SMALL_SCALE;
 
-    public MyPagerAdapter adapter;
+    public ViewPageAdapter adapter;
     public ViewPager pager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.frame_layout);
+        setContentView(R.layout.register_frags);
         getClients();
 
-        pager = (ViewPager) findViewById(R.id.myviewpager);
-
-        adapter = new MyPagerAdapter(this, this.getSupportFragmentManager());
-        pager.setAdapter(adapter);
-        pager.setOnPageChangeListener(adapter);
-
-
-        // Set current item to the middle page so we can fling to both
-        // directions left and right
-        pager.setCurrentItem(FIRST_PAGE);
-
-        // Necessary or the pager will only have one extra page to show
-        // make this at least however many pages you can see
-        pager.setOffscreenPageLimit(3);
-
-        // Set margin for pages as a negative number, so a part of next and
-        // previous pages will be showed
-        pager.setPageMargin(-200);
     }
 
     /**
@@ -105,8 +89,11 @@ public class RegisterActivity extends Activity implements RegisterFragment.Regis
     private void startRegister(JSONArray json){
         getFragmentManager().beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.container, RegisterFragment.newInstance(json), RegisterFragment.TAG)
+                .replace(R.id.form, RegisterFragment.newInstance(json), RegisterFragment.TAG)
                 .commit();
+        pager = (ViewPager) findViewById(R.id.pager);
+        adapter = new ViewPageAdapter(getSupportFragmentManager());
+        pager.setAdapter(adapter);
         if (getActionBar() != null) {
             getActionBar().setTitle(R.string.register_and_play);
         }

@@ -199,16 +199,15 @@ public class RegisterFragment extends Fragment implements AdapterView.OnItemSele
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final String name = nameField.getText().toString();
         //get id from IMAGEVIEW fragmento
-        final String pjID ="2";
         final School selectedSchool = (School) schoolSpinner.getSelectedItem();
         final ClassRoom selectedClassRoom = (ClassRoom) classSpinner.getSelectedItem();
         String message = String.format(getString(R.string.register_dialog),
-                name,pjID, selectedSchool.name, selectedClassRoom.name);
+                name, selectedSchool.name, selectedClassRoom.name);
         builder.setMessage(message);
         builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                registerNewPlayer(name,pjID, selectedSchool, selectedClassRoom);
+                registerNewPlayer(name,"2", selectedSchool, selectedClassRoom);
                 dialog.dismiss();
             }
         });
