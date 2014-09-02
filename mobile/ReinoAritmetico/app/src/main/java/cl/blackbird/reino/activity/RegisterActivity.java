@@ -25,7 +25,6 @@ import cl.blackbird.reino.Config;
 import cl.blackbird.reino.R;
 import cl.blackbird.reino.ReinoApplication;
 import cl.blackbird.reino.fragment.LoadingFragment;
-import cl.blackbird.reino.fragment.MyPagerAdapter;
 import cl.blackbird.reino.fragment.RegisterFragment;
 import cl.blackbird.reino.model.Player;
 
@@ -47,33 +46,12 @@ public class RegisterActivity extends Activity implements RegisterFragment.Regis
     public final static float SMALL_SCALE = 0.7f;
     public final static float DIFF_SCALE = BIG_SCALE - SMALL_SCALE;
 
-    public MyPagerAdapter adapter;
-    public ViewPager pager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.frame_layout);
         getClients();
 
-        pager = (ViewPager) findViewById(R.id.myviewpager);
-
-        adapter = new MyPagerAdapter(this, this.getSupportFragmentManager());
-        pager.setAdapter(adapter);
-        pager.setOnPageChangeListener(adapter);
-
-
-        // Set current item to the middle page so we can fling to both
-        // directions left and right
-        pager.setCurrentItem(FIRST_PAGE);
-
-        // Necessary or the pager will only have one extra page to show
-        // make this at least however many pages you can see
-        pager.setOffscreenPageLimit(3);
-
-        // Set margin for pages as a negative number, so a part of next and
-        // previous pages will be showed
-        pager.setPageMargin(-200);
     }
 
     /**
@@ -146,7 +124,7 @@ public class RegisterActivity extends Activity implements RegisterFragment.Regis
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("android_id", player.androidID);
                 params.put("name", player.name);
-                params.put("pjid",player.pjID);
+                //params.put("pjid",player.pjID);
                 params.put("school", String.valueOf(player.school.id));
                 params.put("classroom", String.valueOf(player.classRoom.id));
                 return params;

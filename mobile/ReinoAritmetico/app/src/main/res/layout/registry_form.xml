@@ -13,12 +13,20 @@
         android:orientation="vertical"
         tools:context="cl.blackbird.reino.fragment.RegisterFragment">
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/myviewpager"
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="200dp"
+            android:id="@+id/imageView"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ro_mage_male"/>
+
+        <Spinner
             android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:layout_gravity="center"
-            android:overScrollMode="never" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:spinnerMode="dialog"
+            android:prompt="@string/Select_char"
+            android:id="@+id/char_spinner" />
 
         <TextView
             android:text="@string/register_first"
@@ -39,20 +47,20 @@
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/school_spinner"
             android:layout_gravity="center_horizontal"
             android:spinnerMode="dialog"
-            android:prompt="@string/select_school"
+            android:prompt="@string/Select_char"
+            android:id="@+id/school_spinner"
             android:nextFocusForward="@+id/class_spinner"/>
-
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/class_spinner"
             android:layout_gravity="center_horizontal"
             android:spinnerMode="dialog"
-            android:prompt="@string/select_class"
+            android:prompt="@string/Select_char"
+            android:id="@+id/class_spinner"
             android:nextFocusForward="@+id/register_button"/>
+
 
         <Button
             android:layout_width="wrap_content"

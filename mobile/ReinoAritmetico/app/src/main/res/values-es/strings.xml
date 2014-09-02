@@ -9,6 +9,7 @@
         nuestro sistema. Este paso se hace una vez y nunca más se te pedirá registrarte en este
         dispositivo.</string>
     <string name="register_and_play">Regístrate y juega!</string>
+    <string name="Select_char">Selecciona tu personaje</string>
     <string name="select_school">Selecciona tu colegio</string>
     <string name="select_class">Selecciona tu clase</string>
     <string name="full_name_hint">Tu nombre completo</string>
@@ -16,7 +17,7 @@
         aplicación.</string>
     <string name="welcome_player">Que bueno verte de nuevo, %s!</string>
     <string name="welcome_player_error">Algo extraño pasó y no pude leer tu nombre…</string>
-    <string name="register_dialog" formatted="false">Tu nombre es %s, estudiante del %s y
+    <string name="register_dialog" formatted="false">Escogiste %s, Tu nombre es %s, estudiante del %s y
         actualmente estás en %s, ¿correcto?</string>
     <string name="register_error">Ocurrió un problema con tu registro, ¿te importaría intentarlo de
         nuevo?</string>
