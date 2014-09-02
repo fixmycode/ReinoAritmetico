@@ -9,7 +9,7 @@
 
     win.on('close', function(){
         if (game.playing) {
-            game.end(game, function(){
+            game.end(function(){
                 server.close();
                 win.close(true);    
             });    
@@ -20,8 +20,7 @@
     });
 
     $('.maximize-app').on('click', function () {
-        win.showDevTools();
-        return;
+    
         if(win.isFullscreen){
             win.toggleFullscreen();
         }else{
@@ -40,6 +39,10 @@
     process.on('uncaughtException', function (err) {
       console.log('Caught exception: ' + err);
       status("Error de comunicacion");
+    });
+
+    $(document).bind('keydown', 'ctrl+d', function(){
+        win.showDevTools();
     });
  });
 }) (jQuery);

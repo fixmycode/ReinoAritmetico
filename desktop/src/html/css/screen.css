@@ -445,7 +445,7 @@ a.right {
 }
 
 /* line 303, ../sass/screen.scss */
-.start-game input[type=text] {
+.start-room input[type=text] {
   font-size: 40px;
   padding: 6px 4px;
   outline: 0;
@@ -458,7 +458,7 @@ a.right {
   text-align: center;
 }
 /* line 316, ../sass/screen.scss */
-.start-game input[type=submit] {
+.start-room input[type=submit] {
   border: 0;
   background: #0897e2;
   color: #f4f4f4;

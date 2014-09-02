@@ -14,8 +14,8 @@
   "window": {
     "title": "Reino Aritmético",
     "icon": "./html/favicon.ico",
-    "toolbar": true,
-    "frame": true,
+    "toolbar": false,
+    "frame": false,
     "width": 800,
     "height": 640,
     "position": "mouse",
@@ -23,14 +23,16 @@
     "min_height": 600
   },
   "webkit": {
-    "plugin": true
+    "plugin": false
   },
   "private": true,
   "dependencies": {
     "express": "3.x",
     "body-parser": "~1.5.0",
     "ip": "~0.3.0",
-    "socket.io": "~0.9.16"
+    "socket.io": "~0.9.16",
+    "should": "~4.0.4",
+    "mocha": "~1.21.4"
   },
   "author": "jpeg",
   "license": "MIT"

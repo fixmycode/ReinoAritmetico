@@ -104,15 +104,15 @@ pre {white-space: pre;}
     background: $blue !important;
 }
 
-.close-app {
+.close-app:hover {
     background: #ff403d;
 }
 
-.minimize-app {
+.minimize-app:hover {
     background: #e1ec17;
 }
 
-.maximize-app {
+.maximize-app:hover {
     background: yellowgreen;
 }
 
@@ -299,7 +299,7 @@ a.right {
     width: 53px !important;
 }
 
-.start-game {
+.start-room {
     input[type=text] {
         font-size: 40px;
         padding: 6px 4px;
