@@ -1,0 +1,47 @@
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        
+
+        <form action="" method="POST" class="form-horizontal form-dark" role="form">
+            <div class="form-group">
+                <a href="#/" class="btn btn-text btn-xs">Atrás</a>
+            </div>
+                <div class="form-group">
+                    <legend>Nuevo Quest</legend>
+                </div>
+
+                <div class="form-group">
+                    <label for="questName" class="col-sm-4 control-label">Nombre del Quest</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="questName" ng-model="newQuest.name">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-4 control-label">N de jugadores</label>
+                    <div class="col-sm-2">
+                        <input type="text" ng-model="newQuest.numPlayers" name="newQuest.numPlayers" min="1" max="5" integer />
+                    </div>
+                    <div class="col-sm-8">
+                        <p class="help-block" ng-show="(newQuest.numPlayers < 1 || newQuest.numPlayers > 5) && newQuest.numPlayers != ''">Ingrese entre 1 y 5 jugadores</p>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-4 control-label">Dificultad</label>
+                    <div class="col-sm-8">
+                      <div class="checkbox">
+                        <input type="radio" value="1" name="dificultad" class="css-checkbox" ng-model="newQuest.dificulty" id="facil" checked> <label for="facil" class="css-label">Facil</label>
+                        <input type="radio" value="2" name="dificultad" class="css-checkbox" ng-model="newQuest.dificulty" id="medio"> <label for="medio" class="css-label">Medio</label>
+                        <input type="radio" value="3" name="dificultad" class="css-checkbox" ng-model="newQuest.dificulty" id="dificil"> <label for="dificil" class="css-label">Dificil</label>
+                      </div>
+                    </div>
+                  </div>
+                
+                <div class="form-group">
+                    <div class="col-sm-8 col-sm-offset-4">
+                        <button type="submit" class="btn btn-primary" ng-click="submit(true)">Crear e Iniciar</button>
+                        <button type="submit" class="btn btn-primary" ng-click="submit(false)">Crear y Volver</button>
+                    </div>
+                </div>
+        </form>
+    </div>
+</div>

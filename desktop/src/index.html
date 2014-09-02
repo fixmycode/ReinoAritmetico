@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html data-ng-app="RAApp">
+
+<head>
+    <title>Reino Aritmetico</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/app.css">
+    <link rel="stylesheet" href="css/packages/font-awesome/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="js/lib/angular.js"></script>
+    <script type="text/javascript" src="js/lib/angular-resource.min.js"></script>
+    <script type="text/javascript" src="js/lib/angular-route.min.js"></script>
+    <script type="text/javascript" src="js/lib/jquery.min.js"></script>
+    <script type="text/javascript" src="js/lib/bootstrap.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/service/services.js"></script>
+    <script type="text/javascript" src="js/controller/controllers.js"></script>
+    <script type="text/javascript" src="js/router/routes.js"></script>
+</head>
+
+<body class="container" data-ng-controller="MainGameCtrl">
+    <div data-ng-include src="headerSrc"></div>
+    <div id="container">
+        <div data-ng-view=""></div>
+    </div>
+    <script>
+    $(function(){
+         $('body').tooltip({
+            selector: '[rel=tooltip]'
+        });
+    });
+    </script>
+</body>
+
+</html>

@@ -1,39 +1,32 @@
 {
-  "name": "Reino-Aritmetico",
+  "name": "nwk-ngApp",
   "version": "0.0.1",
-  "description": "Juego para niños usando nodejs desde dispositivos moviles como controles",
-  "main": "./html/index.html",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "description": "An Angular node-webkit application",
+  "main": "index.html",
+  "private": true,
   "keywords": [
-    "nodejs",
-    "express",
-    "game"
+    "node",
+    "webkit",
+    "win",
+    "osx"
   ],
   "window": {
     "title": "Reino Aritmético",
     "icon": "./html/favicon.ico",
-    "toolbar": false,
-    "frame": false,
-    "width": 800,
-    "height": 640,
+    "toolbar": true,
+    "frame": true,
+    "width": 1024,
+    "height": 768,
     "position": "mouse",
     "min_width": 800,
     "min_height": 600
   },
-  "webkit": {
-    "plugin": false
-  },
-  "private": true,
+  "author": "JPEG",
+  "license": "MIT",
   "dependencies": {
-    "express": "3.x",
-    "body-parser": "~1.5.0",
+    "underscore": "~1.7.0",
     "ip": "~0.3.0",
     "socket.io": "~0.9.16",
-    "should": "~4.0.4",
-    "mocha": "~1.21.4"
-  },
-  "author": "jpeg",
-  "license": "MIT"
+    "q": "~1.0.1"
+  }
 }

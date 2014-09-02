@@ -1,0 +1,204 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+// @import "compass/reset";
+@import "compass/css3";
+
+$background: #0C141F;
+$text: #6FC3DF;
+$light: #E6FFFF;
+$orange: #DF740C;
+$yellow: #FFE64D;
+
+* { box-sizing: border-box; cursor: default; } /* Awesome! */
+
+#actions { -webkit-app-region: drag; }
+#actions > ul > li { -webkit-app-region: no-drag; }
+* {-webkit-user-select: none;}
+* { outline: none;}
+
+body {
+  padding-top: 50px;
+  background: $background;
+  color: $text;
+}
+
+#actions {
+    background: #282828;
+    padding: 10px 10px;
+    text-align: center;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+
+    a {
+      color: white;
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+        float: left;
+        cursor: default;
+    }
+    ul li {
+        display: inline-block;
+        cursor: default;
+    }
+
+    .title {
+        font-size: 13px;
+        cursor: default;
+        display: inline-block;
+        margin: 0;
+        margin-left: -100px;
+        opacity: .75;
+    }
+}
+
+#actions .close-app,
+#actions .minimize-app,
+#actions .maximize-app {
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+    margin: 0 2px;
+    display: block;
+    cursor: default;
+    @include transition(.4s ease-out box-shadow);
+
+    &:hover {
+      box-shadow: 1px solid white;
+    }
+}
+
+#actions .close-app {
+    background: #ff403d;
+}
+
+#actions .minimize-app {
+    background: #dae417;
+}
+
+#actions .maximize-app {
+    background: yellowgreen;
+}
+
+.modal {
+  margin-top: 40px;
+}
+
+.modal-content {
+  border-radius: 0;
+}
+
+//Forms
+input[type=radio].css-checkbox {
+    display: none;
+}
+
+input[type=radio].css-checkbox + label.css-label {
+    padding-left: 29px;
+    height: 24px; 
+    display: inline-block;
+    line-height: 24px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    vertical-align: middle;
+    cursor: pointer;
+
+}
+
+input[type=radio].css-checkbox:checked + label.css-label {
+    background-position: 0 -24px;
+}
+label.css-label {
+    background-image:url(../img/checkbox.png);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+legend {
+    color: $light;
+}
+
+.btn {
+    border-radius: 1px;
+}
+
+.form-dark {
+  input[type=text] {
+    background: none;
+    border: none;
+    border-bottom: 1px dashed $light;
+    box-shadow: none;
+    color: $light;
+    font-size: 15px;
+    padding: 0!important;
+    border-radius: 0;
+
+    &:focus {
+        border-bottom-color: $orange;
+    }
+  }
+}
+
+.tone-down {
+    opacity: .5;
+
+    @include transition(.3s ease-in opacity);
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+a {
+    color: inherit;
+}
+
+a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+#players {
+    text-align: center;
+    vertical-align: top;
+}
+
+.player {
+    vertical-align: top;
+    display: inline-block;
+
+    img {
+        width: 150px;
+    }
+}
+
+#join-code {
+    text-align: center;
+    background: $yellow;
+    display: inline-block;
+    font-size: 30px;
+    color: $background;
+    padding: 10px;
+    font-weight: light;
+    margin: 30px 0;
+
+    &.start {
+        background: $light;
+        color: $background;
+    }
+}
+

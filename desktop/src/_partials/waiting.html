@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <a href="#/" class="btn btn-text btn-xs">Atrás</a>
+    
+    <h2  class="text-center">Quest <small>{{ quest.name }}</small></h2>
+    
+    <p class="text-center" ng-show="Object.keys(match.players).length == match.numPlayers">Ingresa el siguiente código para unirte a la partida</p>
+    <div class="text-center">
+      <div id="join-code" ng-show="match.joinCode && match.players.length < match.numPlayers">{{ match.joinCode }}</div>
+      <a href="#play/{{ quest.id }}" id="join-code" class="start" ng-show="match.players.length == match.numPlayers">Iniciar Quest</a>
+      <div id="join-code" ng-show=" ! match.joinCode"><i class="fa fa-spinner fa-spin"></i></div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div id="players">
+      <div class="player" ng-repeat="player in match.players track by $index">
+        <img src="img/warrior.gif"> <br>
+        <small>Jugador {{ $index + 1 }}</small> <br>
+        <span class="player">{{ player.name }}</span>
+      </div>
+      <div class="player waiting" ng-repeat="i in [] | range: (match.numPlayers - match.players.length)">
+              <img src="img/not-connected.gif"> <br>
+              <small>Jugador {{ i + 1 }}</small> <br>
+              <span class="player">Esperando&hellip;</span>
+          </div>
+    </div>
+  </div>
+</div>
