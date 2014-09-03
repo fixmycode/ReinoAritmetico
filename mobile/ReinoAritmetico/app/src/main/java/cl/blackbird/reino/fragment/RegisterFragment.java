@@ -228,16 +228,16 @@ public class RegisterFragment extends Fragment implements AdapterView.OnItemSele
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final String name = nameField.getText().toString();
         //get id from IMAGEVIEW fragmento
-        final String pjID =charSpinner.getSelectedItem().toString();
+        final int characterType =Integer.parseInt(charSpinner.getSelectedItem().toString());
         final School selectedSchool = (School) schoolSpinner.getSelectedItem();
         final ClassRoom selectedClassRoom = (ClassRoom) classSpinner.getSelectedItem();
         String message = String.format(getString(R.string.register_dialog),
-                name,pjID, selectedSchool.name, selectedClassRoom.name);
+                name,characterType, selectedSchool.name, selectedClassRoom.name);
         builder.setMessage(message);
         builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                registerNewPlayer(name/*,pjID*/, selectedSchool, selectedClassRoom);
+                registerNewPlayer(name,characterType, selectedSchool, selectedClassRoom);
                 dialog.dismiss();
             }
         });
@@ -257,8 +257,8 @@ public class RegisterFragment extends Fragment implements AdapterView.OnItemSele
      * @param school the school
      * @param classRoom the classroom
      */
-    private void registerNewPlayer(final String name/*,String pjID*/, School school, ClassRoom classRoom) {
-        Player player = new Player(name/*,pjID*/, school, classRoom);
+    private void registerNewPlayer(final String name,int characterType, School school, ClassRoom classRoom) {
+        Player player = new Player(name,characterType, school, classRoom);
         player.androidID = Settings.Secure.getString(
                 getActivity().getContentResolver(),
                 Settings.Secure.ANDROID_ID);

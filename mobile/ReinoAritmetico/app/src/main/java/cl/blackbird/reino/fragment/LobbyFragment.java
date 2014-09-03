@@ -1,6 +1,7 @@
 package cl.blackbird.reino.fragment;
 
 import android.app.Activity;
+import android.content.res.TypedArray;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -16,7 +17,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+
 import cl.blackbird.reino.R;
+import cl.blackbird.reino.model.Player;
 
 public class LobbyFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
     public static final String TAG = "RAFLOBBY";
@@ -25,6 +29,18 @@ public class LobbyFragment extends Fragment implements CompoundButton.OnCheckedC
     private ImageView warriorView;
     private AnimationDrawable warriorAnim;
     private CompoundButton joinButton;
+    private TypedArray imgs;
+
+    public static LobbyFragment newInstance(Player player) {
+        LobbyFragment fragment = new LobbyFragment();
+        Bundle args = new Bundle();
+        args.putInt("characterType", player.characterType);
+        fragment.setArguments(args);
+        return fragment;
+    }
+    public LobbyFragment() {
+        // Required empty public constructor
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,8 +51,10 @@ public class LobbyFragment extends Fragment implements CompoundButton.OnCheckedC
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.lobby_layout, container, false);
-
-        warriorView = (ImageView) layout.findViewById(R.id.warrior_anim);
+        //warriorView = (ImageView) layout.findViewById(R.id.warrior_anim);
+        imgs = getResources().obtainTypedArray(R.array.character_list);
+        warriorView.setImageResource(imgs.getResourceId(
+                getArguments().getInt("characterType"), -1));
         lobbyCode = (EditText) layout.findViewById(R.id.lobby_code);
         joinButton = (CompoundButton) layout.findViewById(R.id.join_button);
         joinButton.setOnCheckedChangeListener(this);

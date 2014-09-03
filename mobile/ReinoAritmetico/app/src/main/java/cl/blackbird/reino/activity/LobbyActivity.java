@@ -53,7 +53,7 @@ public class LobbyActivity extends Activity implements LobbyFragment.LobbyListen
             player = (Player) getIntent().getExtras().getSerializable("player");
             getFragmentManager().beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    .add(R.id.container, new LobbyFragment(), LobbyFragment.TAG)
+                    .add(R.id.container, LobbyFragment.newInstance(player), LobbyFragment.TAG)
                     .commit();
         }
     }
@@ -197,6 +197,7 @@ public class LobbyActivity extends Activity implements LobbyFragment.LobbyListen
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("name", player.name);
+                params.put("characterType",player.characterType);
                 params.put("android_id", player.androidID);
                 return params;
             }
