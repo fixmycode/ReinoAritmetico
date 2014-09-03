@@ -1,6 +1,5 @@
 package cl.blackbird.reino.activity;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -9,7 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.widget.Toast;
-import android.support.v7.app.ActionBarActivity;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -25,18 +24,16 @@ import java.util.Map;
 import cl.blackbird.reino.Config;
 import cl.blackbird.reino.R;
 import cl.blackbird.reino.ReinoApplication;
-import cl.blackbird.reino.personaje.ViewPageAdapter;
 import cl.blackbird.reino.fragment.LoadingFragment;
 import cl.blackbird.reino.fragment.RegisterFragment;
 import cl.blackbird.reino.model.Player;
-import cl.blackbird.reino.personaje.ViewPagerFragment;
 
 /**
  * This activity takes care of the user registry. This is a result activity, and generates a result
  * when it's finish. Main Activity handles this result.
  * REMINDER: Activities don't interact with the UI, only the fragments can interact with the UI.
  */
-public class RegisterActivity extends ActionBarActivity implements RegisterFragment.RegisterListener {
+public class RegisterActivity extends Activity implements RegisterFragment.RegisterListener {
 
     private long back_pressed;
 
@@ -49,16 +46,10 @@ public class RegisterActivity extends ActionBarActivity implements RegisterFragm
     public final static float SMALL_SCALE = 0.7f;
     public final static float DIFF_SCALE = BIG_SCALE - SMALL_SCALE;
 
-<<<<<<< HEAD
-=======
-    public ViewPageAdapter adapter;
-    public ViewPager pager;
-
->>>>>>> a2f74ab7479a1b5983ff35e0b55c479e669e67b7
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.register_frags);
+        setContentView(R.layout.frame_layout);
         getClients();
 
     }
@@ -92,11 +83,8 @@ public class RegisterActivity extends ActionBarActivity implements RegisterFragm
     private void startRegister(JSONArray json){
         getFragmentManager().beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.form, RegisterFragment.newInstance(json), RegisterFragment.TAG)
+                .replace(R.id.container, RegisterFragment.newInstance(json), RegisterFragment.TAG)
                 .commit();
-        pager = (ViewPager) findViewById(R.id.pager);
-        adapter = new ViewPageAdapter(getSupportFragmentManager());
-        pager.setAdapter(adapter);
         if (getActionBar() != null) {
             getActionBar().setTitle(R.string.register_and_play);
         }
