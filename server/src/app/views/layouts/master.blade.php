@@ -107,7 +107,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('questions.index') }}">
+                            <a href="{{ route('problems.index') }}">
                                 <i class="fa fa-th"></i> <span>Preguntas</span>
                             </a>
                         </li>

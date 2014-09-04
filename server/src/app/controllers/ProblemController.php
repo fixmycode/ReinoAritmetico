@@ -9,9 +9,9 @@ class ProblemController extends \BaseController {
 	 */
 	public function index()
 	{
-		$questions = Problem::all();
-		return View::make('questions.index')
-									->with('questions', $questions)
+		$problems = Problem::all();
+		return View::make('problems.index')
+									->with('problems', $problems)
 									->with('title', 'Preguntas');
 	}
 

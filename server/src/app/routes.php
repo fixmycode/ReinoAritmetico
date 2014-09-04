@@ -8,13 +8,11 @@ Route::get('dashboard', ['as' => 'dashboard', function(){
 
 Route::resource('clientss', 'ClientsController');
 Route::resource('clientss.classrooms', 'ClientsClassroomsController');
-Route::resource('questions', 'ProblemController');
+Route::resource('problems', 'ProblemController');
 
 Route::get("problems/{number}", function($number){
   $problems = DB::table('problems')->take($number)->get();
   return $problems;
-
-
 });
 
 

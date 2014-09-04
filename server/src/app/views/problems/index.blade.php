@@ -17,24 +17,13 @@
             </tr>
           </thead>
           <tbody>
-            <!--@foreach ($clients as $index => $client )
-            <tr>
-                <td>{{ $index + 1}}.</td>
-                <td><a href="{{ URL::route('clientss.classrooms.index', $client->id) }}">{{$client->name}}</a></td>
-                <td class="text-right">
-                  <a href="#" class="label label-danger destroy" data-client-id="{{$client->id}}" title="Seguro?"><i class="fa fa-trash-o"></i></a>
-                  <a href="#" class="label label-success" data-toggle="modal" data-target="#theModal" data-remote="{{ URL::route('clientss.edit', $client->id) }}"><i class="fa fa-pencil"></i></a>
-                </td>
-            </tr>
-            @endforeach -->
+            
           </tbody>
         </table>
       </div><!-- /.box-body -->
     </div>
   </div>
-  <!--<div class="col-md-4 col-md-offset-1">
-    @include('clients.partials.create', ['client' => new Client])
-  </div> -->
+  
 </div>
 @stop
 

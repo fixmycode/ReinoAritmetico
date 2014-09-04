@@ -1,6 +1,6 @@
 <?php
 
-class Student extends \Eloquent {
+class Player extends \Eloquent {
 
   public $timestamps = false;
 
