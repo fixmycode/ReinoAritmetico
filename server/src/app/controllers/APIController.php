@@ -17,19 +17,22 @@ class APIController extends \BaseController {
 	 * 	school: "Ruben Dario"
 	 * }
 	 */
-	public function getIdentify() {
+	public function getIdentify()
+	 {
+
 		$android_id = Input::get('id', 0);
 
-	  $student = DB::table('students')->where('android_id', $android_id)
-	              ->join('classrooms', 'students.classroom_id', '=', 'classrooms.id')
+	  $player = DB::table('players')->where('android_id', $android_id)
+	              ->join('classrooms', 'players.classroom_id', '=', 'classrooms.id')
 	              ->join('clients', 'classrooms.client_id', '=', 'clients.id')
-	              ->select(DB::raw('students.name, classrooms.name as classroom, clients.name as school'))
+	              ->join('character_type', 'players.character_type_id', '=', 'character_type.id')
+	              ->select(DB::raw('players.name, classrooms.name as classroom, clients.name as school, character_type.uid as character_type'))
 	              ->first();
-
-	  if ( is_null($student) )
+	              
+	  if ( is_null($player) )
 	    App::abort(404);
 
-		return json_encode($student);
+		return json_encode($player);
 	}
 
 	/**
@@ -61,10 +64,11 @@ class APIController extends \BaseController {
 	 * POST /register
 	 * data:
 	 * {
-	 * 		name: "student name",
+	 * 		name: "player name",
 	 * 		android_id: <android_uid>
 	 * 		school: <school_id>,
 	 * 		classroom: <classroom_id>,
+	 *		character_type: <character_type_id>
 	 * }
 	 * 
 	 * response: json
@@ -77,9 +81,17 @@ class APIController extends \BaseController {
 	public function postRegister() { 
 	  $client_id    = Input::get('school', 0);
 	  $classroom_id = Input::get('classroom', 0);
-	  $student      = new Student(Input::only('name', 'android_id'));
-
-	  Client::findOrFail($client_id)->classrooms()->findOrFail($classroom_id)->students()->save($student);
+	  $character_type = Input::get('character_type', 0);
+	  $player      = new Player(Input::only('name', 'android_id'));
+	  
+	  $client = Client::findOrFail($client_id);
+	  $classroom = $client->classrooms()->findOrFail($classroom_id);
+	  $character_type = CharacterType::whereUid($character_type)->first();
+	  
+	  $player->client_id = $client->id;
+	  $player->classroom_id = $classroom->id;
+	  $player->character_type_id = $character_type->id;
+	  $player->save();
 
 	  return Response::json(['err' => false, 'msg' => 'Estudiante creado exitosamente']);
 	}
@@ -97,12 +109,12 @@ class APIController extends \BaseController {
 	public function getDelete() {
 	  $android_id = Input::get('id', 0);
 
-	  $student = Student::whereAndroidId($android_id)->first();
+	  $player = Player::whereAndroidId($android_id)->first();
 
-	  if ( empty($student) )
+	  if ( empty($player) )
 			return Response::json(['err' => true, 'msg' => 'El estudiante no existe'], 404);	  	
 
-	  $student->delete();
+	  $player->delete();
 
 	  return Response::json(['err' => false, 'msg' => 'Estudiante eliminado exitosamente']);
 	}
@@ -151,6 +163,7 @@ class APIController extends \BaseController {
 	  	return Response::json(['err' => true, 'msg' => 'La partida ya finalizo'], 400);
 
 	  $game->ended = new DateTime();
+	  $game->uid = 'Done';
 
 	  $game->save();
 

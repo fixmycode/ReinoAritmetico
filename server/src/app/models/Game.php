@@ -14,7 +14,7 @@ class Game extends \Eloquent {
 
   public static function generateShortUid()
   {
-    $size = rand(8,10);
+    $size = 3;
     return trim(strtolower(str_replace(range(0,9),'', str_random($size))));
   }
 

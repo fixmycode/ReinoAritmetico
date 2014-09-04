@@ -25,9 +25,9 @@ class Classroom extends \Eloquent {
   /**
    * 
    */
-  public function students()
+  public function players()
   {
-    return $this->hasMany('Student');
+    return $this->hasMany('Player');
   }
 
 }
