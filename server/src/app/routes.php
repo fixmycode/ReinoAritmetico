@@ -10,7 +10,7 @@ Route::resource('clientss', 'ClientsController');
 Route::resource('clientss.classrooms', 'ClientsClassroomsController');
 Route::resource('problems', 'ProblemController');
 
-Route::get("problems/{number}", function($number){
+Route::get("api/problems/{number}", function($number){
   $problems = DB::table('problems')->take($number)->get();
   return $problems;
 });

@@ -18,6 +18,8 @@ class CreateProblemTable extends Migration {
 			$table->string('type');
 			
 			$table->integer('max_difficulty');
+			$table->datetime('started');
+			$table->datetime('ended')->nullable();
 			
 		});
 
@@ -28,6 +30,8 @@ class CreateProblemTable extends Migration {
 			$table->string('answer');
 			$table->integer('difficulty');
 			$table->integer('problem_type_id')->unsigned();
+			$table->datetime('started');
+			$table->datetime('ended')->nullable();
 
 			$table->foreign('problem_type_id')
 	      ->references('id')->on('problem_type');
@@ -39,6 +43,8 @@ class CreateProblemTable extends Migration {
 			
 			$table->integer('game_id')->unsigned();
 			$table->integer('problem_id')->unsigned();
+			$table->datetime('started');
+			$table->datetime('ended')->nullable();
 
 			$table->foreign('problem_id')
 	      ->references('id')->on('problems');

@@ -9,10 +9,17 @@ class ProblemController extends \BaseController {
 	 */
 	public function index()
 	{
+
 		$problems = Problem::all();
+		//$problemType = DB::table('problem_type')->select('id', 'type')->get();
+		$problemType = ProblemType::lists("type","id");
+		$dificultad = array("1"=>"1");
+		
 		return View::make('problems.index')
 									->with('problems', $problems)
-									->with('title', 'Preguntas');
+									->with('title', 'Preguntas')
+									->with('problem_type',$problemType )
+									->with('dificultad', $dificultad);
 	}
 
 
@@ -23,7 +30,8 @@ class ProblemController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+
+
 	}
 
 
@@ -34,7 +42,15 @@ class ProblemController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+
+		$problem = new Problem();
+		$problem->question = Input::get('question');
+		$problem->answer = Input::get('answer');
+		$problem->problem_type_id = Input::get('problem_type_id');
+		$problem->difficulty = Input::get('dificultad');
+		$problem->save();
+		
+		return Redirect::route('problems.index');
 	}
 
 
@@ -58,7 +74,14 @@ class ProblemController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		$problem = Problem::findOrFail($id);
+		$problemType = ProblemType::lists("type","id");
+		$dificultad = array("1"=>"1");
+
+		return View::make('problems.partials.edit')
+									->with('problem_type',$problemType )
+									->with('dificultad', $dificultad)
+									->with('problem', $problem);
 	}
 
 
@@ -70,7 +93,14 @@ class ProblemController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$problem = Problem::find($id);
+		$problem->question = Input::get('question');
+		$problem->answer = Input::get('answer');
+		$problem->problem_type_id = Input::get('problem_type_id');
+		$problem->difficulty = Input::get('dificultad');
+		$problem->save();
+		return Redirect::route('problems.index');
+
 	}
 
 
@@ -82,7 +112,11 @@ class ProblemController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+
+		$problem = Problem::findOrFail($id);
+
+		$problem->delete();
+		
 	}
 
 
