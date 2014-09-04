@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -22,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import cl.blackbird.reino.Config;
 import cl.blackbird.reino.R;
@@ -162,9 +164,14 @@ public class LobbyActivity extends Activity implements LobbyFragment.LobbyListen
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (resultCode) {
+            },
+            new Response.ErrorListener() {
             case Activity.RESULT_OK:
                 Log.d(TAG, "Activity ended OK");
+                    error.printStackTrace();
                 return;
+                }
+            }
             case Activity.RESULT_CANCELED:
                 Log.d(TAG, "Activity canceled");
                 forceLeave();
@@ -235,5 +242,4 @@ public class LobbyActivity extends Activity implements LobbyFragment.LobbyListen
         );
         ReinoApplication.getInstance().getRequestQueue().add(request);
     }
-
 }
