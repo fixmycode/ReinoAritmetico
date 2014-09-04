@@ -1,7 +1,7 @@
 var _          = require('underscore');
 var q          = require('q');
 var io         = require('socket.io').listen(3000);
-var createGame = require('./js/lib/game.js');
+var createGame = require('./lib/game.js');
 
 var game = createGame();
 var settings = {
@@ -11,7 +11,7 @@ var settings = {
 
 io.set('log level', 1);
 
-angular.module('RAApp', ['ngResource', 'ngRoute']);
+angular.module('RAApp', ['ngRoute']);
 
 Object.size = function(obj) {
     var size = 0, key;
@@ -30,7 +30,7 @@ function getQuests() {
     return JSON.parse(localStorage.quests || '[]');
 }
 
-angular.module('RAApp').run(function($rootScope, GameService) {
+angular.module('RAApp').run(function($rootScope) {
     // Socket comunication
     io.on('connection', function (socket) {
       console.log(socket.id + ' just conected');
@@ -106,8 +106,8 @@ angular.module('RAApp').run(function($rootScope, GameService) {
       console.log('Caught exception: ' + err);
     });
 
-    // $(document).bind('keydown', 'ctrl+d', function(){
-    //     win.showDevTools();
-    // });
+    $(document).bind('keydown', 'ctrl+d', function(){
+        win.showDevTools();
+    });
  });
 }) (jQuery);

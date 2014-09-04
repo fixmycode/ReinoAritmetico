@@ -1,4 +1,4 @@
-angular.module('RAApp').controller("MainGameCtrl", function ($scope, movieStubFactory, $location) {
+angular.module('RAApp').controller("MainGameCtrl", function ($scope, $location) {
     $scope.headerSrc = "_partials/header.html";
 
     $scope.quests = getQuests();

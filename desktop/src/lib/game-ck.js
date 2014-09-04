@@ -1,1 +1,0 @@
-function Game(){this.maxPlayers=2}module.exports.create=function(e){return new Game};

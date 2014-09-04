@@ -1,20 +1,20 @@
 {
-  "name": "nwk-ngApp",
-  "version": "0.0.1",
-  "description": "An Angular node-webkit application",
+  "name": "ReinoAritmetico",
+  "version": "0.0.2",
+  "description": "Juego de matematico de niños con smartphones",
   "main": "index.html",
   "private": true,
   "keywords": [
     "node",
     "webkit",
-    "win",
-    "osx"
+    "socket.io",
+    "angular.js"
   ],
   "window": {
     "title": "Reino Aritmético",
     "icon": "./html/favicon.ico",
-    "toolbar": true,
-    "frame": true,
+    "toolbar": false,
+    "frame": false,
     "width": 1024,
     "height": 768,
     "position": "mouse",

@@ -1,0 +1,25 @@
+{
+  "name": "ReinoAritmetico",
+  "version": "0.0.0",
+  "homepage": "https://github.com/fixmycode/ReinoAritmetico",
+  "authors": [
+    "jpeg"
+  ],
+  "description": "Juego de matematico de niños con smartphones",
+  "main": "index.html",
+  "keywords": [
+    "node.js",
+    "angular",
+    "socket.io"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "fontawesome": "~4.2.0",
+    "bootstrap": "~3.2.0",
+    "angular": "~1.2.23",
+    "angular-route": "~1.2.23",
+    "jquery.hotkeys": "jeresig/jquery.hotkeys#~0.1.0"
+  }
+}

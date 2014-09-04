@@ -1,1 +1,0 @@
-movieStubApp=angular.module("RAApp",["ngResource","ngRoute"]);$(".tp").tooltip();
