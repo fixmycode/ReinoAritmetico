@@ -15,12 +15,10 @@
         android:contentDescription="@string/character"
         android:layout_gravity="center_horizontal"
         android:layout_margin="@dimen/activity_horizontal_margin"/>
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/lobby_instructions"/>
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,17 +32,12 @@
             android:hint="@string/enter_code"
             android:inputType="textNoSuggestions"
             android:singleLine="true" />
-
-        <ToggleButton
+        <Button
             android:id="@+id/join_button"
             android:layout_width="@dimen/join_game_button"
             android:layout_height="wrap_content"
-            android:textOff="@string/join_game"
-            android:textOn="@string/leave_game"
+            android:text="@string/join_game"
             android:enabled="false"
             android:textStyle="bold"/>
     </LinearLayout>
-
-
-
 </LinearLayout>

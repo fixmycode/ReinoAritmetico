@@ -4,4 +4,5 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="lobby_game_field">160sp</dimen>
     <dimen name="join_game_button">160dp</dimen>
+    <dimen name="game_button_text_size">30sp</dimen>
 </resources>

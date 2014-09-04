@@ -1,0 +1,158 @@
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/your_question"
+            android:layout_above="@+id/problemText"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/game_button_text_size"
+            android:id="@+id/problemText"
+            android:text="@string/no_question"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/your_answer"
+            android:layout_above="@+id/answerText"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/game_button_text_size"
+            android:text="@string/no_answer"
+            android:id="@+id/answerText"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2">
+
+        <Button
+            android:text="@string/answer"
+            android:id="@+id/answerButton"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_above="@+id/eraseButton"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+        <Button
+            android:text="@string/erase"
+            android:id="@+id/eraseButton"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/buttonTable"
+            android:layout_toEndOf="@+id/buttonTable" />
+
+        <TableLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/buttonTable"
+            android:layout_toLeftOf="@+id/answerButton"
+            android:layout_toStartOf="@+id/answerButton">
+            <TableRow>
+
+                <Button
+                    android:text="7"
+                    android:id="@+id/button7"
+                    style="@style/GameButton"/>
+
+                <Button
+                    android:text="8"
+                    android:id="@+id/button8"
+                    style="@style/GameButton"/>
+
+                <Button
+                    android:text="9"
+                    android:id="@+id/button9"
+                    style="@style/GameButton"/>
+            </TableRow>
+
+            <TableRow>
+
+                <Button
+                    android:text="4"
+                    android:id="@+id/button4"
+                    style="@style/GameButton"/>
+
+                <Button
+                    android:text="5"
+                    android:id="@+id/button5"
+                    style="@style/GameButton"/>
+
+                <Button
+                    android:text="6"
+                    android:id="@+id/button6"
+                    style="@style/GameButton"/>
+            </TableRow>
+
+            <TableRow>
+
+                <Button
+                    android:text="1"
+                    android:id="@+id/button1"
+                    style="@style/GameButton"/>
+
+                <Button
+                    android:text="2"
+                    android:id="@+id/button2"
+                    style="@style/GameButton"/>
+
+                <Button
+                    android:text="3"
+                    android:id="@+id/button3"
+                    style="@style/GameButton"/>
+            </TableRow>
+
+            <TableRow>
+
+                <Button
+                    android:text="0"
+                    android:layout_weight="2"
+                    style="@style/GameButton"
+                    android:id="@+id/button0" />
+
+                <Button
+                    android:id="@+id/buttonDot"
+                    android:text="."
+                    style="@style/GameButton"/>
+            </TableRow>
+        </TableLayout>
+
+
+    </RelativeLayout>
+
+</LinearLayout>

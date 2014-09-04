@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +19,13 @@ import android.widget.TextView;
 
 import cl.blackbird.reino.R;
 
-public class LobbyFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
+public class LobbyFragment extends Fragment implements View.OnClickListener {
     public static final String TAG = "RAFLOBBY";
     private LobbyListener mListener;
     private EditText lobbyCode;
     private ImageView warriorView;
     private AnimationDrawable warriorAnim;
-    private CompoundButton joinButton;
+    private Button joinButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,8 +39,8 @@ public class LobbyFragment extends Fragment implements CompoundButton.OnCheckedC
 
         warriorView = (ImageView) layout.findViewById(R.id.warrior_anim);
         lobbyCode = (EditText) layout.findViewById(R.id.lobby_code);
-        joinButton = (CompoundButton) layout.findViewById(R.id.join_button);
-        joinButton.setOnCheckedChangeListener(this);
+        joinButton = (Button) layout.findViewById(R.id.join_button);
+        joinButton.setOnClickListener(this);
         checkValidForm(lobbyCode.getText(), joinButton);
         lobbyCode.addTextChangedListener(new TextWatcher() {
             @Override
@@ -63,7 +64,7 @@ public class LobbyFragment extends Fragment implements CompoundButton.OnCheckedC
      * @param text the form field
      * @param button the button
      */
-    private void checkValidForm(Editable text, CompoundButton button) {
+    private void checkValidForm(Editable text, Button button) {
         button.setEnabled(!text.toString().isEmpty());
     }
 
@@ -115,40 +116,10 @@ public class LobbyFragment extends Fragment implements CompoundButton.OnCheckedC
         mListener = null;
     }
 
-    /**
-     * What happens when you click the Join/Leave button
-     * @param buttonView the button
-     * @param isChecked the value that changes
-     */
     @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (mListener != null) {
-            View layout = getView();
-            if(layout != null) {
-
-                if (lobbyCode != null) {
-                    if(isChecked){
-                        String code = lobbyCode.getText().toString();
-                        lobbyCode.clearFocus();
-                        mListener.onJoinServer(code);
-                    } else {
-                        mListener.onLeaveServer();
-                        lobbyCode.requestFocus();
-                    }
-                    lobbyCode.setEnabled(!isChecked);
-                    lobbyCode.setFocusable(!isChecked);
-                    lobbyCode.setFocusableInTouchMode(!isChecked);
-                    lobbyCode.setClickable(!isChecked);
-                }
-            }
-        }
-    }
-
-    /**
-     * Resets the UI to disconnected state
-     */
-    public void forceLeave() {
-        joinButton.setChecked(false);
+    public void onClick(View v) {
+        String code = lobbyCode.getText().toString();
+        mListener.onJoinServer(code);
     }
 
     /**
@@ -157,7 +128,6 @@ public class LobbyFragment extends Fragment implements CompoundButton.OnCheckedC
      */
     public interface LobbyListener {
         public void onJoinServer(String code);
-        public void onLeaveServer();
     }
 
 }

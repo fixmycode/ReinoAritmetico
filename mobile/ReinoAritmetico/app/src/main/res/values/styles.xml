@@ -5,4 +5,12 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="GameButton" parent="@android:style/Widget.Holo.Light.Button">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/game_button_text_size</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
 </resources>

@@ -44,5 +44,11 @@
         servidor, reintentando en %d segundos…</string>
     <string name="press_twice">Presiona nuevamente para salir</string>
     <string name="server_address">Dirección del Servidor</string>
+    <string name="answer">Responder</string>
+    <string name="erase">Erase</string>
+    <string name="no_answer" />
+    <string name="your_answer">Tu Respuesta</string>
+    <string name="no_question">Esperando…</string>
+    <string name="your_question">Tu Pregunta</string>
 
 </resources>
