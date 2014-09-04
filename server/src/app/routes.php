@@ -11,7 +11,7 @@ Route::resource('clientss.classrooms', 'ClientsClassroomsController');
 Route::resource('problems', 'ProblemController');
 
 Route::get("api/problems", function(){
-  $quantity = Input::get('quantity');
+  $quantity   = Input::get('quantity');
   $difficulty = Input::get('difficulty');
   
   if($quantity != null && $difficulty != null){
@@ -21,9 +21,6 @@ Route::get("api/problems", function(){
   
   return null;
 });
-
-
-
 
 Route::controller('/', 'APIController');
 

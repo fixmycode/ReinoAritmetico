@@ -13,13 +13,14 @@ class ProblemController extends \BaseController {
 		$problems = Problem::all();
 		//$problemType = DB::table('problem_type')->select('id', 'type')->get();
 		$problemType = ProblemType::lists("type","id");
-		$dificultad = array("1"=>"1");
+		$difficulty = array("1"=>"1", 2 => 2, 3 => 3);
 		
 		return View::make('problems.index')
 									->with('problems', $problems)
 									->with('title', 'Preguntas')
+									->with('newProblem', new Problem)
 									->with('problem_type',$problemType )
-									->with('dificultad', $dificultad);
+									->with('difficulty', $difficulty);
 	}
 
 
@@ -44,10 +45,10 @@ class ProblemController extends \BaseController {
 	{
 
 		$problem = new Problem();
-		$problem->question = Input::get('question');
-		$problem->answer = Input::get('answer');
-		$problem->problem_type_id = Input::get('problem_type_id');
-		$problem->difficulty = Input::get('dificultad');
+		$problem->problem = Input::get('problem');
+		$problem->correct_answer = Input::get('correct_answer');
+		$problem->problem_type_id = 1; //Input::get('problem_type_id');
+		$problem->difficulty = Input::get('difficulty');
 		$problem->save();
 		
 		return Redirect::route('problems.index');

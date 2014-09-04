@@ -12,14 +12,14 @@ class ProblemTableSeeder extends Seeder {
     
     DB::table('problems')->insert(
       array(
-        array('id'=>1,'question'=>'3+3','answer'=>'6', 'difficulty'=>'1', 'problem_type_id'=>'1'),
-        array('id'=>2,'question'=>'3+5','answer'=>'8', 'difficulty'=>'1', 'problem_type_id'=>'1'),
-        array('id'=>3,'question'=>'2+1','answer'=>'3', 'difficulty'=>'2', 'problem_type_id'=>'1'),
-        array('id'=>4,'question'=>'8+9','answer'=>'17', 'difficulty'=>'3', 'problem_type_id'=>'1'),
-        array('id'=>5,'question'=>'3+3','answer'=>'6', 'difficulty'=>'1', 'problem_type_id'=>'1'),
-        array('id'=>6,'question'=>'3+5','answer'=>'8', 'difficulty'=>'1', 'problem_type_id'=>'1'),
-        array('id'=>7,'question'=>'2+1','answer'=>'3', 'difficulty'=>'2', 'problem_type_id'=>'1'),
-        array('id'=>8,'question'=>'8+9','answer'=>'17', 'difficulty'=>'3', 'problem_type_id'=>'1')
+        array('id'=>1,'problem'=>'3+3','correct_answer'=>'6', 'difficulty'=>'1', 'problem_type_id'=>'1'),
+        array('id'=>2,'problem'=>'3+5','correct_answer'=>'8', 'difficulty'=>'1', 'problem_type_id'=>'1'),
+        array('id'=>3,'problem'=>'2+1','correct_answer'=>'3', 'difficulty'=>'2', 'problem_type_id'=>'1'),
+        array('id'=>4,'problem'=>'8+9','correct_answer'=>'17', 'difficulty'=>'3', 'problem_type_id'=>'1'),
+        array('id'=>5,'problem'=>'3+3','correct_answer'=>'6', 'difficulty'=>'1', 'problem_type_id'=>'1'),
+        array('id'=>6,'problem'=>'3+5','correct_answer'=>'8', 'difficulty'=>'1', 'problem_type_id'=>'1'),
+        array('id'=>7,'problem'=>'2+1','correct_answer'=>'3', 'difficulty'=>'2', 'problem_type_id'=>'1'),
+        array('id'=>8,'problem'=>'8+9','correct_answer'=>'17', 'difficulty'=>'3', 'problem_type_id'=>'1')
         )
     );
 

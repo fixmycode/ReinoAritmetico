@@ -26,8 +26,8 @@ class CreateProblemTable extends Migration {
 		Schema::create('problems', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('question', 128);
-			$table->string('answer');
+			$table->string('problem', 128);
+			$table->string('correct_answer');
 			$table->integer('difficulty');
 			$table->integer('problem_type_id')->unsigned();
 			$table->datetime('started');

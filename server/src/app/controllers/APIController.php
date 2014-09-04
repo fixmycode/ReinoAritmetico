@@ -25,10 +25,9 @@ class APIController extends \BaseController {
 	  $player = DB::table('players')->where('android_id', $android_id)
 	              ->join('classrooms', 'players.classroom_id', '=', 'classrooms.id')
 	              ->join('clients', 'classrooms.client_id', '=', 'clients.id')
-	              ->select(DB::raw('players.name, classrooms.name as classroom, clients.name as school'))
+	              ->select(DB::raw('players.name, classrooms.name as classroom, clients.name as school, players.character_type_id as character_type'))
 	              ->first();
 	              
-
 	  if ( is_null($player) )
 	    App::abort(404);
 
@@ -163,6 +162,7 @@ class APIController extends \BaseController {
 	  	return Response::json(['err' => true, 'msg' => 'La partida ya finalizo'], 400);
 
 	  $game->ended = new DateTime();
+	  $game->uid = 'Done';
 
 	  $game->save();
 

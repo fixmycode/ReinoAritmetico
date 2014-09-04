@@ -14,7 +14,7 @@
               <th style="width: 10px">#</th>
               <th>Pregunta</th>
               <th>Respuesta</th>
-              <th>Tipo Problema</th>
+              <!-- <th>Tipo Problema</th> -->
               <th>Dificultad</th>
 
               <th class="text-right">Acciones</th>
@@ -25,9 +25,9 @@
             @foreach ($problems as $problem )
             <tr>
                 <td>{{ $problem->id}}.</td>
-                <td>{{ $problem->question}}</td>
-                <td>{{ $problem->answer}}</td>
-                <td>{{ $problem->problem_type()->first()->type}}</td>
+                <td>{{ $problem->problem}}</td>
+                <td>{{ $problem->correct_answer}}</td>
+                <!-- <td>{{ $problem->problem_type()->first()->type}}</td> -->
                 <td>{{ $problem->difficulty}}</td>
                 {{--<td><a href="{{ URL::route('problems.index', $problem->id) }}">{{$problem->name}}</a></td> --}}
                 <td class="text-right">
@@ -42,7 +42,7 @@
     </div>
   </div>
   <div class="col-md-4 col-md-offset-1">
-    @include('problems.partials.create', ['client' => new Client])
+    @include('problems.partials.create', ['newProblem' => new Problem])
   </div>
   
 </div>
