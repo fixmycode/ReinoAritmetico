@@ -164,14 +164,9 @@ public class LobbyActivity extends Activity implements LobbyFragment.LobbyListen
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (resultCode) {
-            },
-            new Response.ErrorListener() {
             case Activity.RESULT_OK:
                 Log.d(TAG, "Activity ended OK");
-                    error.printStackTrace();
-                return;
-                }
-            }
+                break;
             case Activity.RESULT_CANCELED:
                 Log.d(TAG, "Activity canceled");
                 forceLeave();

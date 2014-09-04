@@ -163,6 +163,7 @@ public class GameActivity extends Activity implements IOCallback, MainGameFragme
         try {
             jsonPlayer.put("name", player.name);
             jsonPlayer.put("android_id", player.androidID);
+            jsonPlayer.put("character_type", player.characterType);
         } catch (JSONException e) {
             e.printStackTrace();
         }

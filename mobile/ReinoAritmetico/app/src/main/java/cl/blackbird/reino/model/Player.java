@@ -6,9 +6,6 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Created by Pablo Albornoz on 7/27/14.
- */
 public class Player implements Serializable {
     public String androidID;
     public String name;
@@ -50,6 +47,6 @@ public class Player implements Serializable {
         ArrayList<ClassRoom> classList = new ArrayList<ClassRoom>();
         classList.add(tempClassRoom);
         tempSchool = new School(schoolID, schoolName, classList);
-        return new Player(json.getString("name"),Integer.parseInt(json.getString("character_type")), tempSchool, tempClassRoom);
+        return new Player(json.getString("name"), json.getInt("character_type"), tempSchool, tempClassRoom);
     }
 }
