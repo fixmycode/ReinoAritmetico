@@ -7,22 +7,17 @@
     {{ Form::open(array('url' => URL::route('problems.update', $problem->id), 'method'=>"PUT")) }}
     <div class="modal-body">
     <label for="exampleInputEmail1">Pregunta</label>
-          {{ Form::text('question', $problem->question, ['class' => 'form-control']) }}
+          {{ Form::text('problem', $problem->problem, ['class' => 'form-control']) }}
         <div class="form-group">
             <label for="exampleInputEmail1">Respuesta</label>
-            {{ Form::text('answer', $problem->answer, ['class' => 'form-control']) }}
+            {{ Form::text('correct_answer', $problem->correct_answer, ['class' => 'form-control']) }}
         </div>
 
         <div class="form-group">
             <label for="exampleInputEmail1">Dificultad</label>
-            {{Form::select('dificultad', $dificultad, null, array('class'=>'form-control'))}}
+            {{Form::select('difficulty', $difficulty, $problem->difficulty, array('class'=>'form-control'))}}
         </div>
-
-        <div class="form-group">
-            <label for="exampleInputEmail1">Tipo Pregunta</label>
-            {{Form::select('problem_type_id', $problem_type, null, array('class'=>'form-control'))}}
-        </div>
-
+        
       </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

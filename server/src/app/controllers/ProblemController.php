@@ -77,11 +77,11 @@ class ProblemController extends \BaseController {
 	{
 		$problem = Problem::findOrFail($id);
 		$problemType = ProblemType::lists("type","id");
-		$dificultad = array("1"=>"1");
+		$difficulty = array("1"=>"1", 2 => 2, 3 => 3);
 
 		return View::make('problems.partials.edit')
 									->with('problem_type',$problemType )
-									->with('dificultad', $dificultad)
+									->with('difficulty', $difficulty)
 									->with('problem', $problem);
 	}
 
@@ -95,10 +95,10 @@ class ProblemController extends \BaseController {
 	public function update($id)
 	{
 		$problem = Problem::find($id);
-		$problem->question = Input::get('question');
-		$problem->answer = Input::get('answer');
-		$problem->problem_type_id = Input::get('problem_type_id');
-		$problem->difficulty = Input::get('dificultad');
+		$problem->problem = Input::get('problem');
+		$problem->correct_answer = Input::get('correct_answer');
+		$problem->problem_type_id = 1;//Input::get('problem_type_id');
+		$problem->difficulty = Input::get('difficulty');
 		$problem->save();
 		return Redirect::route('problems.index');
 
