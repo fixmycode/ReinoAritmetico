@@ -4,13 +4,13 @@ class StudentsTableSeeder extends Seeder {
 
 	public function run()
 	{
-    DB::table('students')->delete();
+    DB::table('players')->delete();
 
-    $students = [
+    $players = [
       new Student(["name" => "Jon Snow", 'android_id' => str_random(64)])
     ];
 
-    Classroom::whereName('3ro Basico')->first()->students()->saveMany($students);
+    Classroom::whereName('3ro Basico')->first()->players()->saveMany($players);
 	}
 
 }

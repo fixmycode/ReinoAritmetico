@@ -15,11 +15,11 @@
             </tr>
           </thead>
           <tbody>
-            @foreach ($classroom->students as $index => $student )
+            @foreach ($classroom->players as $index => $player )
             <tr>
                 <td>{{ $index + 1}}.</td>
-                <td>{{$student->name}}</td>
-                <td>{{$student->android_id}}</td>
+                <td>{{$player->name}}</td>
+                <td>{{$player->android_id}}</td>
             </tr>
             @endforeach
           </tbody>

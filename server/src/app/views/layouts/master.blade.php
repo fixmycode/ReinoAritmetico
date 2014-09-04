@@ -106,6 +106,12 @@
                                 <i class="fa fa-th"></i> <span>Clientes</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ route('questions.index') }}">
+                                <i class="fa fa-th"></i> <span>Preguntas</span>
+                            </a>
+                        </li>
+
                     </ul>
                 </section>
                 <!-- /.sidebar -->
