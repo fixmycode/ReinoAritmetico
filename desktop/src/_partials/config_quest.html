@@ -17,12 +17,18 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="inputPassword3" class="col-sm-4 control-label">N de jugadores</label>
+                    <label class="col-sm-4 control-label">N de jugadores</label>
                     <div class="col-sm-2">
                         <input type="text" ng-model="newQuest.numPlayers" name="newQuest.numPlayers" min="1" max="5" integer />
                     </div>
                     <div class="col-sm-8">
                         <p class="help-block" ng-show="(newQuest.numPlayers < 1 || newQuest.numPlayers > 5) && newQuest.numPlayers != ''">Ingrese entre 1 y 5 jugadores</p>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-4 control-label">Preguntas Por Jugador</label>
+                    <div class="col-sm-2">
+                        <input type="text" ng-model="newQuest.problemsPerPlayer" name="newQuest.problemsPerPlayer" min="1" max="5" integer />
                     </div>
                   </div>
                   <div class="form-group">

@@ -46,6 +46,7 @@
     <script>
       var socket = io.connect('http://localhost:3000');
       var problem = {};
+      var elapsed = null;
 
       $('form#join-game').on('submit', function() {
         console.log('joining');
@@ -68,6 +69,7 @@
 
       socket.on('solve problem', function(data) {
         problem = data;
+        elapsed = new Date();
         $('#log').prepend('<p class="info"><i class="fa fa-fw fa-info"></i><form class="solve-problem" data-problem-id="'+data.problem_id+'"> ' + data.problem + ' <input type="text" placeholder="respuesta"><input type="submit" value="Enviar"></form><span class="timestamp">' + (new Date()).toLocaleTimeString() + '</span></p>');
       });
 
@@ -79,11 +81,15 @@
         $this = $(this);
 
         var problem_solved = {
-          id: $this.data('problem-id'),
-          student_answer: $this.find('input[type=text]').first().val()
+          id: problem.id,
+          'problem': problem.problem,
+          correct_answer: problem.correct_answer,
+          answer: $this.find('input[type=text]').first().val(),
+          elapsed_time: ( (new Date()) - elapsed)/1000
         };
+        elapsed = null;
 
-        if (problem.correct_answer === problem_solved.student_answer) {
+        if (problem.correct_answer === problem_solved.answer) {
           $('#log').prepend('<p class="info"><i class="fa fa-fw fa-info"></i>Correcto! <span class="timestamp">' + (new Date()).toLocaleTimeString() + '</span></p>');
         }else {
           $('#log').prepend('<p class="error"><i class="fa fa-fw fa-warning"></i>Ups. mal :( <span class="timestamp">' + (new Date()).toLocaleTimeString() + '</span></p>');

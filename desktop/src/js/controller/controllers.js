@@ -12,7 +12,7 @@ angular.module('RAApp').controller("MainGameCtrl", function ($scope, movieStubFa
 });
 
 angular.module('RAApp').controller("welcomeCtrl", function ($scope, $routeParams) {
-    if (_.size(game.players) > 0) {
+    if (game.waiting || game.playing) {
         game.end().then(function(){
             io.sockets.emit('info', {msg: 'La partida ha finalizado'});
         });
@@ -57,6 +57,7 @@ angular.module('RAApp').controller("waitingCtrl", function ($scope, $routeParams
     $window.game = createGame({
         numPlayers: $scope.quest.numPlayers,
         dificulty: $scope.quest.dificulty,
+        problemsPerPlayer: $scope.quest.problemsPerPlayer,
         serverIpAddress: settings.serverIpAddress,
         serverPort: settings.serverPort
     });
@@ -85,18 +86,22 @@ angular.module('RAApp').controller("playCtrl", function ($scope, $routeParams, $
 
     $scope.match.start();
 
-    $scope.$on('game end', function(event, args) {
-        $scope.$apply(function(){
-            $location.path("/");    
-        });
+    $scope.$on('player answered', function(e, data) {
+        if ( $scope.match.submitAnswer(data.socket, data.answer) ){
+            $scope.$apply(function(){
+                $scope.match.playing = false;
+            });
+        }else {
+            $scope.$digest();
+        }
     });
 
-    $scope.$on('player answered', function(event, args) {
-        $scope.$apply(function(){
-            
-        });
+    $scope.$on('resume game', function(e, data){
+        $scope.match.resume();
     });
 
-    
+    $scope.$on('player disconnected', function(e, socketId) {
+        $scope.match.playerFell(socketId);
+    });
 });
 

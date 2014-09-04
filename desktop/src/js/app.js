@@ -37,9 +37,17 @@ angular.module('RAApp').run(function($rootScope, GameService) {
 
       socket.on('join', function(player){
         player.socket = socket;
-        game.join(player).then(function(){
-            $rootScope.$broadcast('update players');
-        });
+
+        if (game.waitingForFallen.length > 0) {
+            // Rejoin an ongoing quest
+            game.rejoin(player);
+            if (game.waitingForFallen.length === 0) $rootScope.$broadcast('resume game');
+        }else {
+            // Normal join
+            game.join(player).then(function(){
+                $rootScope.$broadcast('update players');
+            });
+        }
       });
 
       socket.on('leave', function(player) {
@@ -47,11 +55,14 @@ angular.module('RAApp').run(function($rootScope, GameService) {
         $rootScope.$broadcast('update players')
       });
 
-      socket.on('submit answer', function(answer){
-        if ( game.submitAnswer(socket.id, answer) ) {
-            $rootScope.$broadcast('game end');
-        }else {
-            $rootScope.$broadcast('player answered');
+      socket.on('submit answer', function(answer){ 
+        console.log(answer);       
+        $rootScope.$broadcast('player answered', {'socket': socket.id, 'answer': answer});
+      });
+
+      socket.on('disconnect', function(){
+        if (game.playing) {
+            $rootScope.$broadcast('player disconnected', socket.id);
         }
       });
     });

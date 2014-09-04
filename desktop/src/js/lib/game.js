@@ -5,13 +5,16 @@ var q           = require('q');
 var _           = require('underscore');
 
 function Game(options) {
-  this.numPlayers      = options.numPlayers      || 5;
-  this.serverIpAddress = options.serverIpAddress || '127.0.0.1';
-  this.serverPort      = options.serverPort      || 8000;
-  this.dificulty       = options.dificulty       || 1;
+  this.numPlayers        = options.numPlayers        || 5;
+  this.serverIpAddress   = options.serverIpAddress   || '127.0.0.1';
+  this.serverPort        = options.serverPort        || 8000;
+  this.dificulty         = options.dificulty         || 1;
+  this.problemsPerPlayer = options.problemsPerPlayer || 15;
   this.players = [];
   this.playersCount = 0;
   this.waiting = false;
+  this.waitingForFallen = [];
+  this.answers = [];
 }
 
 Game.prototype.init = function(){
@@ -32,8 +35,6 @@ Game.prototype.init = function(){
           'Content-Length': Buffer.byteLength(data)
       }
   };
-
-  console.log(options);
 
   var req = http.request(options, function(res) {
       res.setEncoding('utf8');
@@ -189,7 +190,47 @@ Game.prototype.submitAnswer = function(socketId, answer) {
       .value();
 
   player.answers.push(answer);
+  answer.player_name = player.name;
+  self.answers.push(answer);
   return self.sendProblem(player);
+}
+
+Game.prototype.playerFell = function(socketId) {
+  var self = this;
+
+  var player = _.chain(self.players)
+      .filter(function(p) { return p.socket.id == socketId; })
+      .first()
+      .value();
+
+  self.players = _.without(self.players, player);
+
+  player.socket = undefined;
+  self.waitingForFallen.push(player);
+  self.playing = false;
+}
+
+Game.prototype.rejoin = function(player){
+  var self = this;
+
+  for (var i = 0; i < self.waitingForFallen; i++) {
+    if (self.waitingForFallen[i].android_id === player.android_id) {
+      
+      self.waitingForFallen[i].socket = player.socket; // Update to the new socket
+
+      game.players.push(self.waitingForFallen[i]);
+
+      break;
+    }
+  }
+
+  self.waitingForFallen.splice(i, 1);
+}
+
+Game.prototype.resume = function(){
+  var self = this;
+
+  self.playing = true;
 }
 
 module.exports = function(options){
