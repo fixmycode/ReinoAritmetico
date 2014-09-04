@@ -53,8 +53,8 @@
     <integer-array name="character_list">
         <item>@drawable/ro_mage_male</item>
         <item>@drawable/ro_mage_female</item>
-        <item>@drawable/warrior_01</item>
-        <item>@drawable/warrior_05</item>
+        <item>@drawable/ro_swordman_male</item>
+        <item>@drawable/ro_swordman_female</item>
         <item>@drawable/ro_archer_male</item>
         <item>@drawable/ro_archer_female</item>
     </integer-array>

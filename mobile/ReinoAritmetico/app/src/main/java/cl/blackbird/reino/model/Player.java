@@ -50,6 +50,6 @@ public class Player implements Serializable {
         ArrayList<ClassRoom> classList = new ArrayList<ClassRoom>();
         classList.add(tempClassRoom);
         tempSchool = new School(schoolID, schoolName, classList);
-        return new Player(json.getString("name"),json.getInt("character_type"), tempSchool, tempClassRoom);
+        return new Player(json.getString("name"),Integer.parseInt(json.getString("character_type")), tempSchool, tempClassRoom);
     }
 }

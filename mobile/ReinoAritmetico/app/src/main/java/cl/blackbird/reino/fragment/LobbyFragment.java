@@ -51,7 +51,7 @@ public class LobbyFragment extends Fragment implements CompoundButton.OnCheckedC
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.lobby_layout, container, false);
-        //warriorView = (ImageView) layout.findViewById(R.id.warrior_anim);
+
         imgs = getResources().obtainTypedArray(R.array.character_list);
         warriorView.setImageResource(imgs.getResourceId(
                 getArguments().getInt("characterType"), -1));
@@ -91,12 +91,12 @@ public class LobbyFragment extends Fragment implements CompoundButton.OnCheckedC
     @Override
     public void onResume() {
         super.onResume();
-        if(warriorAnim == null){
+        /*if(warriorAnim == null){
             warriorView.setBackgroundResource(R.drawable.warrior_animation);
             warriorAnim = (AnimationDrawable) warriorView.getBackground();
         }
 
-        warriorAnim.start();
+        warriorAnim.start();*/
     }
 
     /**
@@ -106,7 +106,7 @@ public class LobbyFragment extends Fragment implements CompoundButton.OnCheckedC
     @Override
     public void onPause() {
         super.onPause();
-        warriorAnim.stop();
+        //warriorAnim.stop();
     }
 
     /**

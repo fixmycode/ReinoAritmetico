@@ -124,7 +124,7 @@ public class RegisterActivity extends Activity implements RegisterFragment.Regis
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("android_id", player.androidID);
                 params.put("name", player.name);
-                //params.put("pjid",player.pjID);
+                params.put("character_type",Integer.toString(player.characterType));
                 params.put("school", String.valueOf(player.school.id));
                 params.put("classroom", String.valueOf(player.classRoom.id));
                 return params;
