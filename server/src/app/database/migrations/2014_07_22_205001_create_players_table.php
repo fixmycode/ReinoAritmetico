@@ -15,6 +15,7 @@ class CreatePlayersTable extends Migration {
 		Schema::create('character_type', function(Blueprint $table)
 		{
 			$table->increments('id');
+			$table->integer('uid');
 			$table->string('sex');
 			$table->string('name', 64);
 		});

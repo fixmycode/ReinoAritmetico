@@ -25,7 +25,8 @@ class APIController extends \BaseController {
 	  $player = DB::table('players')->where('android_id', $android_id)
 	              ->join('classrooms', 'players.classroom_id', '=', 'classrooms.id')
 	              ->join('clients', 'classrooms.client_id', '=', 'clients.id')
-	              ->select(DB::raw('players.name, classrooms.name as classroom, clients.name as school, players.character_type_id as character_type'))
+	              ->join('character_type', 'players.character_type_id', '=', 'character_type.id')
+	              ->select(DB::raw('players.name, classrooms.name as classroom, clients.name as school, character_type.uid as character_type'))
 	              ->first();
 	              
 	  if ( is_null($player) )
@@ -85,7 +86,7 @@ class APIController extends \BaseController {
 	  
 	  $client = Client::findOrFail($client_id);
 	  $classroom = $client->classrooms()->findOrFail($classroom_id);
-	  $character_type = CharacterType::find($character_type);
+	  $character_type = CharacterType::whereUid($character_type)->first();
 	  
 	  $player->client_id = $client->id;
 	  $player->classroom_id = $classroom->id;
