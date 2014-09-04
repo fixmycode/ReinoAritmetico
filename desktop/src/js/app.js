@@ -2,6 +2,7 @@ var _          = require('underscore');
 var q          = require('q');
 var io         = require('socket.io').listen(3000);
 var createGame = require('./lib/game.js');
+var ip         = require('ip');
 
 var game = createGame();
 var settings = {
@@ -82,6 +83,8 @@ angular.module('RAApp').run(function($rootScope) {
     win.on('close', function(){
         game.end().then(function(){
             win.close(true);    
+        }).fail(function(){
+            win.close(true);
         });
     });
 

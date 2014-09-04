@@ -8,7 +8,7 @@
     </div>
     <div ng-repeat="player in match.players">
       <div ng-repeat="answer in player.answers">
-        <p><i class="fa fa-male"></i> {{ player.name }} contesto {{ answer.answer == answer.correct_answer ? 'correctamente' : 'equivocadamente' }} {{ answer.problem }} = {{ answer.answer }} <i class="fa fa-{{ answer.answer == answer.correct_answer ? 'check' : 'times' }}"></i> <span class="timestamp">{{ answer.elapsed_time}}</span></p>
+        <p><i class="fa fa-male"></i> {{ player.name }} contesto {{ answer.answer == answer.correct_answer ? 'correctamente' : 'equivocadamente' }} {{ answer.problem }} = {{ answer.answer }} <i class="fa fa-{{ answer.answer == answer.correct_answer ? 'check' : 'times' }}"></i> <span class="timestamp">{{ answer.elapsed_time }}</span></p>
       </div>
     </div>
   </div>

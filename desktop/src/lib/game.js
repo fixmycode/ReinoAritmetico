@@ -15,6 +15,7 @@ function Game(options) {
   this.waiting = false;
   this.waitingForFallen = [];
   this.answers = [];
+  this.address = ip.address() + ':' + '3000';
 }
 
 Game.prototype.init = function(){

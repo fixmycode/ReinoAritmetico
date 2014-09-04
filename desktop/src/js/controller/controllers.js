@@ -1,6 +1,8 @@
 angular.module('RAApp').controller("MainGameCtrl", function ($scope, $location) {
     $scope.headerSrc = "_partials/header.html";
 
+    console.log("'" + ip.address() + "'");
+
     $scope.quests = getQuests();
 
     $scope.settings = settings;
@@ -14,7 +16,7 @@ angular.module('RAApp').controller("MainGameCtrl", function ($scope, $location) 
 angular.module('RAApp').controller("welcomeCtrl", function ($scope, $routeParams) {
     if (game.waiting || game.playing) {
         game.end().then(function(){
-            io.sockets.emit('info', {msg: 'La partida ha finalizado'});
+            io.sockets.emit('game end');
         });
     }
     $scope.quests = getQuests();
@@ -90,6 +92,8 @@ angular.module('RAApp').controller("playCtrl", function ($scope, $routeParams, $
         if ( $scope.match.submitAnswer(data.socket, data.answer) ){
             $scope.$apply(function(){
                 $scope.match.playing = false;
+                io.sockets.emit('game end');
+                $scope.match.end();
             });
         }else {
             $scope.$digest();
