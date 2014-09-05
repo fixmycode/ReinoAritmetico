@@ -15,12 +15,12 @@
     <div class="game-info">
       <p>
         Tiempo: <timer interval="1000">{{mminutes}}:{{sseconds}}</timer> <br>
-        Tiempo Promedio de respuesta: {{ averageTime() }}
+        Tiempo Promedio de respuesta: {{ averageTime() | number : 3 }}
       </p>
 
       <div class="progress">
         <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: {{ match.answers.length / (match.numPlayers*match.problemsPerPlayer) * 100 }}%;">
-           {{ match.answers.length / (match.numPlayers*match.problemsPerPlayer) * 100 }}%
+           {{ match.answers.length / (match.numPlayers*match.problemsPerPlayer) * 100 | number : 0}}%
          </div>
        </div>
      </div>
@@ -31,7 +31,7 @@
     </div>
     <div  class="game-log">
       <div ng-repeat="answer in match.answers | reverse track by $index">
-        <p>{{ match.answers.length - $index }}. {{ answer.player_name }} contesto {{ answer.answer == answer.correct_answer ? 'correctamente' : 'equivocadamente' }} {{ answer.problem }} = {{ answer.answer }} <i class="fa fa-{{ answer.answer == answer.correct_answer ? 'check' : 'times' }}"></i> <span class="timestamp pull-right">{{ answer.elapsed_time }}s</span></p>
+        <p>{{ match.answers.length - $index }}. {{ answer.player_name }} contesto {{ answer.answer == answer.correct_answer ? 'correctamente' : 'equivocadamente' }} {{ answer.problem }} = {{ answer.answer }} <i class="fa fa-{{ answer.answer == answer.correct_answer ? 'check' : 'times' }}"></i> <span class="timestamp pull-right">{{ answer.elapsed_time | number : 3}}s</span></p>
       </div>
     </div>
   </div>
