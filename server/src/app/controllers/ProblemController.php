@@ -13,7 +13,7 @@ class ProblemController extends \BaseController {
 		$problems = Problem::all();
 		//$problemType = DB::table('problem_type')->select('id', 'type')->get();
 		$problemType = ProblemType::lists("type","id");
-		$difficulty = array("1"=>"1", 2 => 2, 3 => 3);
+		$difficulty = array("1"=>"Fácil", 2 => 'Normal', 3 => 'Dificil');
 		
 		return View::make('problems.index')
 									->with('problems', $problems)
@@ -77,7 +77,7 @@ class ProblemController extends \BaseController {
 	{
 		$problem = Problem::findOrFail($id);
 		$problemType = ProblemType::lists("type","id");
-		$difficulty = array("1"=>"1", 2 => 2, 3 => 3);
+		$difficulty = array("1"=>"Fácil", 2 => 'Normal', 3 => 'Dificil');
 
 		return View::make('problems.partials.edit')
 									->with('problem_type',$problemType )

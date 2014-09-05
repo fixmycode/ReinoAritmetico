@@ -24,7 +24,7 @@ Game.prototype.init = function(){
   var self = this;
 
   var data = querystring.stringify({
-    address: 'ludus.noip.me:3000'//self.address
+    address: self.address
   });
 
   var options = {

@@ -28,7 +28,15 @@
                 <td>{{ $problem->problem}}</td>
                 <td>{{ $problem->correct_answer}}</td>
                 <!-- <td>{{ $problem->problem_type()->first()->type}}</td> -->
-                <td>{{ $problem->difficulty}}</td>
+                <td>
+                @if ($problem->difficulty == 1 )
+                    Fácil
+                    @elseif($problem->difficulty == 2)
+                    Normal
+                    @else
+                    Dificil
+                    @endif
+                    </td>
                 {{--<td><a href="{{ URL::route('problems.index', $problem->id) }}">{{$problem->name}}</a></td> --}}
                 <td class="text-right">
                   <a href="#" class="label label-danger destroy" data-problem-id="{{$problem->id}}" title="Seguro?"><i class="fa fa-trash-o"></i></a>
