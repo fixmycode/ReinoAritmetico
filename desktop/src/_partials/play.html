@@ -2,7 +2,7 @@
   <div class="col-md-6 col-md-offset-3">
     <a href="#/" class="btn btn-text btn-xs">Atrás</a>
     <h3 class="page-header">Game Log</h3>
-    <div class="alert alert-info" ng-show=" ! match.playing">
+    <div class="alert alert-info" ng-show=" ! match.playing && match.waitingForFallen.length === 0">
       <a type="button" href="#/" class="close" >&times;</a>
       <strong>El quest ha terminado</strong> Han ganado!!!!
     </div>

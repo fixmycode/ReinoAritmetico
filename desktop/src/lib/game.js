@@ -8,9 +8,10 @@ function Game(options) {
   this.numPlayers        = options.numPlayers        || 5;
   this.serverIpAddress   = options.serverIpAddress   || '127.0.0.1';
   this.serverPort        = options.serverPort        || 8000;
-  this.dificulty         = options.dificulty         || 1;
+  this.difficulty         = options.difficulty         || 1;
   this.problemsPerPlayer = options.problemsPerPlayer || 15;
   this.players = [];
+  this.answeringPlayers = [];
   this.playersCount = 0;
   this.waiting = false;
   this.waitingForFallen = [];
@@ -23,7 +24,7 @@ Game.prototype.init = function(){
   var self = this;
 
   var data = querystring.stringify({
-    address: self.address
+    address: 'ludus.noip.me:3000'//self.address
   });
 
   var options = {
@@ -138,48 +139,71 @@ Game.prototype.start = function() {
   var defer = q.defer();
 
   // Fetch Problems from server
-  self.problems = [
-    {
-      problem_id: 1,
-      problem: '2+x = 3. x = ?',
-      correct_answer: '1' 
-    },
-    {
-      problem_id: 2,
-      problem: '3*4',
-      correct_answer: '12' 
-    },
-    {
-      problem_id: 3,
-      problem: '5*8',
-      correct_answer: '40' 
-    },
-    {
-      problem_id: 4,
-      problem: '3+8',
-      correct_answer: '11' 
-    },
-    {
-      problem_id: 5,
-      problem: '12*12',
-      correct_answer: '144' 
-    }
-  ];
+  
+  // self.problems = [
+  //   {
+  //     problem_id: 1,
+  //     problem: '2+x = 3. x = ?',
+  //     correct_answer: '1' 
+  //   },
+  //   {
+  //     problem_id: 2,
+  //     problem: '3*4',
+  //     correct_answer: '12' 
+  //   },
+  //   {
+  //     problem_id: 3,
+  //     problem: '5*8',
+  //     correct_answer: '40' 
+  //   },
+  //   {
+  //     problem_id: 4,
+  //     problem: '3+8',
+  //     correct_answer: '11' 
+  //   },
+  //   {
+  //     problem_id: 5,
+  //     problem: '12*12',
+  //     correct_answer: '144' 
+  //   }
+  // ];
+  var options = {
+      host: self.serverIpAddress,
+      port: self.serverPort,
+      path: '/api/problems?quantity='+ (parseInt(self.numPlayers) * parseInt(self.problemsPerPlayer) ) +'&difficulty='+ self.difficulty
+  };
+  var req = http.get(options, function(res) {
+    res.setEncoding('utf8');
+    var body = "";
 
-  _.each(self.players, self.sendProblem, self);
+    res.on('data', function (chunk) {
+      body += chunk;
+    })
+    .on('end', function() {
+      var a = JSON.parse(body);
+      self.problems = a;
+      _.each(self.players, self.sendProblem, self);
+      defer.resolve();
+    })
+    .on('error', defer.reject);
+  });
+
+  req.on('error', function(e) {
+    defer.reject();
+  });
 
   self.playing = true;
+
+  return defer.promise;
 }
 
 Game.prototype.sendProblem = function(player) {
   var self = this;
 
-  if (self.problems.length > 0) {
-    player.socket.emit('solve problem', self.problems.pop());
-    return false;
-  }else {
-    return true;
-  }
+  player.current_problem = self.problems.pop();
+  player.socket.emit('solve problem', player.current_problem);
+
+  self.answeringPlayers.push(player);  
 }
 
 Game.prototype.submitAnswer = function(socketId, answer) {
@@ -190,10 +214,21 @@ Game.prototype.submitAnswer = function(socketId, answer) {
       .first()
       .value();
 
+  self.answeringPlayers = _.without(self.answeringPlayers, player); // sacar al jugador de la lista de espera
+
   player.answers.push(answer);
   answer.player_name = player.name;
   self.answers.push(answer);
-  return self.sendProblem(player);
+
+  if (self.answeringPlayers.length === 0) {
+    if (self.problems.length === 0) {
+      return true;
+    }else {
+      _.each(self.players, self.sendProblem, self);
+    }
+  }
+  return false;
+
 }
 
 Game.prototype.playerFell = function(socketId) {
@@ -211,21 +246,18 @@ Game.prototype.playerFell = function(socketId) {
   self.playing = false;
 }
 
-Game.prototype.rejoin = function(player){
+Game.prototype.rejoin = function(data){
   var self = this;
 
-  for (var i = 0; i < self.waitingForFallen; i++) {
-    if (self.waitingForFallen[i].android_id === player.android_id) {
-      
-      self.waitingForFallen[i].socket = player.socket; // Update to the new socket
+  var player = _.chain(self.waitingForFallen)
+      .filter(function(p) { return p.android_id == data.android_id; })
+      .first()
+      .value();
 
-      game.players.push(self.waitingForFallen[i]);
-
-      break;
-    }
-  }
-
-  self.waitingForFallen.splice(i, 1);
+  player.socket = data.socket;
+  self.waitingForFallen = _.without(self.waitingForFallen, player);
+  self.players.push(player);
+  player.socket.emit('solve problem', player.current_problem);
 }
 
 Game.prototype.resume = function(){
