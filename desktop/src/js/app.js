@@ -12,7 +12,7 @@ var settings = {
 
 io.set('log level', 1);
 
-angular.module('RAApp', ['ngRoute']);
+angular.module('RAApp', ['ngRoute', 'timer']);
 
 Object.size = function(obj) {
     var size = 0, key;
@@ -34,7 +34,6 @@ function getQuests() {
 angular.module('RAApp').run(function($rootScope) {
     // Socket comunication
     io.on('connection', function (socket) {
-      console.log(socket.id + ' just conected');
 
       socket.on('join', function(player){
         player.socket = socket;
@@ -42,6 +41,7 @@ angular.module('RAApp').run(function($rootScope) {
         if (game.waitingForFallen.length > 0) {
             // Rejoin an ongoing quest
             game.rejoin(player);
+            $rootScope.$broadcast('update players');
             if (game.waitingForFallen.length === 0) $rootScope.$broadcast('resume game');
         }else {
             // Normal join
@@ -53,17 +53,24 @@ angular.module('RAApp').run(function($rootScope) {
 
       socket.on('leave', function(player) {
         game.leave(player.android_id);
-        $rootScope.$broadcast('update players')
+        $rootScope.$broadcast('update players');
       });
 
       socket.on('submit answer', function(answer){ 
-        console.log(answer);       
         $rootScope.$broadcast('player answered', {'socket': socket.id, 'answer': answer});
       });
 
       socket.on('disconnect', function(){
-        if (game.playing) {
+        if (game.playing || game.waitingForFallen.length > 0) {
             $rootScope.$broadcast('player disconnected', socket.id);
+        }else if (game.waiting) {
+            var player = _.chain(game.players)
+                  .filter(function(p) { return p.socket.id == socket.id; })
+                  .first()
+                  .value();
+
+            game.leave(player.android_id);
+            $rootScope.$broadcast('update players');
         }
       });
     });

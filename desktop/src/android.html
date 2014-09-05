@@ -32,12 +32,17 @@
 
 
     <form action="" id="join-game">
-        <label>Codigo Juego</label><input type="text"><br>
-      <label>Android ID</label> <input type="text" id="androidId">
-      <label>Name</label> <input type="text" id="name">
-      <button>Join</button> <br>
+        <label>Android ID</label> <input type="text" id="androidId"> <br>
+        <label>Name</label> <input type="text" id="name"> <br>
+        <label>Character Type</label> <select id="characterType">
+          <option value="0">Warrior</option>
+          <option value="1">Wizard</option>
+          <option value="2">Archer</option>
+        </select><br>
+        <button>Join</button> <br>
     </form>
-    <button id="leave">Salir</button>
+    <button id="leave">Salir</button><br>
+    <button class="clear">Clear</button>
 
     <div id="log"></div>
 
@@ -52,7 +57,8 @@
         console.log('joining');
         socket.emit('join', {
           android_id: $('#androidId').val(),
-          name: $('#name').val()
+          name: $('#name').val(),
+          character_type: $('#characterType').val()
         });
         return false;
       });
@@ -75,6 +81,10 @@
 
       $('#leave').on('click', function(){
         socket.emit('leave', {android_id: $('#androidId').val()});
+      });
+
+      $('.clear').on('click', function(){
+        $('#log').html('');
       });
 
       $(document).on('submit', 'form.solve-problem', function(){

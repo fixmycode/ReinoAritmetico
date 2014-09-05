@@ -31,7 +31,7 @@
 
 /* line 22, ../sass/app.scss */
 body {
-  padding-top: 50px;
+  padding-top: 80px;
   background: #0c141f;
   color: #6fc3df;
 }
@@ -46,7 +46,7 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1;
+  z-index: 3;
 }
 /* line 39, ../sass/app.scss */
 #actions a {
@@ -235,4 +235,39 @@ a:hover {
 #join-code.start {
   background: #e6ffff;
   color: #0c141f;
+}
+
+/* line 205, ../sass/app.scss */
+.game-log {
+  overflow: scroll;
+  height: 220px;
+}
+
+/* line 210, ../sass/app.scss */
+#players-ongoing-game {
+  text-align: center;
+  vertical-align: top;
+}
+/* line 215, ../sass/app.scss */
+#players-ongoing-game img {
+  width: 100px;
+}
+
+/* line 220, ../sass/app.scss */
+.game-info {
+  font-size: 12px;
+}
+
+/* line 224, ../sass/app.scss */
+.paused {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-top: 270px;
+  font-size: 24px;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 2;
+  text-align: center;
 }

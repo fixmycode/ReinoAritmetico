@@ -20,7 +20,7 @@ $yellow: #FFE64D;
 * { outline: none;}
 
 body {
-  padding-top: 50px;
+  padding-top: 80px;
   background: $background;
   color: $text;
 }
@@ -34,7 +34,7 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1;
+    z-index: 3;
 
     a {
       color: white;
@@ -202,3 +202,34 @@ a:hover {
     }
 }
 
+.game-log {
+    overflow: scroll;
+    height: 220px;
+}
+
+#players-ongoing-game {
+
+    text-align: center;
+    vertical-align: top;
+
+    img{
+        width: 100px;
+    }
+}
+
+.game-info {
+    font-size: 12px;
+}
+
+.paused {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-top: 270px;
+    font-size: 24px;
+    background: rgba(0, 0, 0, .8);
+    z-index: 2;
+    text-align: center;
+}

@@ -102,10 +102,24 @@ angular.module('RAApp').controller("playCtrl", function ($scope, $routeParams, $
 
     $scope.$on('resume game', function(e, data){
         $scope.match.resume();
+        $scope.$digest();
     });
 
     $scope.$on('player disconnected', function(e, socketId) {
         $scope.match.playerFell(socketId);
+        $scope.$digest();
     });
+
+    $scope.$on('update players', function(event, args) {
+        $scope.$digest();
+    });
+
+    $scope.averageTime = function(){
+        var time = 0.0;
+        var sum = _.reduce($scope.match.answers, function(time, num){ return time + parseFloat(num.elapsed_time); }, 0);
+
+        if ($scope.match.answers.length === 0 ) return '-';
+        return sum / $scope.match.answers.length;
+    };
 });
 

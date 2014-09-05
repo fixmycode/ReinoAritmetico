@@ -6,3 +6,9 @@ angular.module('RAApp').filter('range', function() {
     return val;
   };
 });
+
+angular.module('RAApp').filter('reverse', function() {
+  return function(items) {
+    return items.slice().reverse();
+  };
+});

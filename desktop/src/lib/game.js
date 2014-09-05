@@ -193,6 +193,7 @@ Game.prototype.start = function() {
   });
 
   self.playing = true;
+  self.waiting = false;
 
   return defer.promise;
 }

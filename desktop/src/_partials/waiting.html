@@ -16,15 +16,15 @@
   <div class="col-md-12">
     <div id="players">
       <div class="player" ng-repeat="player in match.players track by $index">
-        <img src="img/warrior.gif"> <br>
+        <img src="img/{{ player.character_type }}.png"> <br>
         <small>Jugador {{ $index + 1 }}</small> <br>
         <span class="player">{{ player.name }}</span>
       </div>
       <div class="player waiting" ng-repeat="i in [] | range: (match.numPlayers - match.players.length)">
-              <img src="img/not-connected.gif"> <br>
-              <small>Jugador {{ i + 1 }}</small> <br>
-              <span class="player">Esperando&hellip;</span>
-          </div>
+        <img src="img/not-connected.gif"> <br>
+        <small>Jugador {{ i + 1 + match.players.length }}</small> <br>
+        <span class="player">Esperando&hellip;</span>
+      </div>
     </div>
   </div>
 </div>
