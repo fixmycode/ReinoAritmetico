@@ -23,12 +23,12 @@ public class Problem {
     }
 
     public static Problem fromJSON(JSONObject obj) throws JSONException {
-        return new Problem(obj.getInt("problem_id"), obj.getString("problem"), obj.getString("correct_answer"));
+        return new Problem(obj.getInt("id"), obj.getString("problem"), obj.getString("correct_answer"));
     }
 
     public JSONObject toJSON() throws JSONException {
         JSONObject obj = new JSONObject();
-        obj.put("problem_id", id);
+        obj.put("id", id);
         obj.put("problem", problem);
         obj.put("correct_answer", correctAnswer);
         obj.put("answer", answer);
