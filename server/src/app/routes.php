@@ -15,7 +15,7 @@ Route::get("api/problems", function(){
   $difficulty = Input::get('difficulty');
   
   if($quantity != null && $difficulty != null){
-    $problems = DB::table('problems')->where('difficulty','=',$difficulty)->take($quantity)->get();  
+    $problems = DB::table('problems')->where('difficulty','=',$difficulty)->orderByRaw("RAND()")->take($quantity)->get();  
     return Response::json($problems);
   }
   
