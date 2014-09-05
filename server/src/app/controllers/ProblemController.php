@@ -9,10 +9,18 @@ class ProblemController extends \BaseController {
 	 */
 	public function index()
 	{
+
 		$problems = Problem::all();
+		//$problemType = DB::table('problem_type')->select('id', 'type')->get();
+		$problemType = ProblemType::lists("type","id");
+		$difficulty = array("1"=>"1", 2 => 2, 3 => 3);
+		
 		return View::make('problems.index')
 									->with('problems', $problems)
-									->with('title', 'Preguntas');
+									->with('title', 'Preguntas')
+									->with('newProblem', new Problem)
+									->with('problem_type',$problemType )
+									->with('difficulty', $difficulty);
 	}
 
 
@@ -23,7 +31,8 @@ class ProblemController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+
+
 	}
 
 
@@ -34,7 +43,15 @@ class ProblemController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+
+		$problem = new Problem();
+		$problem->problem = Input::get('problem');
+		$problem->correct_answer = Input::get('correct_answer');
+		$problem->problem_type_id = 1; //Input::get('problem_type_id');
+		$problem->difficulty = Input::get('difficulty');
+		$problem->save();
+		
+		return Redirect::route('problems.index');
 	}
 
 
@@ -58,7 +75,14 @@ class ProblemController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		$problem = Problem::findOrFail($id);
+		$problemType = ProblemType::lists("type","id");
+		$difficulty = array("1"=>"1", 2 => 2, 3 => 3);
+
+		return View::make('problems.partials.edit')
+									->with('problem_type',$problemType )
+									->with('difficulty', $difficulty)
+									->with('problem', $problem);
 	}
 
 
@@ -70,7 +94,14 @@ class ProblemController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$problem = Problem::find($id);
+		$problem->problem = Input::get('problem');
+		$problem->correct_answer = Input::get('correct_answer');
+		$problem->problem_type_id = 1;//Input::get('problem_type_id');
+		$problem->difficulty = Input::get('difficulty');
+		$problem->save();
+		return Redirect::route('problems.index');
+
 	}
 
 
@@ -82,7 +113,11 @@ class ProblemController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+
+		$problem = Problem::findOrFail($id);
+
+		$problem->delete();
+		
 	}
 
 

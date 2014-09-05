@@ -3,41 +3,109 @@
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
+
+  <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <style>
+  body {
+    font-family: 'Open Sans', sans-serif;
+  }
+  #log p {
+    margin: 0 0 5px 0;
+  }
+    #log p.info {
+      color: #2e6be6;
+    }
+
+    #log p.error {
+      color: #ff4347;
+    }
+
+    span.timestamp {
+      float: right;
+      color: #aaa;
+    }
+  </style>
 </head>
 <body>
-    <form action="">
-      <label>Android ID</label> <input type="text" id="androidId">
-      <label>Name</label> <input type="text" id="name">
-      <button>Join</button> <br>
+
+
+
+    <form action="" id="join-game">
+        <label>Android ID</label> <input type="text" id="androidId"> <br>
+        <label>Name</label> <input type="text" id="name"> <br>
+        <label>Character Type</label> <select id="characterType">
+          <option value="0">Warrior</option>
+          <option value="1">Wizard</option>
+          <option value="2">Archer</option>
+        </select><br>
+        <button>Join</button> <br>
     </form>
-    <button id="leave">Salir</button>
+    <button id="leave">Salir</button><br>
+    <button class="clear">Clear</button>
 
     <div id="log"></div>
 
     <script src="node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-      var socket = io.connect('http://ludus.noip.me:3000');
+      var socket = io.connect('http://localhost:3000');
+      var problem = {};
+      var elapsed = null;
+
+      $('form#join-game').on('submit', function() {
+        console.log('joining');
+        socket.emit('join', {
+          android_id: $('#androidId').val(),
+          name: $('#name').val(),
+          character_type: $('#characterType').val()
+        });
+        return false;
+      });
 
       socket.on('error', function(data){
-        $('#log').append('<p>' + data.msg + '</p>');
+        $('#log').prepend('<p class="error"><i class="fa fa-fw fa-warning"></i> ' + data.msg + '<span class="timestamp">' + (new Date()).toLocaleTimeString() + '</span></p>');
         console.error(data);
       });
 
       socket.on('info', function(data){
-        $('#log').append('<p>' + data.msg + '</p>');
+        $('#log').prepend('<p class="info"><i class="fa fa-fw fa-info"></i> ' + data.msg + '<span class="timestamp">' + (new Date()).toLocaleTimeString() + '</span></p>');
         console.info(data);
+      });
+
+      socket.on('solve problem', function(data) {
+        problem = data;
+        elapsed = new Date();
+        $('#log').prepend('<p class="info"><i class="fa fa-fw fa-info"></i><form class="solve-problem" data-problem-id="'+data.problem_id+'"> ' + data.problem + ' <input type="text" placeholder="respuesta"><input type="submit" value="Enviar"></form><span class="timestamp">' + (new Date()).toLocaleTimeString() + '</span></p>');
       });
 
       $('#leave').on('click', function(){
         socket.emit('leave', {android_id: $('#androidId').val()});
       });
 
-      $('form').submit(function(){
-        socket.emit('join', {
-          android_id: $('#androidId').val(),
-          name: $('#name').val()
-        });
+      $('.clear').on('click', function(){
+        $('#log').html('');
+      });
+
+      $(document).on('submit', 'form.solve-problem', function(){
+        $this = $(this);
+
+        var problem_solved = {
+          id: problem.id,
+          'problem': problem.problem,
+          correct_answer: problem.correct_answer,
+          answer: $this.find('input[type=text]').first().val(),
+          elapsed_time: ( (new Date()) - elapsed)/1000
+        };
+        elapsed = null;
+
+        if (problem.correct_answer === problem_solved.answer) {
+          $('#log').prepend('<p class="info"><i class="fa fa-fw fa-info"></i>Correcto! <span class="timestamp">' + (new Date()).toLocaleTimeString() + '</span></p>');
+        }else {
+          $('#log').prepend('<p class="error"><i class="fa fa-fw fa-warning"></i>Ups. mal :( <span class="timestamp">' + (new Date()).toLocaleTimeString() + '</span></p>');
+        }
+
+        socket.emit('submit answer', problem_solved);
         return false;
       });
     </script>

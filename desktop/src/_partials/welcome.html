@@ -1,0 +1,24 @@
+<p class="text-center">
+    <img src="img/reino-logo.png" alt="">
+</p>
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="page-header">
+            <h2>Iniciar Quest</h2>
+        </div>
+        <ul class="list-unstyled">
+            <li ng-repeat="quest in quests track by $index">
+            <h4>
+                <a href="#waiting/{{$index}}">
+                    {{ $index + 1 }}. {{ quest.name }} <small>{{ quest.numPlayers }} Jugador{{ quest.numPlayers > 1 ? 'es' : '' }}, Dificultad {{ quest.difficulty }}, {{  quest.problemsPerPlayer }} {{ quest.problemsPerPlayer > 1 ? 'Preguntas' : 'Pregunta'}} Por Jugador </small>
+                </a>
+                <small><span class="pull-right tone-down" ng-click="removeQuest(quest)"><i class="fa fa-trash-o"></i></span></small>
+            </h4>
+            </li>
+            <li ng-show="quests.length < 3">
+                <a href="#config_quest" class="btn btn-primary btn-xs">Nuevo Quest</a>
+            </li>
+        </ul>
+    </div>
+</div>

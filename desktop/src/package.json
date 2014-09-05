@@ -1,37 +1,32 @@
 {
-  "name": "Reino-Aritmetico",
-  "version": "0.0.1",
-  "description": "Juego para niños usando nodejs desde dispositivos moviles como controles",
-  "main": "./html/index.html",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "name": "ReinoAritmetico",
+  "version": "0.0.2",
+  "description": "Juego de matematico de niños con smartphones",
+  "main": "index.html",
+  "private": true,
   "keywords": [
-    "nodejs",
-    "express",
-    "game"
+    "node",
+    "webkit",
+    "socket.io",
+    "angular.js"
   ],
   "window": {
     "title": "Reino Aritmético",
     "icon": "./html/favicon.ico",
-    "toolbar": true,
-    "frame": true,
-    "width": 800,
-    "height": 640,
+    "toolbar": false,
+    "frame": false,
+    "width": 1024,
+    "height": 768,
     "position": "mouse",
     "min_width": 800,
     "min_height": 600
   },
-  "webkit": {
-    "plugin": true
-  },
-  "private": true,
+  "author": "JPEG",
+  "license": "MIT",
   "dependencies": {
-    "express": "3.x",
-    "body-parser": "~1.5.0",
+    "underscore": "~1.7.0",
     "ip": "~0.3.0",
-    "socket.io": "~0.9.16"
-  },
-  "author": "jpeg",
-  "license": "MIT"
+    "socket.io": "~0.9.16",
+    "q": "~1.0.1"
+  }
 }

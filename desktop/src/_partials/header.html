@@ -1,0 +1,47 @@
+<header id="actions">
+    <ul>
+        <li><a class="close-app" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Cerrar"></a></li>
+        <li><a class="minimize-app" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Minimizar"></a></li>
+        <li><a class="maximize-app" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Maximizar"></a></li>
+    </ul>
+    <h2 class="title">Reino Aritmético</h2>
+    <a class="pull-right" data-toggle="modal" data-target="#settings"  rel="tooltip" data-toggle="tooltip" data-placement="left" title="Opciones"><i class="fa fa-cog"></i></a>
+</header>
+
+<div class="modal fade" id="settings">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Configuración</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" ng-submit="saveSettings()">
+                    <fieldset>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                      <label class="col-md-4 control-label" for="serverIpAddress">IP Servidor</label>  
+                      <div class="col-md-4">
+                        <input id="serverIpAddress" name="serverIpAddress" type="text" placeholder="" class="form-control input-md" ng-model="settings.serverIpAddress">
+                      </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                      <label class="col-md-4 control-label" for="serverPort">Puerto</label>  
+                      <div class="col-md-3">
+                        <input id="serverPort" name="serverPort" type="text" placeholder="" class="form-control input-md" ng-model="settings.serverPort">
+                      </div>
+                    </div>
+
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="saveSettings()">Guardar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
