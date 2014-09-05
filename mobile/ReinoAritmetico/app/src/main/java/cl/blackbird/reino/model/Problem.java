@@ -32,7 +32,7 @@ public class Problem {
         obj.put("problem", problem);
         obj.put("correct_answer", correctAnswer);
         obj.put("answer", answer);
-        obj.put("elapsed_time", elapsedTime);
+        obj.put("elapsed_time", elapsedTime/1000f);
         return obj;
     }
 

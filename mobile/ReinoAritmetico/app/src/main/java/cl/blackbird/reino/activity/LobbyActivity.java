@@ -55,7 +55,7 @@ public class LobbyActivity extends Activity implements LobbyFragment.LobbyListen
         setContentView(R.layout.frame_layout);
         if (savedInstanceState == null){
             player = (Player) getIntent().getExtras().getSerializable("player");
-            lobbyFragment = new LobbyFragment();
+            lobbyFragment = LobbyFragment.newInstance(player);
             getFragmentManager().beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     .add(R.id.container, lobbyFragment, LobbyFragment.TAG)
@@ -163,15 +163,21 @@ public class LobbyActivity extends Activity implements LobbyFragment.LobbyListen
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        int toastRes = R.string.game_over;
         switch (resultCode) {
             case Activity.RESULT_OK:
                 Log.d(TAG, "Activity ended OK");
+                toastRes = R.string.game_over;
                 break;
             case Activity.RESULT_CANCELED:
                 Log.d(TAG, "Activity canceled");
-                forceLeave();
+                toastRes = R.string.game_error;
                 break;
         }
+        Toast.makeText(
+                getApplicationContext(),
+                toastRes,
+                Toast.LENGTH_LONG).show();
     }
 
     /**

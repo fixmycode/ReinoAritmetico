@@ -27,6 +27,7 @@ public class GameActivity extends Activity implements IOCallback, MainGameFragme
     private static final String TAG = "RAGAME";
     private boolean gameStarted;
     private Player player;
+    private String server;
     private SocketIO socket;
     private long back_pressed;
     private MainGameFragment gameFragment;
@@ -40,31 +41,27 @@ public class GameActivity extends Activity implements IOCallback, MainGameFragme
         if(getActionBar() != null){
             getActionBar().setDisplayHomeAsUpEnabled(false);
         }
-        try {
-            socket = new SocketIO(extras.getString("server"));
-            player = (Player) extras.getSerializable("player");
-            mHandler = new Handler(Looper.getMainLooper());
-            if (savedInstanceState == null) {
-                gameStarted = false;
-                LoadingFragment.setLoadingMessage(this, R.string.joining_game);
-            } else {
-                gameStarted = savedInstanceState.getBoolean("gameStarted");
-            }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            setResult(Activity.RESULT_CANCELED);
-            finish();
+        server = extras.getString("server");
+        player = (Player) extras.getSerializable("player");
+        mHandler = new Handler(Looper.getMainLooper());
+        if (savedInstanceState == null) {
+            gameStarted = false;
+            LoadingFragment.setLoadingMessage(this, R.string.joining_game);
+        } else {
+            gameStarted = savedInstanceState.getBoolean("gameStarted");
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(!socket.isConnected()){
-            socket.connect(this);
-            if(!gameStarted){
-                emitJoin();
-            }
+        try {
+            socket = new SocketIO(server, this);
+            emitJoin();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            setResult(Activity.RESULT_CANCELED);
+            finish();
         }
     }
 
@@ -102,7 +99,9 @@ public class GameActivity extends Activity implements IOCallback, MainGameFragme
     @Override
     public void onConnect() {
         Log.d(TAG, "Socket Connected");
-        gameFragment = new MainGameFragment();
+        if(gameFragment == null) {
+            gameFragment = new MainGameFragment();
+        }
         getFragmentManager().beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.container, gameFragment)

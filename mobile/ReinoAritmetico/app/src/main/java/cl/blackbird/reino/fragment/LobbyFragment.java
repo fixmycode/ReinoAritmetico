@@ -1,11 +1,13 @@
 package cl.blackbird.reino.fragment;
 
 import android.app.Activity;
+import android.content.res.TypedArray;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,8 +37,9 @@ public class LobbyFragment extends Fragment implements View.OnClickListener {
         View layout = inflater.inflate(R.layout.lobby_layout, container, false);
         player = (Player) getArguments().getSerializable("player");
         characterImage = (ImageView) layout.findViewById(R.id.character_image);
-        characterImage.setImageResource(
-                getResources().getIntArray(R.array.character_list)[player.characterType]);
+        TypedArray drawableArray = getResources().obtainTypedArray(R.array.character_list);
+        int characterId = drawableArray.getResourceId(player.characterType, -1);
+        characterImage.setImageResource(characterId);
         lobbyCode = (EditText) layout.findViewById(R.id.lobby_code);
         joinButton = (Button) layout.findViewById(R.id.join_button);
         joinButton.setOnClickListener(this);
@@ -63,7 +66,7 @@ public class LobbyFragment extends Fragment implements View.OnClickListener {
         //empty constructor
     }
 
-    public LobbyFragment newInstance(Player player) {
+    public static LobbyFragment newInstance(Player player) {
         Bundle args = new Bundle();
         args.putSerializable("player", player);
         LobbyFragment instance = new LobbyFragment();

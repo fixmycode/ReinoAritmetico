@@ -48,6 +48,8 @@
     <string name="your_answer">Your Answer</string>
     <string name="no_question">Waiting…</string>
     <string name="your_question">Your Question</string>
+    <string name="game_over">Game over! results are on the screen</string>
+    <string name="game_error">Unexpected error during the game</string>
 
     <string-array name="characters">
         <item>Warrior</item>

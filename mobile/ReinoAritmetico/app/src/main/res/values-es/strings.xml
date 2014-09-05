@@ -50,6 +50,8 @@
     <string name="your_answer">Tu Respuesta</string>
     <string name="no_question">Esperando…</string>
     <string name="your_question">Tu Pregunta</string>
+    <string name="game_over">Juego terminado! los resultados están en la pantalla</string>
+    <string name="game_error">Error inesperado durante la partida</string>
 
     <string-array name="characters">
         <item>Guerrero</item>
