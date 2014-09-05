@@ -223,42 +223,43 @@ a:hover {
 /* line 189, ../sass/app.scss */
 #join-code {
   text-align: center;
-  background: #ffe64d;
+  background: yellowgreen;
   display: inline-block;
+  border-radius: 3px;
   font-size: 30px;
   color: #0c141f;
   padding: 10px;
   font-weight: light;
   margin: 30px 0;
 }
-/* line 199, ../sass/app.scss */
+/* line 200, ../sass/app.scss */
 #join-code.start {
   background: #e6ffff;
   color: #0c141f;
 }
 
-/* line 205, ../sass/app.scss */
+/* line 206, ../sass/app.scss */
 .game-log {
   overflow: scroll;
   height: 220px;
 }
 
-/* line 210, ../sass/app.scss */
+/* line 211, ../sass/app.scss */
 #players-ongoing-game {
   text-align: center;
   vertical-align: top;
 }
-/* line 215, ../sass/app.scss */
+/* line 216, ../sass/app.scss */
 #players-ongoing-game img {
   width: 100px;
 }
 
-/* line 220, ../sass/app.scss */
+/* line 221, ../sass/app.scss */
 .game-info {
   font-size: 12px;
 }
 
-/* line 224, ../sass/app.scss */
+/* line 225, ../sass/app.scss */
 .paused {
   position: absolute;
   top: 0;
