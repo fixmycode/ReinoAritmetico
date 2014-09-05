@@ -58,7 +58,7 @@ angular.module('RAApp').controller("waitingCtrl", function ($scope, $routeParams
 
     $window.game = createGame({
         numPlayers: $scope.quest.numPlayers,
-        dificulty: $scope.quest.dificulty,
+        difficulty: $scope.quest.difficulty,
         problemsPerPlayer: $scope.quest.problemsPerPlayer,
         serverIpAddress: settings.serverIpAddress,
         serverPort: settings.serverPort

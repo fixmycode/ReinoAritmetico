@@ -24,9 +24,9 @@
          </div>
        </div>
      </div>
-
+     
     <div class="alert alert-info" ng-show=" ! match.playing && match.waitingForFallen.length === 0">
-      <a type="button" href="#/" class="close" >&times;</a>
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
       <strong>El quest ha terminado</strong> Han ganado!!!!
     </div>
     <div  class="game-log">
@@ -46,7 +46,7 @@
         <span class="player">{{ player.name }}</span>
       </div>
       <div class="player waiting" ng-repeat="player in match.waitingForFallen">
-        <img src="img/not-connected.gif"> <br>
+        <img src="img/nobody.png"> <br>
         <small>{{ player.name }}</small> <br>
         <span class="player">Esperando <i class="fa fa-spinner fa-spin"></i></span>
       </div>

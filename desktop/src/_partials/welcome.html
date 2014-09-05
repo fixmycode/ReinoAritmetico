@@ -11,7 +11,7 @@
             <li ng-repeat="quest in quests track by $index">
             <h4>
                 <a href="#waiting/{{$index}}">
-                    {{ $index + 1 }}. {{ quest.name }} <small>{{ quest.numPlayers }} Jugador{{ quest.numPlayers > 1 ? 'es' : '' }}, Dificultad {{ quest.dificulty }}, {{  quest.problemsPerPlayer }} {{ quest.problemsPerPlayer > 1 ? 'Preguntas' : 'Pregunta'}} Por Jugador </small>
+                    {{ $index + 1 }}. {{ quest.name }} <small>{{ quest.numPlayers }} Jugador{{ quest.numPlayers > 1 ? 'es' : '' }}, Dificultad {{ quest.difficulty }}, {{  quest.problemsPerPlayer }} {{ quest.problemsPerPlayer > 1 ? 'Preguntas' : 'Pregunta'}} Por Jugador </small>
                 </a>
                 <small><span class="pull-right tone-down" ng-click="removeQuest(quest)"><i class="fa fa-trash-o"></i></span></small>
             </h4>

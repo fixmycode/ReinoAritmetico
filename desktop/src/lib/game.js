@@ -8,7 +8,7 @@ function Game(options) {
   this.numPlayers        = options.numPlayers        || 5;
   this.serverIpAddress   = options.serverIpAddress   || '127.0.0.1';
   this.serverPort        = options.serverPort        || 8000;
-  this.difficulty         = options.difficulty         || 1;
+  this.difficulty        = options.difficulty        || 1;
   this.problemsPerPlayer = options.problemsPerPlayer || 15;
   this.players = [];
   this.answeringPlayers = [];

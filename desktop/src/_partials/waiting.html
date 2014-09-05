@@ -21,7 +21,7 @@
         <span class="player">{{ player.name }}</span>
       </div>
       <div class="player waiting" ng-repeat="i in [] | range: (match.numPlayers - match.players.length)">
-        <img src="img/not-connected.gif"> <br>
+        <img src="img/nobody.png"> <br>
         <small>Jugador {{ i + 1 + match.players.length }}</small> <br>
         <span class="player">Esperando&hellip;</span>
       </div>
