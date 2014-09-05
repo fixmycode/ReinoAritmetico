@@ -8,13 +8,14 @@
     <string name="register_first">To be able to play with your friends, you need to register in the
     system first. This is a one-time step, you won\'t be asked to register in this device ever again.</string>
     <string name="register_and_play">Register and play!</string>
+    <string name="select_char">Select your character</string>
     <string name="select_school">Select your school</string>
     <string name="select_class">Select your class</string>
     <string name="full_name_hint">Your full name</string>
     <string name="server_error">There was an error with the server, please restart the application.</string>
     <string name="welcome_player">It\'s nice to see you again, %s!</string>
     <string name="welcome_player_error">Something weird happened and I didn\'t catch your name…</string>
-    <string name="register_dialog" formatted="false">Your name is %s, you go to %s and you\'re currently on %s class, is this correct?</string>
+    <string name="register_dialog" formatted="false">Your name is %s, you go to %s, you\'re currently on %s class and chose to be a %s, is this correct?</string>
     <string name="register_error">There was a problem with your registration, care to try again?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -39,5 +40,20 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="server_address">Server Address</string>
     <string name="default_server">http://192.168.0.101</string>
+    <string name="title_activity_game">GameActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="answer">Answer</string>
+    <string name="erase">Erase</string>
+    <string name="no_answer" />
+    <string name="your_answer">Your Answer</string>
+    <string name="no_question">Waiting…</string>
+    <string name="your_question">Your Question</string>
+    <string name="game_over">Game over! results are on the screen</string>
+    <string name="game_error">Unexpected error during the game</string>
 
+    <string-array name="characters">
+        <item>Warrior</item>
+        <item>Wizard</item>
+        <item>Archer</item>
+    </string-array>
 </resources>

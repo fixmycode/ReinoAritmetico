@@ -5,6 +5,8 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -40,6 +42,7 @@ public class RegisterActivity extends Activity implements RegisterFragment.Regis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.frame_layout);
         getClients();
+
     }
 
     /**
@@ -112,6 +115,7 @@ public class RegisterActivity extends Activity implements RegisterFragment.Regis
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("android_id", player.androidID);
                 params.put("name", player.name);
+                params.put("character_type", String.valueOf(player.characterType));
                 params.put("school", String.valueOf(player.school.id));
                 params.put("classroom", String.valueOf(player.classRoom.id));
                 return params;

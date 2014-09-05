@@ -9,6 +9,7 @@
         nuestro sistema. Este paso se hace una vez y nunca más se te pedirá registrarte en este
         dispositivo.</string>
     <string name="register_and_play">Regístrate y juega!</string>
+    <string name="select_char">Selecciona tu personaje</string>
     <string name="select_school">Selecciona tu colegio</string>
     <string name="select_class">Selecciona tu clase</string>
     <string name="full_name_hint">Tu nombre completo</string>
@@ -16,8 +17,7 @@
         aplicación.</string>
     <string name="welcome_player">Que bueno verte de nuevo, %s!</string>
     <string name="welcome_player_error">Algo extraño pasó y no pude leer tu nombre…</string>
-    <string name="register_dialog" formatted="false">Tu nombre es %s, estudiante del %s y
-        actualmente estás en %s, ¿correcto?</string>
+    <string name="register_dialog" formatted="false">Tu nombre es %s, estudiante del %s, actualmente estás en %s y elegiste ser un %s, ¿correcto?</string>
     <string name="register_error">Ocurrió un problema con tu registro, ¿te importaría intentarlo de
         nuevo?</string>
     <string name="yes">Sí</string>
@@ -44,5 +44,18 @@
         servidor, reintentando en %d segundos…</string>
     <string name="press_twice">Presiona nuevamente para salir</string>
     <string name="server_address">Dirección del Servidor</string>
+    <string name="answer">Responder</string>
+    <string name="erase">Borrar</string>
+    <string name="no_answer" />
+    <string name="your_answer">Tu Respuesta</string>
+    <string name="no_question">Esperando…</string>
+    <string name="your_question">Tu Pregunta</string>
+    <string name="game_over">Juego terminado! los resultados están en la pantalla</string>
+    <string name="game_error">Error inesperado durante la partida</string>
 
+    <string-array name="characters">
+        <item>Guerrero</item>
+        <item>Mago</item>
+        <item>Arquero</item>
+    </string-array>
 </resources>

@@ -3,6 +3,7 @@ package cl.blackbird.reino.fragment;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.provider.Settings;
@@ -16,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import org.json.JSONArray;
@@ -35,9 +37,13 @@ public class RegisterFragment extends Fragment implements AdapterView.OnItemSele
     private static final String CLIENTS_STRING = "clients";
     private Spinner schoolSpinner;
     private Spinner classSpinner;
+    private Spinner charSpinner;
     private EditText nameField;
     private RegisterListener registerListener;
     private Button registerButton;
+    private ImageView charImage;
+    private String[] charTypes;
+    private TypedArray charDrawables;
 
     /**
      * This is a factory method (remember the Factory pattern from FISW?) to create a new Register
@@ -89,6 +95,9 @@ public class RegisterFragment extends Fragment implements AdapterView.OnItemSele
                 checkValidForm(s, registerButton);
             }
         });
+        charTypes = getResources().getStringArray(R.array.characters);
+        charDrawables = getResources().obtainTypedArray(R.array.character_list);
+        charImage = (ImageView) layout.findViewById(R.id.character_img);
 
         if (getArguments() != null) {
             try {
@@ -125,7 +134,26 @@ public class RegisterFragment extends Fragment implements AdapterView.OnItemSele
     private void buildSpinners(View layout, JSONArray clients) throws JSONException {
         schoolSpinner = (Spinner) layout.findViewById(R.id.school_spinner);
         classSpinner = (Spinner) layout.findViewById(R.id.class_spinner);
+        charSpinner = (Spinner) layout.findViewById(R.id.char_spinner);
         classSpinner.setEnabled(false);
+
+        ArrayAdapter<String> dataAdapter  = new ArrayAdapter<String>(
+                getActivity(),android.R.layout.simple_spinner_item, charTypes);
+
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        charSpinner.setAdapter(dataAdapter);
+        charSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                charImage.setImageResource(charDrawables.getResourceId(
+                        charSpinner.getSelectedItemPosition(), -1));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         List<School> schoolList = new ArrayList<School>();
         for(int i = 0; i < clients.length(); i++){
@@ -180,6 +208,7 @@ public class RegisterFragment extends Fragment implements AdapterView.OnItemSele
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         classSpinner.setEnabled(true);
         School school = (School) schoolSpinner.getItemAtPosition(position);
+
         ArrayAdapter<ClassRoom> classAdapter = new ArrayAdapter<ClassRoom>(getActivity(),
                 android.R.layout.simple_spinner_item, school.classRooms);
         classAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -198,15 +227,17 @@ public class RegisterFragment extends Fragment implements AdapterView.OnItemSele
     public void onClick(View v) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final String name = nameField.getText().toString();
+        final int characterId = charSpinner.getSelectedItemPosition();
+        final String characterName = charSpinner.getSelectedItem().toString();
         final School selectedSchool = (School) schoolSpinner.getSelectedItem();
         final ClassRoom selectedClassRoom = (ClassRoom) classSpinner.getSelectedItem();
         String message = String.format(getString(R.string.register_dialog),
-                name, selectedSchool.name, selectedClassRoom.name);
+                name, selectedSchool.name, selectedClassRoom.name, characterName);
         builder.setMessage(message);
         builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                registerNewPlayer(name, selectedSchool, selectedClassRoom);
+                registerNewPlayer(name, characterId, selectedSchool, selectedClassRoom);
                 dialog.dismiss();
             }
         });
@@ -226,8 +257,8 @@ public class RegisterFragment extends Fragment implements AdapterView.OnItemSele
      * @param school the school
      * @param classRoom the classroom
      */
-    private void registerNewPlayer(final String name, School school, ClassRoom classRoom) {
-        Player player = new Player(name, school, classRoom);
+    private void registerNewPlayer(String name, int characterType, School school, ClassRoom classRoom) {
+        Player player = new Player(name, characterType, school, classRoom);
         player.androidID = Settings.Secure.getString(
                 getActivity().getContentResolver(),
                 Settings.Secure.ANDROID_ID);

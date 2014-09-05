@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,9 +36,12 @@ import cl.blackbird.reino.model.Player;
  * REMINDER: Activities don't interact with the UI, only the fragments can interact with the UI.
  */
 public class LobbyActivity extends Activity implements LobbyFragment.LobbyListener {
+    private static final String TAG = "RALOBBY";
+    private static final int GAME_CODE = 2;
     private Player player;
     private String server;
     private HashMap<String, String> routingTable;
+    private LobbyFragment lobbyFragment;
     private long back_pressed;
 
     /**
@@ -51,9 +55,10 @@ public class LobbyActivity extends Activity implements LobbyFragment.LobbyListen
         setContentView(R.layout.frame_layout);
         if (savedInstanceState == null){
             player = (Player) getIntent().getExtras().getSerializable("player");
+            lobbyFragment = LobbyFragment.newInstance(player);
             getFragmentManager().beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    .add(R.id.container, new LobbyFragment(), LobbyFragment.TAG)
+                    .add(R.id.container, lobbyFragment, LobbyFragment.TAG)
                     .commit();
         }
     }
@@ -108,6 +113,7 @@ public class LobbyActivity extends Activity implements LobbyFragment.LobbyListen
     public void onJoinServer(final String code) {
         String cachedServer = routingTable.get(code);
         if(cachedServer != null){
+            Log.d(TAG, "Using cached server: "+cachedServer);
             joinServer(player, cachedServer);
         } else {
             String url = Uri.parse(Config.getServer(this)).buildUpon()
@@ -139,69 +145,39 @@ public class LobbyActivity extends Activity implements LobbyFragment.LobbyListen
         }
     }
 
-    /**
-     * API call to leave a game room.
-     */
-    @Override
-    public void onLeaveServer() {
-        if(this.server != null){
-            String url = Uri.parse(this.server).buildUpon()
-                    .path("leave")
-                    .appendQueryParameter("android_id", player.androidID)
-                    .build().toString();
-            StringRequest request = new StringRequest(Request.Method.GET, url,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            setServer(null);
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            error.printStackTrace();
-                        }
-                    });
-            ReinoApplication.getInstance().getRequestQueue().add(request);
-        }
-    }
 
     /**
-     * API call to join a game room. After it finishes successfully, it saves the server address in
-     * a variable so we can go back to it later to leave.
+     * Calls the Game Activity with the server information we captured. This activity returns a
+     * result that the lobby must expect.
      * @param player the player data
      * @param server the game server address
      */
     private void joinServer(final Player player, final String server) {
-        Log.d("Servidor", server);
-        String url = Uri.parse(server).buildUpon()
-                .path("join")
-                .build().toString();
-        StringRequest request = new StringRequest(Request.Method.POST, url,
-            new Response.Listener<String>() {
+        Log.d(TAG, "Joining server: "+server);
+        Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra("player", player);
+        intent.putExtra("server", server);
+        startActivityForResult(intent, GAME_CODE);
+    }
 
-                @Override
-                public void onResponse(String response) {
-                    setServer(server);
-                }
-            },
-            new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    error.printStackTrace();
-                    forceLeave();
-                }
-            }
-        ){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("name", player.name);
-                params.put("android_id", player.androidID);
-                return params;
-            }
-        };
-        ReinoApplication.getInstance().getRequestQueue().add(request);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        int toastRes = R.string.game_over;
+        switch (resultCode) {
+            case Activity.RESULT_OK:
+                Log.d(TAG, "Activity ended OK");
+                toastRes = R.string.game_over;
+                break;
+            case Activity.RESULT_CANCELED:
+                Log.d(TAG, "Activity canceled");
+                toastRes = R.string.game_error;
+                break;
+        }
+        Toast.makeText(
+                getApplicationContext(),
+                toastRes,
+                Toast.LENGTH_LONG).show();
     }
 
     /**
@@ -217,15 +193,10 @@ public class LobbyActivity extends Activity implements LobbyFragment.LobbyListen
      * state.
      */
     private void forceLeave() {
-        LobbyFragment fragment = (LobbyFragment) getFragmentManager()
-                .findFragmentByTag(LobbyFragment.TAG);
-        if(fragment != null){
-            Toast.makeText(
+        Toast.makeText(
                 getApplicationContext(),
                 R.string.join_error,
                 Toast.LENGTH_LONG).show();
-            fragment.forceLeave();
-        }
     }
 
     /**
