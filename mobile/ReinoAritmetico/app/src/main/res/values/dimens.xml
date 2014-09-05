@@ -5,4 +5,5 @@
     <dimen name="lobby_game_field">160sp</dimen>
     <dimen name="join_game_button">160dp</dimen>
     <dimen name="game_button_text_size">30sp</dimen>
+    <dimen name="question_text_size">40sp</dimen>
 </resources>
