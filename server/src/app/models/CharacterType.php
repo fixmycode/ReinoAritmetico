@@ -1,8 +1,9 @@
 <?php
 
-class Problem extends \Eloquent {
+class CharacterType extends \Eloquent {
 
   public $timestamps = false;
+  protected $table = 'character_type';
 
   // Add your validation rules here
   public static $rules = [
@@ -15,11 +16,6 @@ class Problem extends \Eloquent {
   /**
    * 
    */
-
-  public function problem_type(){
-    return $this->belongsTo('ProblemType');
-
-  }
   
 
 }

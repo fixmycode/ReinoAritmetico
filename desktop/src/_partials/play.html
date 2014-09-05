@@ -1,0 +1,55 @@
+<div class="paused" ng-show="match.waitingForFallen.length > 0">
+  El juego ha sido pausado, esperando a <span ng-repeat="fallen in match.waitingForFallen track by $index">{{ fallen.name }}{{ $index + 1 < match.waitingForFallen.length ? ', ' : ''}}</span> <br>
+<br>
+  <i class="fa fa-spinner fa-spin"></i>
+  <br> <br><br>
+
+  <a href="#/" class="btn btn-info btn-s">Detener Quest</a>
+</div>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <a href="#/" class="btn btn-text btn-xs">Detener Quest</a>
+    <h3 class="page-header">Game Log</h3>
+
+    <div class="game-info">
+      <p>
+        Tiempo: <timer interval="1000">{{mminutes}}:{{sseconds}}</timer> <br>
+        Tiempo Promedio de respuesta: {{ averageTime() | number : 3 }}
+      </p>
+
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: {{ match.answers.length / (match.numPlayers*match.problemsPerPlayer) * 100 }}%;">
+           {{ match.answers.length / (match.numPlayers*match.problemsPerPlayer) * 100 | number : 0}}%
+         </div>
+       </div>
+     </div>
+     
+    <div class="alert alert-info" ng-show=" ! match.playing && match.waitingForFallen.length === 0">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <strong>El quest ha terminado</strong> Han ganado!!!!
+    </div>
+    <div  class="game-log">
+      <div ng-repeat="answer in match.answers | reverse track by $index">
+        <p>{{ match.answers.length - $index }}. {{ answer.player_name }} contesto {{ answer.answer == answer.correct_answer ? 'correctamente' : 'equivocadamente' }} {{ answer.problem }} = {{ answer.answer }} <i class="fa fa-{{ answer.answer == answer.correct_answer ? 'check' : 'times' }}"></i> <span class="timestamp pull-right">{{ answer.elapsed_time | number : 3}}s</span></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div id="players-ongoing-game">
+      <div class="player" ng-repeat="player in match.players track by $index">
+        <img src="img/{{ player.character_type }}.png"> <br>
+        <small>Jugador {{ $index + 1 }}</small> <br>
+        <span class="player">{{ player.name }}</span>
+      </div>
+      <div class="player waiting" ng-repeat="player in match.waitingForFallen">
+        <img src="img/nobody.png"> <br>
+        <small>{{ player.name }}</small> <br>
+        <span class="player">Esperando <i class="fa fa-spinner fa-spin"></i></span>
+      </div>
+    </div>
+  </div>
+</div>

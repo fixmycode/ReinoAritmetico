@@ -1,0 +1,274 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+/* line 15, ../sass/app.scss */
+* {
+  box-sizing: border-box;
+  cursor: default;
+}
+
+/* Awesome! */
+/* line 17, ../sass/app.scss */
+#actions {
+  -webkit-app-region: drag;
+}
+
+/* line 18, ../sass/app.scss */
+#actions > ul > li {
+  -webkit-app-region: no-drag;
+}
+
+/* line 19, ../sass/app.scss */
+* {
+  -webkit-user-select: none;
+}
+
+/* line 20, ../sass/app.scss */
+* {
+  outline: none;
+}
+
+/* line 22, ../sass/app.scss */
+body {
+  padding-top: 80px;
+  background: #0c141f;
+  color: #6fc3df;
+}
+
+/* line 28, ../sass/app.scss */
+#actions {
+  background: #282828;
+  padding: 10px 10px;
+  text-align: center;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+}
+/* line 39, ../sass/app.scss */
+#actions a {
+  color: white;
+}
+/* line 43, ../sass/app.scss */
+#actions ul {
+  margin: 0;
+  padding: 0;
+  float: left;
+  cursor: default;
+}
+/* line 49, ../sass/app.scss */
+#actions ul li {
+  display: inline-block;
+  cursor: default;
+}
+/* line 54, ../sass/app.scss */
+#actions .title {
+  font-size: 13px;
+  cursor: default;
+  display: inline-block;
+  margin: 0;
+  margin-left: -100px;
+  opacity: .75;
+}
+
+/* line 66, ../sass/app.scss */
+#actions .close-app,
+#actions .minimize-app,
+#actions .maximize-app {
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;
+  margin: 0 2px;
+  display: block;
+  cursor: default;
+  -webkit-transition: 0.4s ease-out box-shadow;
+  -moz-transition: 0.4s ease-out box-shadow;
+  -o-transition: 0.4s ease-out box-shadow;
+  transition: 0.4s ease-out box-shadow;
+}
+/* line 75, ../sass/app.scss */
+#actions .close-app:hover,
+#actions .minimize-app:hover,
+#actions .maximize-app:hover {
+  box-shadow: 1px solid white;
+}
+
+/* line 80, ../sass/app.scss */
+#actions .close-app {
+  background: #ff403d;
+}
+
+/* line 84, ../sass/app.scss */
+#actions .minimize-app {
+  background: #dae417;
+}
+
+/* line 88, ../sass/app.scss */
+#actions .maximize-app {
+  background: yellowgreen;
+}
+
+/* line 92, ../sass/app.scss */
+.modal {
+  margin-top: 40px;
+}
+
+/* line 96, ../sass/app.scss */
+.modal-content {
+  border-radius: 0;
+}
+
+/* line 101, ../sass/app.scss */
+input[type=radio].css-checkbox {
+  display: none;
+}
+
+/* line 105, ../sass/app.scss */
+input[type=radio].css-checkbox + label.css-label {
+  padding-left: 29px;
+  height: 24px;
+  display: inline-block;
+  line-height: 24px;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+/* line 117, ../sass/app.scss */
+input[type=radio].css-checkbox:checked + label.css-label {
+  background-position: 0 -24px;
+}
+
+/* line 120, ../sass/app.scss */
+label.css-label {
+  background-image: url(../img/checkbox.png);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* line 130, ../sass/app.scss */
+legend {
+  color: #e6ffff;
+}
+
+/* line 134, ../sass/app.scss */
+.btn {
+  border-radius: 1px;
+}
+
+/* line 139, ../sass/app.scss */
+.form-dark input[type=text] {
+  background: none;
+  border: none;
+  border-bottom: 1px dashed #e6ffff;
+  box-shadow: none;
+  color: #e6ffff;
+  font-size: 15px;
+  padding: 0 !important;
+  border-radius: 0;
+}
+/* line 149, ../sass/app.scss */
+.form-dark input[type=text]:focus {
+  border-bottom-color: #df740c;
+}
+
+/* line 155, ../sass/app.scss */
+.tone-down {
+  opacity: .5;
+  -webkit-transition: 0.3s ease-in opacity;
+  -moz-transition: 0.3s ease-in opacity;
+  -o-transition: 0.3s ease-in opacity;
+  transition: 0.3s ease-in opacity;
+}
+/* line 160, ../sass/app.scss */
+.tone-down:hover {
+  opacity: 1;
+}
+
+/* line 165, ../sass/app.scss */
+a {
+  color: inherit;
+}
+
+/* line 169, ../sass/app.scss */
+a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* line 175, ../sass/app.scss */
+#players {
+  text-align: center;
+  vertical-align: top;
+}
+
+/* line 180, ../sass/app.scss */
+.player {
+  vertical-align: top;
+  display: inline-block;
+}
+/* line 184, ../sass/app.scss */
+.player img {
+  width: 150px;
+}
+
+/* line 189, ../sass/app.scss */
+#join-code {
+  text-align: center;
+  background: yellowgreen;
+  display: inline-block;
+  border-radius: 3px;
+  font-size: 30px;
+  color: #0c141f;
+  padding: 10px;
+  font-weight: light;
+  margin: 30px 0;
+}
+/* line 200, ../sass/app.scss */
+#join-code.start {
+  background: #e6ffff;
+  color: #0c141f;
+}
+
+/* line 206, ../sass/app.scss */
+.game-log {
+  overflow: scroll;
+  height: 220px;
+}
+
+/* line 211, ../sass/app.scss */
+#players-ongoing-game {
+  text-align: center;
+  vertical-align: top;
+}
+/* line 216, ../sass/app.scss */
+#players-ongoing-game img {
+  width: 100px;
+}
+
+/* line 221, ../sass/app.scss */
+.game-info {
+  font-size: 12px;
+}
+
+/* line 225, ../sass/app.scss */
+.paused {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-top: 270px;
+  font-size: 24px;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 2;
+  text-align: center;
+}
