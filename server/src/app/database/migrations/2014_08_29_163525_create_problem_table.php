@@ -40,7 +40,6 @@ class CreateProblemTable extends Migration {
 		Schema::create('game_problem', function(Blueprint $table)
 		{
 			$table->increments('id');
-			
 			$table->integer('game_id')->unsigned();
 			$table->integer('problem_id')->unsigned();
 			$table->datetime('started');
@@ -51,6 +50,19 @@ class CreateProblemTable extends Migration {
 
 	    $table->foreign('game_id')
 	      ->references('id')->on('games');  
+		});
+
+		Schema::create('answers', function(Blueprint $table){
+			$table->increments('id');
+			$table->integer('answer_time');
+			$table->integer('player_id')->unsigned();
+			$table->integer('problem_id')->unsigned();
+			$table->string('answer_selected');
+
+			$table->foreign('player_id')->references('id')->on('players');
+			$table->foreign('problem_id')->references('id')->on('problems');
+
+
 		});
 	}
 
