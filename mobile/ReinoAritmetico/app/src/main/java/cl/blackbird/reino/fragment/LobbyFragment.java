@@ -1,6 +1,7 @@
 package cl.blackbird.reino.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
@@ -14,6 +15,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import cl.blackbird.reino.R;
 import cl.blackbird.reino.model.Player;
@@ -24,7 +28,10 @@ public class LobbyFragment extends Fragment implements View.OnClickListener {
     private EditText lobbyCode;
     private ImageView characterImage;
     private Button joinButton;
+    private Button shopButton;
     private Player player;
+    private TextView nameText;
+    private TextView creditsText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +50,23 @@ public class LobbyFragment extends Fragment implements View.OnClickListener {
         lobbyCode = (EditText) layout.findViewById(R.id.lobby_code);
         joinButton = (Button) layout.findViewById(R.id.join_button);
         joinButton.setOnClickListener(this);
+
+        nameText =(TextView) layout.findViewById(R.id.nameText);
+        nameText.setText(player.name);
+
+        creditsText =(TextView) layout.findViewById(R.id.creditsText);
+        creditsText.setText("creditos");
+
+        shopButton=(Button) layout.findViewById(R.id.shopButton);
+        shopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onJoinShop();
+            }
+        });
+
+
+
         checkValidForm(lobbyCode.getText(), joinButton);
 
         lobbyCode.addTextChangedListener(new TextWatcher() {
@@ -119,6 +143,7 @@ public class LobbyFragment extends Fragment implements View.OnClickListener {
      */
     public interface LobbyListener {
         public void onJoinServer(String code);
+        public void onJoinShop();
     }
 
 }

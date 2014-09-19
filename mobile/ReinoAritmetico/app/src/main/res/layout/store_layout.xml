@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ff000000">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="225dp"
+            android:layout_height="355dp"
+            android:id="@+id/imageView"
+            android:src="@drawable/warrior"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cambiar Arma"
+                android:background="#ffffffff"
+                android:id="@+id/button2"
+                android:textColor="#ff000000" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cambiar Casco"
+                android:layout_marginTop="4dp"
+                android:background="#ffffffff"
+                android:id="@+id/button"
+                android:textColor="#ff000000" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cambiar Clase"
+        android:id="@+id/button3"
+        android:background="#ffffffff"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#ff000000" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Listo"
+        android:layout_marginTop="4dp"
+        android:id="@+id/button4"
+        android:background="#ffffffff"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#ff000000" />
+</LinearLayout>

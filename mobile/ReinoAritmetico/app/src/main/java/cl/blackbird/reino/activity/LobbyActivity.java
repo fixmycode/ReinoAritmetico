@@ -144,6 +144,14 @@ public class LobbyActivity extends Activity implements LobbyFragment.LobbyListen
             ReinoApplication.getInstance().getRequestQueue().add(request);
         }
     }
+    @Override
+    public void onJoinShop(){
+        Log.d(TAG,"Joining Store");
+        Intent intent= new Intent(this,StoreActivity.class);
+        intent.putExtra("player",player);
+        startActivity(intent);
+
+    }
 
 
     /**
