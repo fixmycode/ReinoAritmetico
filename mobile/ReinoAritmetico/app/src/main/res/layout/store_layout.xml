@@ -3,7 +3,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ff000000">
+    android:background="#ff000000"
+    android:gravity="center_vertical">
 
     <Button
         android:layout_width="match_parent"
@@ -12,7 +13,8 @@
         android:background="#ffffffff"
         android:id="@+id/weaponButton"
         android:textColor="#ff000000"
-        android:drawableLeft="@drawable/ic_launcher"/>
+        android:drawableLeft="@drawable/ic_launcher"
+        android:longClickable="false" />
 
     <Button
         android:layout_width="match_parent"

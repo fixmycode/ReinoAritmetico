@@ -24,6 +24,18 @@ public class StoreFragment extends Fragment {
     private Button classButton;
     private Button okButton;
     private StoreListener sListener;
+    public StoreFragment() {
+        //empty constructor
+    }
+
+    public static StoreFragment newInstance(Player player) {
+        Bundle args = new Bundle();
+        args.putSerializable("player", player);
+        StoreFragment instance = new StoreFragment();
+        instance.setArguments(args);
+        return instance;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,22 +50,10 @@ public class StoreFragment extends Fragment {
 
 
 
-
-
         return layout;
     }
 
-    public StoreFragment() {
-        //empty constructor
-    }
 
-    public static StoreFragment newInstance(Player player) {
-        Bundle args = new Bundle();
-        args.putSerializable("player", player);
-        StoreFragment instance = new StoreFragment();
-        instance.setArguments(args);
-        return instance;
-    }
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);

@@ -56,7 +56,7 @@ public class StoreActivity extends Activity implements StoreFragment.StoreListen
     public void onChangeClass() {
         getFragmentManager().beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.container,changeClassFragment, ChangeClassFragment.TAG)
+                .replace(R.id.container,changeClassFragment.newInstance(player.characterType), ChangeClassFragment.TAG)
                 .commit();
     }
 

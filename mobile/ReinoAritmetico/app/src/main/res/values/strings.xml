@@ -56,4 +56,10 @@
         <item>Wizard</item>
         <item>Archer</item>
     </string-array>
+    <string-array name="cascos">
+        <item>batman_head</item>
+    </string-array>
+    <string-array name="armas">
+        <item>sacred_sword</item>
+    </string-array>
 </resources>
