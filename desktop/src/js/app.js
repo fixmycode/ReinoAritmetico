@@ -6,7 +6,7 @@ var ip         = require('ip');
 
 var game = createGame();
 var settings = {
-    serverIpAddress: '127.0.0.1',
+    serverIpAddress: 'citadel-cloud.ddns.net',
     serverPort: '8000'
 }
 
@@ -88,11 +88,16 @@ angular.module('RAApp').run(function($rootScope) {
     });
 
     win.on('close', function(){
-        game.end().then(function(){
-            win.close(true);    
-        }).fail(function(){
+        if (game.playing) {
+            game.end().then(function(){
+                win.close(true);    
+            }).fail(function(){
+                win.close(true);
+            });    
+        }else {
             win.close(true);
-        });
+        }
+        
     });
 
     $(document).on('click', '.maximize-app', function () {

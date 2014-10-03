@@ -2,12 +2,12 @@
   <div class="col-md-6 col-md-offset-3">
     <a href="#/" class="btn btn-text btn-xs">Atrás</a>
     
-    <h2  class="text-center">Quest <small>{{ quest.name }}</small></h2>
+    <h2  class="text-center">Misión <small>{{ quest.name }}</small></h2>
     
-    <p class="text-center" ng-show="Object.keys(match.players).length == match.numPlayers">Ingresa el siguiente código para unirte a la partida</p>
+    <p class="text-center" ng-show="Object.keys(match.players).length == match.numPlayers">Ingresa el siguiente código para unirte a la misión</p>
     <div class="text-center">
       <div id="join-code" ng-show="match.joinCode && match.players.length < match.numPlayers">{{ match.joinCode }}</div>
-      <a href="#play/{{ quest.id }}" id="join-code" class="start" ng-show="match.players.length == match.numPlayers">Iniciar Quest</a>
+      <a href="#play/{{ quest.id }}" id="join-code" class="start" ng-show="match.players.length == match.numPlayers">Iniciar Misión</a>
       <div id="join-code" ng-show=" ! match.joinCode"><i class="fa fa-spinner fa-spin"></i></div>
     </div>
   </div>

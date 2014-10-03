@@ -139,34 +139,6 @@ Game.prototype.start = function() {
   var defer = q.defer();
 
   // Fetch Problems from server
-  
-  // self.problems = [
-  //   {
-  //     problem_id: 1,
-  //     problem: '2+x = 3. x = ?',
-  //     correct_answer: '1' 
-  //   },
-  //   {
-  //     problem_id: 2,
-  //     problem: '3*4',
-  //     correct_answer: '12' 
-  //   },
-  //   {
-  //     problem_id: 3,
-  //     problem: '5*8',
-  //     correct_answer: '40' 
-  //   },
-  //   {
-  //     problem_id: 4,
-  //     problem: '3+8',
-  //     correct_answer: '11' 
-  //   },
-  //   {
-  //     problem_id: 5,
-  //     problem: '12*12',
-  //     correct_answer: '144' 
-  //   }
-  // ];
   var options = {
       host: self.serverIpAddress,
       port: self.serverPort,
