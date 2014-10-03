@@ -17,6 +17,8 @@ function Game(options) {
   this.waitingForFallen = [];
   this.answers = [];
   this.address = ip.address() + ':' + '3000';
+  this.j = 0;
+  this.problemsCount = 0;
 }
 
 Game.prototype.init = function(){
@@ -142,7 +144,7 @@ Game.prototype.start = function() {
   var options = {
       host: self.serverIpAddress,
       port: self.serverPort,
-      path: '/api/problems?quantity='+ (parseInt(self.numPlayers) * parseInt(self.problemsPerPlayer) ) +'&difficulty='+ self.difficulty
+      path: '/api/problems?quantity='+ parseInt(self.problemsPerPlayer) +'&difficulty='+ self.difficulty
   };
   var req = http.get(options, function(res) {
     res.setEncoding('utf8');
@@ -154,6 +156,12 @@ Game.prototype.start = function() {
     .on('end', function() {
       var a = JSON.parse(body);
       self.problems = a;
+      self.j = 0;
+      self.offset = 1;
+      self.problemsCount = 0;
+      for(var i = 0; i < self.players.length; i++) {
+        self.players[i].j = i;
+      }
       _.each(self.players, self.sendProblem, self);
       defer.resolve();
     })
@@ -173,10 +181,13 @@ Game.prototype.start = function() {
 Game.prototype.sendProblem = function(player) {
   var self = this;
 
-  player.current_problem = self.problems.pop();
+  player.current_problem = self.problems[player.j];
+  player.j = (player.j + 1)%self.problems.length;
+
   player.socket.emit('solve problem', player.current_problem);
 
-  self.answeringPlayers.push(player);  
+  self.answeringPlayers.push(player);
+  self.problemsCount++;
 }
 
 Game.prototype.submitAnswer = function(socketId, answer) {
@@ -194,14 +205,13 @@ Game.prototype.submitAnswer = function(socketId, answer) {
   self.answers.push(answer);
 
   if (self.answeringPlayers.length === 0) {
-    if (self.problems.length === 0) {
+    if (self.problemsCount === self.players.length * self.problemsPerPlayer) {
       return true;
-    }else {
-      _.each(self.players, self.sendProblem, self);
     }
+    _.each(self.players, self.sendProblem, self);
+    self.j += self.offset++;
   }
   return false;
-
 }
 
 Game.prototype.playerFell = function(socketId) {

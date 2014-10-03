@@ -119,6 +119,7 @@ angular.module('RAApp').run(function($rootScope) {
 
     process.on('uncaughtException', function (err) {
       console.log('Caught exception: ' + err);
+      console.dir(err);
     });
 
     $(document).bind('keydown', 'ctrl+d', function(){
