@@ -8,7 +8,7 @@
   <div class="col-md-6">
     <div class="box box-success">
       <div class="box-body no-padding">
-        <table class="table table-condensed table-hover">
+        <table class="table table-condensed table-hover" id='questionTable'>
           <thead>
             <tr>
               <th style="width: 10px">#</th>
@@ -54,6 +54,12 @@
 
 <script>
 $(document).ready(function() {
+  
+  $('#questionTable').dataTable({
+            "binfo":     false,
+            "bFilter": false
+
+  });
   $('.destroy').confirmation({
     btnCancelLabel: 'Cancelar',
     btnOkLabel: 'Eliminar',

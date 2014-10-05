@@ -20,4 +20,8 @@ class Player extends \Eloquent {
     return $this->belongsTo('Classroom');
   }
 
+  public function items(){
+    return $this->belongsToMany('Item');
+  }
+
 }

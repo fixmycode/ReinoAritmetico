@@ -25,6 +25,7 @@ class CreatePlayersTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('name');
+			$table->integer('credits',0);
 			$table->string('android_id', 64);
 			$table->integer('classroom_id')->unsigned();
 			$table->integer('character_type_id')->unsigned();

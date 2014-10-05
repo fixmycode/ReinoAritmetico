@@ -30,13 +30,15 @@ class PlayerApiController extends \BaseController {
     return json_encode($player);
   }
 
-  public function getById()
+  public function getByid()
   {
-    dd('asdf');
+    
     $player_id = Input::get('player_id');
-    $player = Player::find($id);
+    
+    $player = Player::find($player_id);
     if(is_null($player))
       App::abort(404);
+    return Response::json($player);
   }
 
   /**

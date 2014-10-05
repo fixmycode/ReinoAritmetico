@@ -10,16 +10,6 @@ Route::resource('clientss', 'ClientsController');
 Route::resource('clientss.classrooms', 'ClientsClassroomsController');
 Route::resource('problems', 'ProblemController');
 
-Route::group(['prefix' => 'api/v1'], function(){
-  Route::controller('client', 'ProblemApiController');
-  Route::controller('game', 'GameApiController');
-  Route::controller('player', 'PlayerApiController');
-  Route::controller('problem', 'ProblemApiController');
-  Route::controller('server', 'ServerApiController');
-
-});
-
-
 /**
  * La nueva forma de hacer llamados a la API deben conformarse al siguiente
  * estandar
@@ -34,5 +24,24 @@ Route::group(['prefix' => 'api/v1'], function(){
  * URL: Identify
  * Antigua: GET localhost:8000/identify?id=<android_uid-del-estudiante>
  * Nueva:   GET localhost:8000/api/v1/player/identify?id=<android_uid-del-estudiante>
- * 
+ *
+ * Los nuevos scopes por ahora son,
+ * 1) client
+ * 2) game
+ * 3) player
+ * 4) problem
+ * 5) server
+ *
+ * Por favor notar que estan en minisculas
  */
+Route::group(['prefix' => 'api/v1'], function(){
+  Route::controller('client', 'ProblemApiController');
+  Route::controller('game', 'GameApiController');
+  Route::controller('player', 'PlayerApiController');
+  Route::controller('problem', 'ProblemApiController');
+  Route::controller('server', 'ServerApiController');
+  Route::controller('item', 'ItemApiController');
+
+});
+
+

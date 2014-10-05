@@ -140,14 +140,18 @@
 
         @section('js')
         <!-- jQuery 2.0.2 -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+<!--         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
         <script src="//code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+ -->
+         {{ HTML::script('js/dataTables/media/js/jquery.js')}}
 
         <!-- Bootstrap -->
         {{ HTML::script('AdminLTE/js/bootstrap.min.js') }}
 
         <!-- AdminLTE App -->
         {{ HTML::script('AdminLTE/js/AdminLTE/app.js') }}
+
+        {{ HTML::script('js/dataTables/media/js/jquery.dataTables.min.js')}}
         @show
 
 

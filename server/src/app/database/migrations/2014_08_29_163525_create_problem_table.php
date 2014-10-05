@@ -58,6 +58,7 @@ class CreateProblemTable extends Migration {
 			$table->integer('player_id')->unsigned();
 			$table->integer('problem_id')->unsigned();
 			$table->string('answer_selected');
+			$table->boolean('answer_state');
 
 			$table->foreign('player_id')->references('id')->on('players');
 			$table->foreign('problem_id')->references('id')->on('problems');
