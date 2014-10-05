@@ -24,4 +24,8 @@ class Player extends \Eloquent {
     return $this->belongsToMany('Item');
   }
 
+  public function characterType(){
+    return $this->belongsTo('CharacterType');
+  }
+
 }

@@ -1,7 +1,6 @@
 <?php
 
 class PlayerApiController extends \BaseController {
-  
   /**
    * GET /identify?id=<android_uid-del-estudiante>
    *
@@ -83,4 +82,42 @@ class PlayerApiController extends \BaseController {
   public function missingMethod($parameters = array()) {
     App::abort(404);
   }
+
+  public function postChangeType(){
+    $android_id = Input::get('android_id', null);
+    $type_id = Input::get('type_id',null);
+    $number_of_paramters = count(Input::all());
+    $player = Player::where('android_id','=',$android_id)->first();
+
+    if( ($android_id == null || $type_id == null) || $number_of_paramters != 2 || $player == null)  {
+      App::abort(400, "BAD REQUEST");
+    }
+    else{
+      $character_type = CharacterType::find($type_id);
+      if($character_type == null)
+        App::abort(404, "NOT FOUND");
+      else{
+        
+        if( ($player->credits - 100) < 0 ){
+          
+          App::abort(403, "FORBIDDEN");
+        }
+        else{
+          if($player->character_type_id == $type_id)
+            return Response::json("error: caracter igual al anterior", 404);
+          else{
+            
+            $player->credits = $player->credits - 100;
+            $player->character_type_id = $character_type->id;
+            $player->save();
+            
+            return Response::json($player, 200);
+          }
+        }
+      }
+    }
+
+
+  }
 }
+
