@@ -5,6 +5,4 @@
         <item>@drawable/wizard</item>
         <item>@drawable/archer</item>
     </integer-array>
-    <integer name="item_list">
-    </integer>
 </resources>

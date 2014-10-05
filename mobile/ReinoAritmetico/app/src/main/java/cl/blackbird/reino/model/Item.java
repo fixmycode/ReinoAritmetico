@@ -13,25 +13,31 @@ import java.util.List;
 public class Item {
     public String androidID;
     public int id;
-    public String precio;
+    public String nombre;
+    public int precio;
     public String descripcion;
-    public boolean tipo;
-    public String clase;
+    public String image;
+    public int tipo;
+    public int clase;
 
-    public Item(int id,String precio,String descripcion,boolean tipo,String clase){
+    public Item(int id,String nombre,String descripcion,String image,int precio,int tipo,int clase){
         this.androidID = null;
         this.id = id;
         this.precio = precio;
+        this.nombre = nombre;
+        this.image = image;
         this.descripcion = descripcion;
         this.tipo = tipo;
         this.clase = clase;
 
     }
-    public Item(int id,String precio,String descripcion,boolean tipo,String clase, String androidID){
+    public Item(int id,String nombre,String descripcion,String image,int precio,int tipo,int clase, String androidID){
 
         this.androidID = androidID;
         this.id = id;
         this.precio = precio;
+        this.nombre = nombre;
+        this.image = image;
         this.descripcion = descripcion;
         this.tipo = tipo;
         this.clase = clase;
@@ -39,7 +45,7 @@ public class Item {
     }
 
     public static Item fromJSONObject(JSONObject jsonObject)throws JSONException{
-        return new Item(jsonObject.getInt("id"),jsonObject.getString("precio"),jsonObject.getString("descripcion"),jsonObject.getBoolean("tipo"),jsonObject.getString("clase"));
+        return new Item(jsonObject.getInt("id"),jsonObject.getString("nombre"),jsonObject.getString("description"),jsonObject.getString("image_path"),jsonObject.getInt("price"),jsonObject.getInt("item_type_id"),jsonObject.getInt("character_type_id"));
     }
 
 }
