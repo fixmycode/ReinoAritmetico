@@ -19,6 +19,7 @@ function Game(options) {
   this.address = ip.address() + ':' + '3000';
   this.j = 0;
   this.problemsCount = 0;
+  this.wrong_players = [];
 }
 
 Game.prototype.init = function(){
@@ -159,6 +160,7 @@ Game.prototype.start = function() {
       self.j = 0;
       self.offset = 1;
       self.problemsCount = 0;
+      self.shaken = 0;
       for(var i = 0; i < self.players.length; i++) {
         self.players[i].j = i;
       }
@@ -198,16 +200,28 @@ Game.prototype.submitAnswer = function(socketId, answer) {
       .first()
       .value();
 
-  self.answeringPlayers = _.without(self.answeringPlayers, player); // sacar al jugador de la lista de espera
+  self.answeringPlayers = _.without(self.answeringPlayers, player); // Remove player from waiting list
 
   player.answers.push(answer);
   answer.player_name = player.name;
   self.answers.push(answer);
 
+  /* Analyse wrong answres */
+  if (answer.answer !== answer.correct_answer) {
+    self.wrong_players.push(player);
+  }
+
   if (self.answeringPlayers.length === 0) {
-    if (self.problemsCount === self.players.length * self.problemsPerPlayer) {
-      return true;
+    if (self.problemsCount === self.players.length * self.problemsPerPlayer) { // Did the game end?
+      return 'end';
     }
+    // Nop, it didn't
+    if (self.wrong_players.length === 1 && Math.random() <= 0.25) { // Trap someone!
+      self.wrong_players[0].socket.broadcast.emit('shake', {name: self.wrong_players[0].name});
+      self.wrong_players[0].socket.emit('trapped', {msg: 'Has sido atrapado! pidele ayuda a tus amigos!'});
+      return 'trapped';
+    }
+    self.wrong_players.length = 0;
     _.each(self.players, self.sendProblem, self);
     self.j += self.offset++;
   }

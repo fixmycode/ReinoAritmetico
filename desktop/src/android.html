@@ -42,6 +42,7 @@
         <button>Join</button> <br>
     </form>
     <button id="leave">Salir</button><br>
+    <button class="shake">Sacudir</button>
     <button class="clear">Clear</button>
 
     <div id="log"></div>
@@ -73,11 +74,20 @@
         console.info(data);
       });
 
+      socket.on('trapped', function(data){
+        $('#log').prepend('<p class="info"><i class="fa fa-fw fa-info"></i> ' + data.msg + '<span class="timestamp">' + (new Date()).toLocaleTimeString() + '</span></p>');
+        console.info(data);
+      });
+
       socket.on('solve problem', function(data) {
         problem = data;
         elapsed = new Date();
         $('#log').prepend('<p class="info"><i class="fa fa-fw fa-info"></i><form class="solve-problem" data-problem-id="'+data.problem_id+'"> ' + data.problem + ' <input type="text" placeholder="respuesta"><input type="submit" value="Enviar"></form><span class="timestamp">' + (new Date()).toLocaleTimeString() + '</span></p>');
       });
+
+      socket.on('shake', function(data){
+        $('#log').prepend('<p class="info"><i class="fa fa-fw fa-info"></i><form class="solve-problem" data-problem-id="'+data.problem_id+'"> SACUDE para salvar a ' + data.name +'!!</form><span class="timestamp">' + (new Date()).toLocaleTimeString() + '</span></p>');
+      })
 
       $('#leave').on('click', function(){
         socket.emit('leave', {android_id: $('#androidId').val()});
@@ -86,6 +96,13 @@
       $('.clear').on('click', function(){
         $('#log').html('');
       });
+
+      $('.shake').on('click', function(){
+        $('#log').prepend('<p class="info"><i class="fa fa-fw fa-info"></i> ~~~ shake shake shake ~~~<span class="timestamp">' + (new Date()).toLocaleTimeString() + '</span></p>');
+        socket.emit('sook');
+      });
+
+
 
       $(document).on('submit', 'form.solve-problem', function(){
         $this = $(this);

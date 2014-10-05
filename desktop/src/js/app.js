@@ -60,6 +60,16 @@ angular.module('RAApp').run(function($rootScope) {
         $rootScope.$broadcast('player answered', {'socket': socket.id, 'answer': answer});
       });
 
+      socket.on('shook', function(s) {
+        game.shaken++;
+        if (game.shaken === game.players.length - game.wrong_players.length) { // All those who had to shake, shook
+            game.shaken = 0;
+            $rootScope.$broadcast('player rescued', game.wrong_players[0]);
+            game.wrong_players.length = 0; // Clear waitingPlayers
+            _.each(game.players, game.sendProblem, game); // Keep playing
+        }
+      });
+
       socket.on('disconnect', function(){
         if (game.playing || game.waitingForFallen.length > 0) {
             $rootScope.$broadcast('player disconnected', socket.id);

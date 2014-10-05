@@ -87,15 +87,21 @@ angular.module('RAApp').controller("playCtrl", function ($scope, $routeParams, $
     $scope.match = $window.game;
 
     $scope.match.start();
+    $scope.an = false;
 
     $scope.$on('player answered', function(e, data) {
-        if ( $scope.match.submitAnswer(data.socket, data.answer) ){
+        var an = $scope.match.submitAnswer(data.socket, data.answer);
+
+        if (an === 'end'){
             $scope.$apply(function(){
                 $scope.match.playing = false;
                 io.sockets.emit('game end');
                 $scope.match.end();
             });
-        }else {
+        }else if( an === 'trapped') {
+            $scope.$digest();
+            $scope.an = true;
+        }else{
             $scope.$digest();
         }
     });
