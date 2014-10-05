@@ -99,7 +99,7 @@
 
       $('.shake').on('click', function(){
         $('#log').prepend('<p class="info"><i class="fa fa-fw fa-info"></i> ~~~ shake shake shake ~~~<span class="timestamp">' + (new Date()).toLocaleTimeString() + '</span></p>');
-        socket.emit('sook');
+        socket.emit('shook');
       });
 
 

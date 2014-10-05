@@ -99,11 +99,19 @@ angular.module('RAApp').controller("playCtrl", function ($scope, $routeParams, $
                 $scope.match.end();
             });
         }else if( an === 'trapped') {
-            $scope.$digest();
-            $scope.an = true;
+            $scope.$apply(function(){
+                $scope.an = true;    
+            });
         }else{
+            $scope.an = false;
             $scope.$digest();
         }
+    });
+
+    $scope.$on('player rescued', function(e, data){
+        $scope.$apply(function(){
+            $scope.an = false;    
+        });
     });
 
     $scope.$on('resume game', function(e, data){
