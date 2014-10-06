@@ -20,12 +20,12 @@ class PlayerApiController extends \BaseController {
                 ->join('classrooms', 'players.classroom_id', '=', 'classrooms.id')
                 ->join('clients', 'classrooms.client_id', '=', 'clients.id')
                 ->join('character_type', 'players.character_type_id', '=', 'character_type.id')
-                ->select(DB::raw('players.name, classrooms.name as classroom, clients.name as school, character_type.uid as character_type'))
+                ->select(DB::raw('players.name, classrooms.name as classroom, clients.name as school, character_type.uid as character_type, players.credits'))
                 ->first();
     
     if ( is_null($player) )
       App::abort(404);
-    
+    dd($player);
     return json_encode($player);
   }
 
