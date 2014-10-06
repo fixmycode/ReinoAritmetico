@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -144,12 +145,12 @@ public class LobbyActivity extends Activity implements LobbyFragment.LobbyListen
             ReinoApplication.getInstance().getRequestQueue().add(request);
         }
     }
-    @Override
-    public void onJoinShop(){
+    public void onClickShop(View v){
         Log.d(TAG,"Joining Store");
-        Intent intent= new Intent(this,StoreActivity.class);
-        intent.putExtra("player",player);
-        startActivity(intent);
+        Intent store= new Intent(this,StoreActivity.class);
+        store.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        store.putExtra("player",player);
+        startActivity(store);
 
     }
 

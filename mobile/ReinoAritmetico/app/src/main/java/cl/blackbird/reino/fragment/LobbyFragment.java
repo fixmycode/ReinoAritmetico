@@ -44,6 +44,7 @@ public class LobbyFragment extends Fragment implements View.OnClickListener {
         View layout = inflater.inflate(R.layout.lobby_layout, container, false);
         player = (Player) getArguments().getSerializable("player");
         characterImage = (ImageView) layout.findViewById(R.id.character_image);
+
         TypedArray drawableArray = getResources().obtainTypedArray(R.array.character_list);
         int characterId = drawableArray.getResourceId(player.characterType, -1);
         characterImage.setImageResource(characterId);
@@ -55,15 +56,16 @@ public class LobbyFragment extends Fragment implements View.OnClickListener {
         nameText.setText(player.name);
 
         creditsText =(TextView) layout.findViewById(R.id.creditsText);
-        creditsText.setText("creditos");
+        creditsText.setText("Creditos: "+String.valueOf(player.credits));
 
-        shopButton=(Button) layout.findViewById(R.id.shopButton);
-        shopButton.setOnClickListener(new View.OnClickListener() {
+        //shopButton=(Button) layout.findViewById(R.id.shopButton);
+        /*shopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mListener.onJoinShop();
+                Log.d("hola","hola");
             }
-        });
+        });*/
 
 
 
@@ -143,7 +145,7 @@ public class LobbyFragment extends Fragment implements View.OnClickListener {
      */
     public interface LobbyListener {
         public void onJoinServer(String code);
-        public void onJoinShop();
+        //public void onJoinShop();
     }
 
 }
