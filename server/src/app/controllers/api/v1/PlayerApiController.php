@@ -25,7 +25,7 @@ class PlayerApiController extends \BaseController {
     
     if ( is_null($player) )
       App::abort(404);
-    dd($player);
+    
     return json_encode($player);
   }
 
