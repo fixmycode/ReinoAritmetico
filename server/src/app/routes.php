@@ -1,5 +1,9 @@
 <?php
 
+Route::any('/', function(){
+  return View::make('hello');
+});
+
 Route::get('dashboard', ['as' => 'dashboard', function(){
   return View::make('dashboard')
           ->with('breadcrumbs', Breadcrumbs::render('dashboard'))
@@ -35,7 +39,7 @@ Route::resource('problems', 'ProblemController');
  * Por favor notar que estan en minisculas
  */
 Route::group(['prefix' => 'api/v1'], function(){
-  Route::controller('client', 'ProblemApiController');
+  Route::controller('client', 'ClientApiController');
   Route::controller('game', 'GameApiController');
   Route::controller('player', 'PlayerApiController');
   Route::controller('problem', 'ProblemApiController');
