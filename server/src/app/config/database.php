@@ -55,9 +55,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'forge',
-			'username'  => 'homestead',
-			'password'  => 'secret',
+			'database'  => 'reino-aritmetico',
+			'username'  => 'root',
+			'password'  => 'blackbird fly away',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
