@@ -51,6 +51,10 @@
     <string name="your_question">Your Question</string>
     <string name="game_over">Game over! results are on the screen</string>
     <string name="game_error">Unexpected error during the game</string>
+    <string name="warrior">Warrior</string>
+    <string name="wizard">Wizard</string>
+    <string name="archer">Archer</string>
+    <string name="store">Store</string>
 
     <string-array name="characters">
         <item>Warrior</item>

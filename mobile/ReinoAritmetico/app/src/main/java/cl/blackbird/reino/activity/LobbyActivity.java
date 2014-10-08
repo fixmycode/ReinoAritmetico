@@ -233,7 +233,7 @@ public class LobbyActivity extends Activity implements LobbyFragment.LobbyListen
 
     private void eraseCharacter(){
         String url = Uri.parse(Config.getServer(this)).buildUpon()
-                .path("delete")
+                .path("api/v1/player/delete")
                 .appendQueryParameter("id", player.androidID)
                 .build().toString();
         StringRequest request = new StringRequest(Request.Method.GET, url,

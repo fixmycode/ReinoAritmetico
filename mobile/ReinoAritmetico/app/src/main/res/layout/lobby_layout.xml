@@ -37,21 +37,32 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Nombre"
-                android:id="@+id/nameText" />
+                android:id="@+id/nameText"
+                android:textSize="24dp" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="34dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Creditos: 500"
-                android:id="@+id/creditsText" />
+                android:text="Tipo"
+                android:id="@+id/characterTypeText"
+                android:textSize="16dp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="42dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Creditos: $500"
+                android:id="@+id/creditsText"
+                android:textSize="20dp" />
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ir a la Tienda"
+                android:layout_width="@dimen/buy_items_button"                android:layout_height="wrap_content"
+                android:text="@string/store"
                 android:id="@+id/shopButton"
-                android:onClick="onClickShop" />
+                android:onClick="onClickShop"
+                android:textStyle="bold"/>
         </LinearLayout>
 
     </LinearLayout>

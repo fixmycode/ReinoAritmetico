@@ -31,6 +31,7 @@ public class LobbyFragment extends Fragment implements View.OnClickListener {
     private Button shopButton;
     private Player player;
     private TextView nameText;
+    private TextView characterTypeText;
     private TextView creditsText;
 
     @Override
@@ -55,8 +56,17 @@ public class LobbyFragment extends Fragment implements View.OnClickListener {
         nameText =(TextView) layout.findViewById(R.id.nameText);
         nameText.setText(player.name);
 
+        characterTypeText = (TextView) layout.findViewById(R.id.characterTypeText);
+        int characterType = 0;
+        if(player.characterType==0){characterType = R.string.warrior;}
+        else{
+            if(player.characterType==1){characterType = R.string.wizard;}
+            else{if(characterId == 2){characterType = R.string.archer;}}
+        }
+        characterTypeText.setText(characterType);
+
         creditsText =(TextView) layout.findViewById(R.id.creditsText);
-        creditsText.setText("Creditos: "+String.valueOf(player.credits));
+        creditsText.setText("Creditos: $"+String.valueOf(player.credits));
 
         //shopButton=(Button) layout.findViewById(R.id.shopButton);
         /*shopButton.setOnClickListener(new View.OnClickListener() {
