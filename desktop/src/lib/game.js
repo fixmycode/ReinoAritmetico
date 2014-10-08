@@ -49,6 +49,7 @@ Game.prototype.init = function(){
         body += chunk;
       })
       .on('end', function() {
+        console.log(body);
         var a = JSON.parse(body);
         self.joinCode = a.uid;
         self.waiting = true;
@@ -217,9 +218,12 @@ Game.prototype.submitAnswer = function(socketId, answer) {
     }
     // Nop, it didn't
     if (self.wrong_players.length === 1 && Math.random() <= 0.25) { // Trap someone!
-      self.wrong_players[0].socket.broadcast.emit('shake', {name: self.wrong_players[0].name});
+      self.wrong_players[0].socket.broadcast.emit('shake', {msg: '¡Rápido! Sacude para salvar a '+ self.wrong_players[0].name});
       self.wrong_players[0].socket.emit('trapped', {msg: 'Has sido atrapado! pidele ayuda a tus amigos!'});
       return 'trapped';
+    }else if(self.wrong_players.length === self.numPlayers){ //Everyone got it wrong!!
+      self.io.sockets.emit('shake', {msg: '¡Te están atacando! ¡Sacude!'});
+      return 'defend-yourselvs';
     }
     self.wrong_players.length = 0;
     _.each(self.players, self.sendProblem, self);

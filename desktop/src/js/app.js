@@ -6,8 +6,8 @@ var ip         = require('ip');
 
 var game = createGame();
 var settings = {
-    serverIpAddress: 'citadel-cloud.ddns.net',
-    serverPort: '8000'
+    serverIpAddress: 'blackbirdsw.noip.me',
+    serverPort: '80'
 }
 
 io.set('log level', 1);
@@ -33,6 +33,7 @@ function getQuests() {
 
 angular.module('RAApp').run(function($rootScope) {
     // Socket comunication
+    game.io = io;
     io.on('connection', function (socket) {
 
       socket.on('join', function(player){
@@ -62,7 +63,12 @@ angular.module('RAApp').run(function($rootScope) {
 
       socket.on('shook', function(s) {
         game.shaken++;
-        if (game.shaken === game.players.length - game.wrong_players.length) { // All those who had to shake, shook
+        if (game.wrong_players.length === game.players.length && game.shaken == game.players.length) { // Everyone wrong
+            game.shaken = 0;
+            $rootScope.$broadcast('players defended');
+            game.wrong_players.length = 0; // Clear waitingPlayers
+            _.each(game.players, game.sendProblem, game); // Keep playing
+        }else if (game.wrong_players.length === 1 && game.shaken === game.players.length - 1) { // All those who had to shake, shook
             game.shaken = 0;
             $rootScope.$broadcast('player rescued', game.wrong_players[0]);
             game.wrong_players.length = 0; // Clear waitingPlayers

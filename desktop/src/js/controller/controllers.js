@@ -102,6 +102,10 @@ angular.module('RAApp').controller("playCtrl", function ($scope, $routeParams, $
             $scope.$apply(function(){
                 $scope.an = true;    
             });
+        }else if( an == 'defend-yourselvs'){
+            $scope.$apply(function(){
+                $scope.defendYourselvs = true;    
+            });
         }else{
             $scope.an = false;
             $scope.$digest();
