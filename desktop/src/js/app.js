@@ -33,7 +33,7 @@ function getQuests() {
 
 angular.module('RAApp').run(function($rootScope) {
     // Socket comunication
-    game.io = io;
+
     io.on('connection', function (socket) {
 
       socket.on('join', function(player){
@@ -65,7 +65,7 @@ angular.module('RAApp').run(function($rootScope) {
         game.shaken++;
         if (game.wrong_players.length === game.players.length && game.shaken == game.players.length) { // Everyone wrong
             game.shaken = 0;
-            $rootScope.$broadcast('players defended');
+            $rootScope.$broadcast('player rescued');
             game.wrong_players.length = 0; // Clear waitingPlayers
             _.each(game.players, game.sendProblem, game); // Keep playing
         }else if (game.wrong_players.length === 1 && game.shaken === game.players.length - 1) { // All those who had to shake, shook

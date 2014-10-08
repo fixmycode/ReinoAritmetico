@@ -108,13 +108,15 @@ angular.module('RAApp').controller("playCtrl", function ($scope, $routeParams, $
             });
         }else{
             $scope.an = false;
+            $scope.defendYourselvs = false;
             $scope.$digest();
         }
     });
 
     $scope.$on('player rescued', function(e, data){
         $scope.$apply(function(){
-            $scope.an = false;    
+            $scope.an = false;  
+            $scope.defendYourselvs = false;  
         });
     });
 

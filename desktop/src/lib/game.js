@@ -33,7 +33,7 @@ Game.prototype.init = function(){
   var options = {
       host: self.serverIpAddress,
       port: self.serverPort,
-      path: '/start',
+      path: '/api/v1/game/start',
       method: 'POST',
       headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -78,7 +78,7 @@ Game.prototype.end = function() {
   var options = {
       host: self.serverIpAddress,
       port: self.serverPort,
-      path: '/end?uid=' + self.joinCode,
+      path: '/game/api/v1/game/end?uid=' + self.joinCode,
   };
 
   http.get(options, function(res) {
@@ -146,7 +146,7 @@ Game.prototype.start = function() {
   var options = {
       host: self.serverIpAddress,
       port: self.serverPort,
-      path: '/api/problems?quantity='+ parseInt(self.problemsPerPlayer) +'&difficulty='+ self.difficulty
+      path: '/api/v1/problem/questions?quantity='+ parseInt(self.problemsPerPlayer) +'&difficulty='+ self.difficulty
   };
   var req = http.get(options, function(res) {
     res.setEncoding('utf8');
@@ -221,8 +221,10 @@ Game.prototype.submitAnswer = function(socketId, answer) {
       self.wrong_players[0].socket.broadcast.emit('shake', {msg: '¡Rápido! Sacude para salvar a '+ self.wrong_players[0].name});
       self.wrong_players[0].socket.emit('trapped', {msg: 'Has sido atrapado! pidele ayuda a tus amigos!'});
       return 'trapped';
-    }else if(self.wrong_players.length === self.numPlayers){ //Everyone got it wrong!!
-      self.io.sockets.emit('shake', {msg: '¡Te están atacando! ¡Sacude!'});
+    }else if(self.wrong_players.length === self.players.length){ //Everyone got it wrong!!
+      console.log('Todos MAL!');
+      self.wrong_players[0].socket.broadcast.emit('shake', {msg: '¡Te están atacando! ¡Sacude!'});
+      self.wrong_players[0].socket.emit('shake', {msg: '¡Te están atacando! ¡Sacude!'});
       return 'defend-yourselvs';
     }
     self.wrong_players.length = 0;
