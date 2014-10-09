@@ -95,7 +95,7 @@ angular.module('RAApp').controller("playCtrl", function ($scope, $routeParams, $
         if (an === 'end'){
             $scope.$apply(function(){
                 $scope.match.playing = false;
-                io.sockets.emit('game end');
+                io.sockets.emit('game end', {reward: $scope.match.reward});
                 $scope.match.end();
             });
         }else if( an === 'trapped') {

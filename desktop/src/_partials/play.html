@@ -47,7 +47,7 @@
      
     <div class="alert alert-info" ng-show=" ! match.playing && match.waitingForFallen.length === 0">
       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-      <strong>El quest ha terminado</strong> Han ganado!!!!
+      <strong>La misión ha terminado</strong> Han ganado {{ match.reward }} monedas cada uno.
     </div>
     <div  class="game-log">
       <div ng-repeat="answer in match.answers | reverse track by $index">

@@ -4,6 +4,9 @@ var ip          = require('ip');
 var q           = require('q');
 var _           = require('underscore');
 
+var REWARD      = 50;
+var TRAPPED_ODD = 0.5;
+
 function Game(options) {
   this.numPlayers        = options.numPlayers        || 5;
   this.serverIpAddress   = options.serverIpAddress   || '127.0.0.1';
@@ -53,6 +56,7 @@ Game.prototype.init = function(){
         var a = JSON.parse(body);
         self.joinCode = a.uid;
         self.waiting = true;
+        self.reward = REWARD;
         defer.resolve();
       })
       .on('error', defer.reject);
@@ -213,11 +217,14 @@ Game.prototype.submitAnswer = function(socketId, answer) {
   }
 
   if (self.answeringPlayers.length === 0) {
+    if (self.wrong_players.length === self.players.length) {
+      self.reward -= 5; // -5 coins each for being all wrong
+    }
     if (self.problemsCount === self.players.length * self.problemsPerPlayer) { // Did the game end?
       return 'end';
     }
     // Nop, it didn't
-    if (self.wrong_players.length === 1 && Math.random() <= 0.25) { // Trap someone!
+    if (self.wrong_players.length === 1 && Math.random() <= TRAPPED_ODD) { // Trap someone!
       self.wrong_players[0].socket.broadcast.emit('shake', {msg: '¡Rápido! Sacude para salvar a '+ self.wrong_players[0].name});
       self.wrong_players[0].socket.emit('trapped', {msg: 'Has sido atrapado! pidele ayuda a tus amigos!'});
       return 'trapped';

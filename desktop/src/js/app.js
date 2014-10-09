@@ -36,59 +36,59 @@ angular.module('RAApp').run(function($rootScope) {
 
     io.on('connection', function (socket) {
 
-      socket.on('join', function(player){
-        player.socket = socket;
+        socket.on('join', function(player){
+            player.socket = socket;
 
-        if (game.waitingForFallen.length > 0) {
-            // Rejoin an ongoing quest
-            game.rejoin(player);
-            $rootScope.$broadcast('update players');
-            if (game.waitingForFallen.length === 0) $rootScope.$broadcast('resume game');
-        }else {
-            // Normal join
-            game.join(player).then(function(){
+            if (game.waitingForFallen.length > 0) {
+                // Rejoin an ongoing quest
+                game.rejoin(player);
                 $rootScope.$broadcast('update players');
-            });
-        }
-      });
+                if (game.waitingForFallen.length === 0) $rootScope.$broadcast('resume game');
+            }else {
+                // Normal join
+                game.join(player).then(function(){
+                    $rootScope.$broadcast('update players');
+                });
+            }
+        });
 
-      socket.on('leave', function(player) {
-        game.leave(player.android_id);
-        $rootScope.$broadcast('update players');
-      });
-
-      socket.on('submit answer', function(answer){ 
-        $rootScope.$broadcast('player answered', {'socket': socket.id, 'answer': answer});
-      });
-
-      socket.on('shook', function(s) {
-        game.shaken++;
-        if (game.wrong_players.length === game.players.length && game.shaken == game.players.length) { // Everyone wrong
-            game.shaken = 0;
-            $rootScope.$broadcast('player rescued');
-            game.wrong_players.length = 0; // Clear waitingPlayers
-            _.each(game.players, game.sendProblem, game); // Keep playing
-        }else if (game.wrong_players.length === 1 && game.shaken === game.players.length - 1) { // All those who had to shake, shook
-            game.shaken = 0;
-            $rootScope.$broadcast('player rescued', game.wrong_players[0]);
-            game.wrong_players.length = 0; // Clear waitingPlayers
-            _.each(game.players, game.sendProblem, game); // Keep playing
-        }
-      });
-
-      socket.on('disconnect', function(){
-        if (game.playing || game.waitingForFallen.length > 0) {
-            $rootScope.$broadcast('player disconnected', socket.id);
-        }else if (game.waiting) {
-            var player = _.chain(game.players)
-                  .filter(function(p) { return p.socket.id == socket.id; })
-                  .first()
-                  .value();
-
+        socket.on('leave', function(player) {
             game.leave(player.android_id);
             $rootScope.$broadcast('update players');
-        }
-      });
+        });
+
+        socket.on('submit answer', function(answer){ 
+            $rootScope.$broadcast('player answered', {'socket': socket.id, 'answer': answer});
+        });
+
+        socket.on('shook', function(s) {
+            game.shaken++;
+            if (game.wrong_players.length === game.players.length && game.shaken == game.players.length) { // Everyone wrong
+                game.shaken = 0;
+                $rootScope.$broadcast('player rescued');
+                game.wrong_players.length = 0; // Clear waitingPlayers
+                _.each(game.players, game.sendProblem, game); // Keep playing
+            }else if (game.wrong_players.length === 1 && game.shaken === game.players.length - 1) { // All those who had to shake, shook
+                game.shaken = 0;
+                $rootScope.$broadcast('player rescued', game.wrong_players[0]);
+                game.wrong_players.length = 0; // Clear waitingPlayers
+                _.each(game.players, game.sendProblem, game); // Keep playing
+            }
+        });
+
+        socket.on('disconnect', function(){
+            if (game.playing || game.waitingForFallen.length > 0) {
+                $rootScope.$broadcast('player disconnected', socket.id);
+            }else if (game.waiting) {
+                var player = _.chain(game.players)
+                      .filter(function(p) { return p.socket.id == socket.id; })
+                      .first()
+                      .value();
+
+                game.leave(player.android_id);
+                $rootScope.$broadcast('update players');
+            }
+        });
     });
 });
 
