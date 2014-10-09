@@ -28,7 +28,7 @@ class ItemApiController extends \BaseController {
 				         'items.price',
 				         'items.item_type_id',
 				         'character_type.uid as character_type_id',
-				         DB::raw('(CASE WHEN (players.android_id = "'.$player_uid.'") THEN 1 ELSE 0 END) as comprado'));
+				         DB::raw('(CASE WHEN (players.android_id = '.$player_uid.') THEN 1 ELSE 0 END) as comprado'));
 
 		if ( ! is_null($type) ) {
 			$items = $items->where('items.character_type_id','=', $type);
@@ -41,16 +41,16 @@ class ItemApiController extends \BaseController {
 	}
 
 	public function getImage(){
-		$item_id = Input::get('id', null);
-		if($item_id == null)
-			App::abort(404);
-		else{
-			$item = Item::find($item_id);
-			if($item->image_path != null){
-				return Response::download(public_path($item->image_path));
-			}
-		}
+		$item_id = Input::get('id', 0);
 
+		$item = Item::find($item_id);
+		if ( ! $item) App::abort(404, "Item not found");
+
+		if($item->image_path != null){
+			$response = Response::make(File::get(public_path($item->image_path)));
+			$response->header('Content-Type', 'image/png');
+			return $response;
+		}
 	}
 
 	public function postBuy(){
