@@ -12,7 +12,7 @@ class ItemApiController extends \BaseController {
 		$kind = Input::get("kind", null);//item_type
 		$player_uid = DB::connection()->getPdo()->quote(Input::get("player", ''));
 
-		// SELECT items.id, items.nombre, items.description, items.image_path, items.price, items.item_type_id, items.character_type_id, (CASE WHEN (players.android_id = 'asdf') THEN 1 ELSE 0 END) as comprado from items
+		// SELECT items.id, items.nombre, items.description, items.image_path, items.price, items.item_type_id, character_type.uid, (CASE WHEN (players.android_id = 'asdf') THEN 1 ELSE 0 END) as comprado from items
 		// LEFT JOIN item_player ON items.id = item_player.`item_id`
 		// LEFT JOIN players ON players.id = item_player.`player_id`
 		// JOIN item_type ON items.item_type_id = item_type.id
@@ -20,20 +20,21 @@ class ItemApiController extends \BaseController {
 
 		$items = Item::leftJoin('item_player', 'items.id', '=', 'item_player.item_id')
 								 ->leftJoin('players', 'players.id', '=', 'item_player.player_id')
+								 ->join('character_type', 'character_type.id', '=', 'items.character_type_id')
 				->select('items.id', 
 				         'items.nombre', 
 				         'items.description', 
 				         'items.image_path',
 				         'items.price',
 				         'items.item_type_id',
-				         'items.character_type_id',
+				         'character_type.uid as character_type_id',
 				         DB::raw('(CASE WHEN (players.android_id = "'.$player_uid.'") THEN 1 ELSE 0 END) as comprado'));
 
 		if ( ! is_null($type) ) {
-			$items = $items->where('character_type_id','=', $type);
+			$items = $items->where('items.character_type_id','=', $type);
 		}
 		if ( ! is_null($kind) ) {
-			$items = $items->where('item_type_id','=', $kind);
+			$items = $items->where('items.item_type_id','=', $kind);
 		}
 		
 		return Response::json($items->get());
