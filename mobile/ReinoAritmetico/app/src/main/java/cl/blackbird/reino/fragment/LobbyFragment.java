@@ -61,8 +61,9 @@ public class LobbyFragment extends Fragment implements View.OnClickListener {
         if(player.characterType==0){characterType = R.string.warrior;}
         else{
             if(player.characterType==1){characterType = R.string.wizard;}
-            else{if(characterId == 2){characterType = R.string.archer;}}
+            else{if(player.characterType == 2){characterType = R.string.archer;}}
         }
+
         characterTypeText.setText(characterType);
 
         creditsText =(TextView) layout.findViewById(R.id.creditsText);
