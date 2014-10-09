@@ -276,13 +276,5 @@ public function run(){
                   'character_type_id' => '3'
              )
         );
-
-        $classroom = Classroom::whereName('3ro Basico')->first();
-        $client = Client::where('name','=','Ruben Dario')->first();
-        DB::table('players')->insert(
-          array(
-            array('name' => 'Jon Snow', 'android_id' => 'know', 'character_type_id'=>1, 'classroom_id'=>$classroom->id,'client_id'=>$client->id),
-            )
-        );
   }
 }

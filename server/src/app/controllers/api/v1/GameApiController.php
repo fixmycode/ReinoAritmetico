@@ -36,6 +36,16 @@ class GameApiController extends \BaseController {
    */
   public function getEnd() {
     $uid = Input::get('uid', 0);
+    $reward = Input::get('reward', 0);
+    $players = Input::get('players', array());
+
+    // Update players credits
+    foreach ($players as $player_uid) {
+      $player = Player::whereAndroidId($player_uid)->first();
+      if ( ! $player) continue;
+      $player->credits += $reward;
+      $player->save();
+    }
 
     $game = Game::whereUid($uid)->first();
 
