@@ -34,7 +34,9 @@ class CreateProblemTable extends Migration {
 			$table->datetime('ended')->nullable();
 
 			$table->foreign('problem_type_id')
-	      ->references('id')->on('problem_type');
+	      		->references('id')
+	      		->on('problem_type')
+	      		->onDelete('cascade');
 		});
 
 		Schema::create('game_problem', function(Blueprint $table)
@@ -46,10 +48,14 @@ class CreateProblemTable extends Migration {
 			$table->datetime('ended')->nullable();
 
 			$table->foreign('problem_id')
-	      ->references('id')->on('problems');
+						->references('id')
+	      		->on('problems')
+	      		->onDelete('cascade');
 
 	    $table->foreign('game_id')
-	      ->references('id')->on('games');  
+	      		->references('id')
+	      		->on('games')
+	      		->onDelete('cascade');  
 		});
 
 		Schema::create('answers', function(Blueprint $table){
@@ -60,10 +66,15 @@ class CreateProblemTable extends Migration {
 			$table->string('answer_selected');
 			$table->boolean('answer_state');
 
-			$table->foreign('player_id')->references('id')->on('players');
-			$table->foreign('problem_id')->references('id')->on('problems');
+			$table->foreign('player_id')
+						->references('id')
+						->on('players')
+						->onDelete('cascade');
 
-
+			$table->foreign('problem_id')
+						->references('id')
+						->on('problems')
+						->onDelete('cascade');
 		});
 	}
 
@@ -75,6 +86,7 @@ class CreateProblemTable extends Migration {
 	public function down()
 	{
 		Schema::drop("game_problem");
+		Schema::drop("answers");
 		Schema::drop("problems");
 		Schema::drop("problem_type");
 	}

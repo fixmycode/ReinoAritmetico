@@ -11,17 +11,19 @@ class ItemApiController extends \BaseController {
 		$type = Input::get("type", null);//character_type
 		$kind = Input::get("kind", null);//item_type
 		$player_uid = Input::get("player", null);
-		
-		$items = null;
-		if($type != null && $kind != null && $player_uid != null){
-			$items = Item::join('item_type','items.item_type_id','=','items.id')
-				->join('character_type', 'items.character_type_id','=','character_type.id')
-				->where('item_type.id','=',$kind)
-				->where('character_type.id','=',$type)
-				->get();
-		}
 
-		return Response::json($items);
+		$items = Item::join('item_type','items.item_type_id', '=', 'item_type.id')
+								->join('character_type', 'items.character_type_id', '=', 'character_type.id');
+
+		if ( ! is_null($type) ) {
+			$items = $items->where('character_type.id','=', $type);
+		}
+		if ( ! is_null($kind) ) {
+			$items = $items->where('item_type.id','=', $kind);
+
+		}
+		
+		return Response::json($items->get());
 		
 	}
 

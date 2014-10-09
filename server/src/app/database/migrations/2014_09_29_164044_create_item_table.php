@@ -16,12 +16,9 @@ class CreateItemTable extends Migration {
 			$table->increments('id');
 			$table->string('nombre');
 			$table->string('description');
-			
-
 		});
 
-		Schema::create('items', function(Blueprint $table)
-		{
+		Schema::create('items', function(Blueprint $table) {
 			$table->increments('id');
 			$table->string('nombre');
 			$table->string('description');
@@ -30,16 +27,19 @@ class CreateItemTable extends Migration {
 			$table->integer('item_type_id')->unsigned();
 			$table->integer('character_type_id')->unsigned();
 
-			$table->foreign('item_type_id')->references('id')
-							->on('item_type');
+			$table->foreign('item_type_id')
+						->references('id')
+						->on('item_type')
+						->onDelete('cascade');
 
 
-			$table->foreign('character_type_id')->references('id')
-											->on('character_type');
+			$table->foreign('character_type_id')
+			      ->references('id')
+						->on('character_type')
+						->onDelete('cascade');
 
 			$table->datetime('started');
 			$table->datetime('ended')->nullable();
-			
 		});
 
 		Schema::create('item_player', function(Blueprint $table){
@@ -47,13 +47,15 @@ class CreateItemTable extends Migration {
 			$table->integer('item_id')->unsigned();
 			$table->integer('player_id')->unsigned();
 
-			$table->foreign('item_id')->references('id')
-						->on('items');
+			$table->foreign('item_id')
+			      ->references('id')
+						->on('items')
+						->onDelete('cascade');
 
-			$table->foreign('player_id')->references('id')
-						->on('players');
-
-
+			$table->foreign('player_id')
+						->references('id')
+						->on('players')
+						->onDelete('cascade');
 		});
 	}
 
@@ -64,8 +66,9 @@ class CreateItemTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('item_type');
+		Schema::drop('item_player');
 		Schema::drop('items');
+		Schema::drop('item_type');
 	}
 
 }

@@ -123,6 +123,7 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
 		'DaveJamesMiller\Breadcrumbs\ServiceProvider',
+		'Darsain\Console\ConsoleServiceProvider',
 
 	),
 
