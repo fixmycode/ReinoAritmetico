@@ -4,6 +4,8 @@
         <meta charset="UTF-8">
         <title>BS :: {{$title or 'Home'}}</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+
+        @section('css')
         <!-- bootstrap 3.0.2 -->
         {{ HTML::style('AdminLTE/css/bootstrap.min.css') }}
         <!-- font Awesome -->
@@ -12,6 +14,7 @@
         {{ HTML::style('AdminLTE/css/ionicons.min.css') }}
         <!-- Theme style -->
         {{ HTML::style('AdminLTE/css/AdminLTE.css') }}
+        @show
         
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
