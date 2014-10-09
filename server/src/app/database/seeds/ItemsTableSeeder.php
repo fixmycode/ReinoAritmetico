@@ -13,7 +13,7 @@ public function run(){
             array('nombre'     => 'Casco fragmentado', 
                  'description'=>'Casco roto, util si notienes nada mas',
                  'price'      =>'10', 
-                 'image_path' =>'public/img/upload/items/casco/1-diamond.png',
+                 'image_path' =>'upload/items/casco/1-diamond.png',
                  'item_type_id'=>'1',
                  'character_type_id'=>'1'
              )
@@ -23,7 +23,7 @@ public function run(){
             array('nombre'     => 'Casco de Diamante',
                  'description'=>'Casco irrompible',
                  'price'      =>'1000',
-                 'image_path' =>'public/img/upload/items/casco/2-diamond.png',
+                 'image_path' =>'upload/items/casco/2-diamond.png',
                  'item_type_id'=>'1',
                  'character_type_id'=>'1'
              )
@@ -35,7 +35,7 @@ public function run(){
                  'nombre'           => 'Espada de madera', 
                  'description'       => 'Poco daño pero de algo sirve',
                  'price'             => '15', 
-                 'image_path'        => 'public/img/upload/items/espada/1-madera.png',
+                 'image_path'        => 'upload/items/espada/1-madera.png',
                  'item_type_id'      => '2',
                  'character_type_id' =>'1'
              )
@@ -46,7 +46,7 @@ public function run(){
             array('nombre'     => 'Espada Ruby', 
                  'description'=>'Espada especial para sumas. Ahora seras mas fuerte!',
                  'price'      =>'500', 
-                 'image_path' =>'public/img/upload/items/espada/2-ruby.png',
+                 'image_path' =>'upload/items/espada/2-ruby.png',
                  'item_type_id'=>'2',
                  'character_type_id'=>'1'
              )

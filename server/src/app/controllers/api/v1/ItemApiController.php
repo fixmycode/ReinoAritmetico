@@ -10,21 +10,33 @@ class ItemApiController extends \BaseController {
 	{
 		$type = Input::get("type", null);//character_type
 		$kind = Input::get("kind", null);//item_type
-		$player_uid = Input::get("player", null);
+		$player_uid = DB::connection()->getPdo()->quote(Input::get("player", ''));
 
-		$items = Item::join('item_type','items.item_type_id', '=', 'item_type.id')
-								->join('character_type', 'items.character_type_id', '=', 'character_type.id');
+		// SELECT items.id, items.nombre, items.description, items.image_path, items.price, items.item_type_id, items.character_type_id, (CASE WHEN (players.android_id = 'asdf') THEN 1 ELSE 0 END) as comprado from items
+		// LEFT JOIN item_player ON items.id = item_player.`item_id`
+		// LEFT JOIN players ON players.id = item_player.`player_id`
+		// JOIN item_type ON items.item_type_id = item_type.id
+		// JOIN character_type ON items.`character_type_id` = character_type.id;
+
+		$items = Item::leftJoin('item_player', 'items.id', '=', 'item_player.item_id')
+								 ->leftJoin('players', 'players.id', '=', 'item_player.player_id')
+				->select('items.id', 
+				         'items.nombre', 
+				         'items.description', 
+				         'items.image_path',
+				         'items.price',
+				         'items.item_type_id',
+				         'items.character_type_id',
+				         DB::raw('(CASE WHEN (players.android_id = "'.$player_uid.'") THEN 1 ELSE 0 END) as comprado'));
 
 		if ( ! is_null($type) ) {
-			$items = $items->where('character_type.id','=', $type);
+			$items = $items->where('character_type_id','=', $type);
 		}
 		if ( ! is_null($kind) ) {
-			$items = $items->where('item_type.id','=', $kind);
-
+			$items = $items->where('item_type_id','=', $kind);
 		}
 		
 		return Response::json($items->get());
-		
 	}
 
 	public function getImage(){
@@ -34,7 +46,7 @@ class ItemApiController extends \BaseController {
 		else{
 			$item = Item::find($item_id);
 			if($item->image_path != null){
-				Response::download($item->image_path);
+				return Response::download(public_path($item->image_path));
 			}
 		}
 
