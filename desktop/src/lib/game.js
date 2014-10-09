@@ -6,6 +6,7 @@ var _           = require('underscore');
 
 var REWARD      = 50;
 var TRAPPED_ODD = 0.5;
+var API         = '/api/v1';
 
 function Game(options) {
   this.numPlayers        = options.numPlayers        || 5;
@@ -36,7 +37,7 @@ Game.prototype.init = function(){
   var options = {
       host: self.serverIpAddress,
       port: self.serverPort,
-      path: '/api/v1/game/start',
+      path: API + '/game/start',
       method: 'POST',
       headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -79,10 +80,13 @@ Game.prototype.end = function() {
   var defer = q.defer();
   var self = this;
 
+  var ai = _.pluck(self.players, 'android_id');
+  ai = _.reduce(ai, function(memo, num){ return memo + '&players[]=' + num; }, "");
+
   var options = {
       host: self.serverIpAddress,
       port: self.serverPort,
-      path: '/game/api/v1/game/end?uid=' + self.joinCode,
+      path: API + '/game/end?uid=' + self.joinCode + '&reward='+ self.reward + ai,
   };
 
   http.get(options, function(res) {
@@ -150,7 +154,7 @@ Game.prototype.start = function() {
   var options = {
       host: self.serverIpAddress,
       port: self.serverPort,
-      path: '/api/v1/problem/questions?quantity='+ parseInt(self.problemsPerPlayer) +'&difficulty='+ self.difficulty
+      path: API + '/problem/questions?quantity='+ parseInt(self.problemsPerPlayer) +'&difficulty='+ self.difficulty
   };
   var req = http.get(options, function(res) {
     res.setEncoding('utf8');

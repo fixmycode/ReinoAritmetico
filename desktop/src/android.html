@@ -75,8 +75,8 @@
       });
 
       socket.on('game end', function(data){
-        $('#log').prepend('<p class="info"><i class="fa fa-fw fa-info"></i> La partida ha finalizado, has ganado ' + data.reward + ' monedas <span class="timestamp">' + (new Date()).toLocaleTimeString() + '</span></p>');
-        console.info(data);
+        $('#log').html('');
+        $('#log').prepend('<p class="info"><i class="fa fa-fw fa-info"></i> La misión ha finalizado, has ganado ' + data.reward + ' monedas <span class="timestamp">' + (new Date()).toLocaleTimeString() + '</span></p>');
       });
 
       socket.on('trapped', function(data){
