@@ -31,7 +31,7 @@ class ItemApiController extends \BaseController {
 				         DB::raw('(CASE WHEN (players.android_id = '.$player_uid.') THEN 1 ELSE 0 END) as comprado'));
 
 		if ( ! is_null($type) ) {
-			$items = $items->where('items.character_type_id','=', $type);
+			$items = $items->where('character_type.uid','=', $type);
 		}
 		if ( ! is_null($kind) ) {
 			$items = $items->where('items.item_type_id','=', $kind);
