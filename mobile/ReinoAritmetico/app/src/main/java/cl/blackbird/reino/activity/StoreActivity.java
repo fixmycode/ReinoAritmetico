@@ -173,6 +173,14 @@ public class StoreActivity extends Activity implements StoreFragment.StoreListen
         startActivity(lobby);
         finish();
     }
+    public void success(int precio,int ctype){
+        player.credits= player.credits-precio;
+        player.characterType=ctype;
+        Intent lobby = new Intent(this, LobbyActivity.class);
+        lobby.putExtra("player", player);
+        startActivity(lobby);
+        finish();
+    }
 
     @Override
     public void onChangeClick(final int clase,final int precio) {
@@ -180,6 +188,7 @@ public class StoreActivity extends Activity implements StoreFragment.StoreListen
                 getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         String url = Uri.parse(Config.getServer(this)).buildUpon().path("/api/v1/player/change-type").build().toString();
+        Log.d("Clase ",String.valueOf(clase));
         StringRequest request = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -188,7 +197,7 @@ public class StoreActivity extends Activity implements StoreFragment.StoreListen
                                 getApplicationContext(),
                                 "Cambio de clase exitoso",
                                 Toast.LENGTH_LONG).show();
-                        success(precio);
+                        success(precio,clase);
                     }
                 },
                 new Response.ErrorListener() {
