@@ -71,6 +71,7 @@ class PlayerApiController extends \BaseController {
     $player->client_id = $client->id;
     $player->classroom_id = $classroom->id;
     $player->character_type_id = $character_type->id;
+    $player->credits = 50;
     $player->save();
 
     return Response::json(['err' => false, 'msg' => 'Estudiante creado exitosamente']);
