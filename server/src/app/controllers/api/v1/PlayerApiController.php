@@ -127,7 +127,7 @@ class PlayerApiController extends \BaseController {
     $player->credits = $player->credits - 500;
     $character_type->players()->save($player);
     
-    return Response::json(Player::with('characterType')->find(1)->toArray(), 200);
+    return Response::json(Player::with('characterType')->find($player->id)->toArray(), 200);
   }
 }
 
