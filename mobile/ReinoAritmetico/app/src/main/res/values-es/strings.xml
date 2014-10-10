@@ -62,8 +62,16 @@
     <string name="armors">Armaduras</string>
 	<string name="weapons">Armas</string>
     <string name="event_description">esta imagen simboliza el evento</string>
-	<string name="classes">Clases</string>
+	<string name="classes">Cambiar clase</string>
     <string name="ok">Listo</string>
+    <string name="credits" formatted="false">Créditos: $%d</string>
+    <string name="ask_buy" formatted="false">Quieres comprar \"%s\" por $%d?</string>
+    <string name="buy_success">Ítem comprado</string>
+    <string name="buy_error">Ocurrió un error comprando el ítem</string>
+    <string name="class_changed">Clase cambiada</string>
+    <string name="change_error">Ocurrió un error cambiando tu clase</string>
+    <string name="change_type">Cambiar clase: $%d</string>
+    <string name="same_class">Ya tienes esa clase</string>
     <string-array name="characters">
         <item>Guerrero</item>
         <item>Mago</item>

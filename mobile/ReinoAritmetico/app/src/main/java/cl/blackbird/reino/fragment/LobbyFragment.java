@@ -43,33 +43,7 @@ public class LobbyFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.lobby_layout, container, false);
         player = (Player) getArguments().getSerializable("player");
-        characterImage = (ImageView) layout.findViewById(R.id.character_image);
-
-        TypedArray drawableArray = getResources().obtainTypedArray(R.array.character_list);
-        int characterId = drawableArray.getResourceId(player.characterType, -1);
-        characterImage.setImageResource(characterId);
-        lobbyCode = (EditText) layout.findViewById(R.id.lobby_code);
-        joinButton = (Button) layout.findViewById(R.id.join_button);
-        joinButton.setOnClickListener(this);
-
-        nameText =(TextView) layout.findViewById(R.id.nameText);
-        nameText.setText(player.name);
-
-        creditsText =(TextView) layout.findViewById(R.id.creditsText);
-        creditsText.setText("Creditos: "+String.valueOf(player.credits));
-
-        characterTypeText = (TextView) layout.findViewById(R.id.characterTypeText);
-        int characterType = 0;
-        if(player.characterType==0){
-            characterType = R.string.warrior;
-        }
-        else if(player.characterType==1){
-            characterType = R.string.wizard;
-        }
-        else if(player.characterType == 2){
-            characterType = R.string.archer;
-        }
-        characterTypeText.setText(characterType);
+        setupPlayer(layout, player);
 
         checkValidForm(lobbyCode.getText(), joinButton);
 
@@ -88,6 +62,36 @@ public class LobbyFragment extends Fragment implements View.OnClickListener {
             }
         });
         return layout;
+    }
+
+    public void setupPlayer(View layout, Player player) {
+        characterImage = (ImageView) layout.findViewById(R.id.character_image);
+
+        TypedArray drawableArray = getResources().obtainTypedArray(R.array.character_list);
+        int characterId = drawableArray.getResourceId(player.characterType, -1);
+        characterImage.setImageResource(characterId);
+        lobbyCode = (EditText) layout.findViewById(R.id.lobby_code);
+        joinButton = (Button) layout.findViewById(R.id.join_button);
+        joinButton.setOnClickListener(this);
+
+        nameText =(TextView) layout.findViewById(R.id.nameText);
+        nameText.setText(player.name);
+
+        creditsText =(TextView) layout.findViewById(R.id.creditsText);
+        creditsText.setText(getString(R.string.credits, player.credits));
+
+        characterTypeText = (TextView) layout.findViewById(R.id.characterTypeText);
+        int characterType = 0;
+        if(player.characterType==0){
+            characterType = R.string.warrior;
+        }
+        else if(player.characterType==1){
+            characterType = R.string.wizard;
+        }
+        else if(player.characterType == 2){
+            characterType = R.string.archer;
+        }
+        characterTypeText.setText(characterType);
     }
 
     public LobbyFragment() {

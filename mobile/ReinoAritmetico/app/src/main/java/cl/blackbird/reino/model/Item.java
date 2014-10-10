@@ -11,7 +11,6 @@ import java.util.List;
  * Created by niko on 14/09/2014.
  */
 public class Item {
-    public String androidID;
     public int id;
     public String nombre;
     public int precio;
@@ -22,20 +21,6 @@ public class Item {
     public int comprado;
 
     public Item(int id,String nombre,String descripcion,String image,int precio,int tipo,int clase,int comprado){
-        this.androidID = null;
-        this.id = id;
-        this.precio = precio;
-        this.nombre = nombre;
-        this.image = image;
-        this.descripcion = descripcion;
-        this.tipo = tipo;
-        this.clase = clase;
-        this.comprado=comprado;
-
-    }
-    public Item(int id,String nombre,String descripcion,String image,int precio,int tipo,int clase,int comprado, String androidID){
-
-        this.androidID = androidID;
         this.id = id;
         this.precio = precio;
         this.nombre = nombre;
@@ -47,7 +32,7 @@ public class Item {
 
     }
 
-    public static Item fromJSONObject(JSONObject jsonObject)throws JSONException{
+    public static Item fromJSON(JSONObject jsonObject)throws JSONException{
         return new Item(jsonObject.getInt("id"),jsonObject.getString("nombre"),jsonObject.getString("description"),jsonObject.getString("image_path"),jsonObject.getInt("price"),jsonObject.getInt("item_type_id"),jsonObject.getInt("character_type_id"),jsonObject.getInt("comprado"));
     }
 

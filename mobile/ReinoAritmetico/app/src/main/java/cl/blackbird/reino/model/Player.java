@@ -14,16 +14,15 @@ public class Player implements Serializable {
     public School school;
     public ClassRoom classRoom;
 
-    public Player(String name,int credits,int characterType, School school, ClassRoom classRoom) {
-        this.androidID = null;
-        this.name = name;
-        this.credits = credits;
-        this.characterType =characterType;
-        this.school = school;
-        this.classRoom = classRoom;
+    public Player(String name, int characterType, School school, ClassRoom classRoom){
+        this(name, 50, characterType, school, classRoom);
     }
 
-    public Player(String name,int credits,int characterType, School school, ClassRoom classRoom, String androidID) {
+    public Player(String name, int credits, int characterType, School school, ClassRoom classRoom) {
+        this(name, credits, characterType, school, classRoom, null);
+    }
+
+    public Player(String name, int credits, int characterType, School school, ClassRoom classRoom, String androidID) {
         this.androidID = androidID;
         this.name = name;
         this.credits = credits;

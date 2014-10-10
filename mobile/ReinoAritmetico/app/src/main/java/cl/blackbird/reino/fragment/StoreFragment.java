@@ -3,12 +3,10 @@ package cl.blackbird.reino.fragment;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ListView;
 
 import cl.blackbird.reino.R;
 import cl.blackbird.reino.model.Player;
@@ -106,7 +104,7 @@ public class StoreFragment extends Fragment {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sListener.onFinish();
+                sListener.onDone();
             }
         });
     }
@@ -114,7 +112,7 @@ public class StoreFragment extends Fragment {
     public interface StoreListener{
         public void onItemList(int kind,int type);
         public void onChangeClass();
-        public void onFinish();
+        public void onDone();
     }
 
 }

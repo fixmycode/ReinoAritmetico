@@ -2,6 +2,7 @@ package cl.blackbird.reino.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -39,8 +40,8 @@ import cl.blackbird.reino.model.Player;
 public class LobbyActivity extends Activity implements LobbyFragment.LobbyListener {
     private static final String TAG = "RALOBBY";
     private static final int GAME_CODE = 2;
+    private static final int STORE_CODE = 3;
     private Player player;
-    private String server;
     private HashMap<String, String> routingTable;
     private LobbyFragment lobbyFragment;
     private long back_pressed;
@@ -146,13 +147,10 @@ public class LobbyActivity extends Activity implements LobbyFragment.LobbyListen
         }
     }
     public void onClickShop(View v){
-        Log.d(TAG,"Joining Store");
-        Intent store= new Intent(this,StoreActivity.class);
-        store.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        store.putExtra("player",player);
-        startActivity(store);
-        finish();
-
+        Log.d(TAG,"Entering Store");
+        Intent store = new Intent(this,StoreActivity.class);
+        store.putExtra("player", player);
+        startActivityForResult(store, STORE_CODE);
     }
 
 
@@ -174,32 +172,42 @@ public class LobbyActivity extends Activity implements LobbyFragment.LobbyListen
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         int toastRes = R.string.game_over;
-        switch (resultCode) {
-            case Activity.RESULT_OK:
-                Log.d(TAG, "Activity ended OK");
-                if(data != null && data.getExtras() != null){
-                    player.credits += data.getExtras().getInt("reward");
-                }
-                toastRes = R.string.game_over;
-                break;
-            case Activity.RESULT_CANCELED:
-                Log.d(TAG, "Activity canceled");
-                toastRes = R.string.game_error;
-                break;
+        if(requestCode == GAME_CODE) {
+            switch (resultCode) {
+                case Activity.RESULT_OK:
+                    Log.d(TAG, "Activity ended OK");
+                    if (data != null && data.getExtras() != null) {
+                        player.credits += data.getExtras().getInt("reward");
+                    }
+                    toastRes = R.string.game_over;
+                    break;
+                case Activity.RESULT_CANCELED:
+                    Log.d(TAG, "Activity canceled");
+                    toastRes = R.string.game_error;
+                    break;
+            }
+            Toast.makeText(
+                    getApplicationContext(),
+                    toastRes,
+                    Toast.LENGTH_LONG).show();
+        } else if(requestCode == STORE_CODE){
+            switch (resultCode) {
+                case Activity.RESULT_OK:
+                    Log.d(TAG, "Store ended OK");
+                    if(data != null && data.getExtras() != null){
+                        player = (Player) data.getExtras().getSerializable("player");
+                    }
+                    break;
+                case Activity.RESULT_CANCELED:
+                    Log.d(TAG, "Store canceled");
+                    break;
+            }
         }
-        Toast.makeText(
-                getApplicationContext(),
-                toastRes,
-                Toast.LENGTH_LONG).show();
+        FragmentManager manager = getFragmentManager();
+        LobbyFragment fragment = (LobbyFragment) manager.findFragmentById(R.id.container);
+        fragment.setupPlayer(fragment.getView(), player);
     }
 
-    /**
-     * Sets the server property
-     * @param server the game server address
-     */
-    private void setServer(String server) {
-        this.server = server;
-    }
 
     /**
      * In case of any errors on the API calls, tells the fragment to reset the UI to a disconnected

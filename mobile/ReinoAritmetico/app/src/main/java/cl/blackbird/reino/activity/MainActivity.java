@@ -76,7 +76,7 @@ public class MainActivity extends Activity {
                 getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         String url = Uri.parse(Config.getServer(this)).buildUpon()
-                .path("identify")
+                .path("api/v1/player/identify")
                 .appendQueryParameter("id", androidId)
                 .build().toString();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -105,10 +105,6 @@ public class MainActivity extends Activity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d(TAG, "Error identifying the device");
-                        error.printStackTrace();/*
-                        Log.d(String.valueOf(error.networkResponse),"error 1");
-                        Log.d(String.valueOf(error.networkResponse.statusCode),"error 2");
-                        Log.d(String.valueOf(registrationError),"error 3");*/
 
                         if(error.networkResponse != null && error.networkResponse.statusCode == 404 && !registrationError){
                             startRegistration();

@@ -11,19 +11,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import org.json.JSONObject;
 
 import cl.blackbird.reino.R;
 
 /**
  * Created by niko on 19/09/2014.
  */
-public class ChangeClassFragment extends Fragment {
+public class ChangeTypeFragment extends Fragment {
     public static final String TAG = "RAFCLASS";
     private Button changeClassButton;
     private Spinner charSpinner;
@@ -31,14 +28,14 @@ public class ChangeClassFragment extends Fragment {
     private int costo;
     private ImageView charImage;
     private String[] charTypes;
-    private changeListener cListener;
+    private ChangeListener cListener;
     private TypedArray charDrawables;
 
-    public ChangeClassFragment(){
+    public ChangeTypeFragment(){
 
     }
-    public static ChangeClassFragment newInstance(int clase){
-        ChangeClassFragment fragment = new ChangeClassFragment();
+    public static ChangeTypeFragment newInstance(int clase){
+        ChangeTypeFragment fragment = new ChangeTypeFragment();
         Bundle args = new Bundle();
         args.putInt("clase", clase);
         fragment.setArguments(args);
@@ -48,7 +45,7 @@ public class ChangeClassFragment extends Fragment {
      public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            cListener = (changeListener) activity;
+            cListener = (ChangeListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -107,16 +104,16 @@ public class ChangeClassFragment extends Fragment {
 
         changeClassButton.setEnabled(true);
         if(clase == charSpinner.getSelectedItemPosition()){
-            changeClassButton.setText("Cambiar Clase: $" + 0);
+            changeClassButton.setText(getString(R.string.change_type, 0));
             changeClassButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getActivity(),"Ya tienes esa clase",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.same_class,Toast.LENGTH_SHORT).show();
                 }
             });
         }
         else {
-            changeClassButton.setText("Cambiar Clase: $" + costo);
+            changeClassButton.setText(getString(R.string.change_type, costo));
             changeClassButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -128,17 +125,7 @@ public class ChangeClassFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    public interface changeListener{
+    public interface ChangeListener {
         public void onChangeClick(int clase,int precio);
     }
 }

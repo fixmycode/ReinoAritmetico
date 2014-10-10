@@ -50,7 +50,7 @@ public class RegisterActivity extends Activity implements RegisterFragment.Regis
      */
     private void getClients(){
         LoadingFragment.setLoadingMessage(this, R.string.preparing_clients);
-        String url = Uri.parse(Config.getServer(this)).buildUpon().path("clients").build().toString();
+        String url = Uri.parse(Config.getServer(this)).buildUpon().path("api/v1/client/clients").build().toString();
         JsonArrayRequest request = new JsonArrayRequest(url,
                 new Response.Listener<JSONArray>() {
                     @Override

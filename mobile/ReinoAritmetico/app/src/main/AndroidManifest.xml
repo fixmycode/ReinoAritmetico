@@ -37,6 +37,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="cl.blackbird.reino.activity.LobbyActivity" />
         </activity>
+        <activity
+            android:name=".activity.StoreActivity"
+            android:label="@string/title_activity_store"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".activity.LobbyActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="cl.blackbird.reino.activity.LobbyActivity" />
+            </activity>
 
     </application>
 

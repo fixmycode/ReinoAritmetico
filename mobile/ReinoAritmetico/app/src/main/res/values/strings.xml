@@ -58,9 +58,18 @@
     <string name="store">Store</string>
     <string name="trap">You\'re trapped, ask your friends for help!</string>
     <string name="weapons">Weapons</string>
+    <string name="armors">Armors</string>
     <string name="event_description">this image symbolizes the event</string>
-	<string name="classes">Classes</string>
+	<string name="classes">Change Class</string>
     <string name="ok">OK</string>
+    <string name="credits" formatted="false">Credits: $%d</string>
+    <string name="ask_buy" formatted="false">Do you want to purchase \"%s\" for $%d?</string>
+    <string name="buy_success">Item Bought</string>
+    <string name="buy_error">There was an error buying the item</string>
+    <string name="class_changed">Class Changed</string>
+    <string name="change_error">There was an error changing your class</string>
+    <string name="change_type">Change class: $%d</string>
+    <string name="same_class">You already have that class</string>
 
     <string-array name="characters">
         <item>Warrior</item>

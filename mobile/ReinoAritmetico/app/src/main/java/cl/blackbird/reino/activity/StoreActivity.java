@@ -3,14 +3,13 @@ package cl.blackbird.reino.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
-import android.app.ListFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.View;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -23,27 +22,26 @@ import com.android.volley.toolbox.StringRequest;
 import org.json.JSONArray;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import cl.blackbird.reino.Config;
 import cl.blackbird.reino.R;
 import cl.blackbird.reino.ReinoApplication;
-import cl.blackbird.reino.fragment.ChangeClassFragment;
-import cl.blackbird.reino.fragment.ListItemFragment;
-import cl.blackbird.reino.fragment.LobbyFragment;
+import cl.blackbird.reino.fragment.ChangeTypeFragment;
+import cl.blackbird.reino.fragment.ItemListFragment;
 import cl.blackbird.reino.fragment.StoreFragment;
-import cl.blackbird.reino.model.Item;
 import cl.blackbird.reino.model.Player;
 
 /**
  * Created by niko on 14/09/2014.
  */
-public class StoreActivity extends Activity implements StoreFragment.StoreListener,ListItemFragment.itemListener,ChangeClassFragment.changeListener{
+public class StoreActivity extends Activity implements
+        StoreFragment.StoreListener,
+        ItemListFragment.itemListener,
+        ChangeTypeFragment.ChangeListener {
     private static final String TAG = "RASTORE";
     private Player player;
-    private StoreFragment storeFragment;
-    private ChangeClassFragment changeClassFragment;
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -55,47 +53,26 @@ public class StoreActivity extends Activity implements StoreFragment.StoreListen
         setContentView(R.layout.frame_layout);
         if (savedInstanceState == null){
             player = (Player) getIntent().getExtras().getSerializable("player");
-            storeFragment = StoreFragment.newInstance(player);
             getFragmentManager().beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    .add(R.id.container, storeFragment, StoreFragment.TAG)
+                    .add(R.id.container, StoreFragment.newInstance(player), StoreFragment.TAG)
                     .commit();
         }
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-    }
-    @Override
-    public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setTitle("Retroceder")
-                .setMessage("¿Seguro quieres volver?")
-                .setNegativeButton(android.R.string.no, null)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        StoreActivity.super.onBackPressed();
-                    }
-                }).create().show();
-    }
-
-    @Override
     public void onChangeClass() {
-        changeClassFragment = changeClassFragment.newInstance(player.characterType);
         getFragmentManager().beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.container,changeClassFragment, ChangeClassFragment.TAG)
+                .replace(R.id.container, ChangeTypeFragment.newInstance(player.characterType), ChangeTypeFragment.TAG)
                 .commit();
     }
 
     @Override
-    public void onFinish() {
-        Intent lobby = new Intent(this,LobbyActivity.class);
-        lobby.putExtra("player",player);
-        lobby.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(lobby);
+    public void onDone() {
+        Intent result = new Intent();
+        result.putExtra("player", player);
+        setResult(Activity.RESULT_OK, result);
         finish();
     }
 
@@ -127,11 +104,11 @@ public class StoreActivity extends Activity implements StoreFragment.StoreListen
     public void startItemList(JSONArray json){
         getFragmentManager().beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.container,ListItemFragment.newInstance(json), ListItemFragment.TAG)
+                .replace(R.id.container, ItemListFragment.newInstance(json), ItemListFragment.TAG)
                 .commit();
     }
     @Override
-    public void onItemClick(final int id_item,final int precio) {
+    public void onItemClick(final int id_item, final int price) {
         final String androidId = Settings.Secure.getString(
                 getContentResolver(),
                 Settings.Secure.ANDROID_ID);
@@ -142,9 +119,9 @@ public class StoreActivity extends Activity implements StoreFragment.StoreListen
                     public void onResponse(String response) {
                         Toast.makeText(
                                 getApplicationContext(),
-                                "Compra exitosa",
+                                R.string.buy_success,
                                 Toast.LENGTH_LONG).show();
-                        success(precio);
+                        itemBought(price);
                     }
                 },
                 new Response.ErrorListener() {
@@ -152,7 +129,7 @@ public class StoreActivity extends Activity implements StoreFragment.StoreListen
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(
                                 getApplicationContext(),
-                                "Error al comprar",
+                                R.string.buy_error,
                                 Toast.LENGTH_LONG).show();
                     }
                 }){
@@ -166,38 +143,38 @@ public class StoreActivity extends Activity implements StoreFragment.StoreListen
         };
         ReinoApplication.getInstance().getRequestQueue().add(request);
     }
-    public void success(int precio){
-        player.credits= player.credits-precio;
-        Intent lobby = new Intent(this, LobbyActivity.class);
-        lobby.putExtra("player", player);
-        startActivity(lobby);
+    public void itemBought(int price){
+        player.credits -= price;
+        Intent result = new Intent();
+        result.putExtra("player", player);
+        setResult(Activity.RESULT_OK, result);
         finish();
     }
-    public void success(int precio,int ctype){
-        player.credits= player.credits-precio;
-        player.characterType=ctype;
-        Intent lobby = new Intent(this, LobbyActivity.class);
-        lobby.putExtra("player", player);
-        startActivity(lobby);
+    public void typeChanged(int price, int type){
+        player.credits -= price;
+        player.characterType = type;
+        Intent result = new Intent();
+        result.putExtra("player", player);
+        setResult(Activity.RESULT_OK, result);
         finish();
     }
 
     @Override
-    public void onChangeClick(final int clase,final int precio) {
+    public void onChangeClick(final int type, final int price) {
         final String androidId = Settings.Secure.getString(
                 getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         String url = Uri.parse(Config.getServer(this)).buildUpon().path("/api/v1/player/change-type").build().toString();
-        Log.d("Clase ",String.valueOf(clase));
+        Log.d("Clase ",String.valueOf(type));
         StringRequest request = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Toast.makeText(
                                 getApplicationContext(),
-                                "Cambio de clase exitoso",
+                                R.string.class_changed,
                                 Toast.LENGTH_LONG).show();
-                        success(precio,clase);
+                        typeChanged(price, type);
                     }
                 },
                 new Response.ErrorListener() {
@@ -205,7 +182,7 @@ public class StoreActivity extends Activity implements StoreFragment.StoreListen
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(
                                 getApplicationContext(),
-                                "Error al cambiar",
+                                R.string.change_error,
                                 Toast.LENGTH_LONG).show();
                     }
                 }){
@@ -213,10 +190,20 @@ public class StoreActivity extends Activity implements StoreFragment.StoreListen
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("android_id",androidId);
-                params.put("type_id", String.valueOf(clase));
+                params.put("type_id", String.valueOf(type));
                 return params;
             }
         };
         ReinoApplication.getInstance().getRequestQueue().add(request);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            setResult(Activity.RESULT_CANCELED);
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
