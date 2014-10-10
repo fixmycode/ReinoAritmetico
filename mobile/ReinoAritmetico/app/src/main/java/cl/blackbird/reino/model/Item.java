@@ -1,11 +1,15 @@
 package cl.blackbird.reino.model;
 
+import android.net.Uri;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cl.blackbird.reino.Config;
 
 /**
  * Created by niko on 14/09/2014.
@@ -35,5 +39,4 @@ public class Item {
     public static Item fromJSON(JSONObject jsonObject)throws JSONException{
         return new Item(jsonObject.getInt("id"),jsonObject.getString("nombre"),jsonObject.getString("description"),jsonObject.getString("image_path"),jsonObject.getInt("price"),jsonObject.getInt("item_type_id"),jsonObject.getInt("character_type_id"),jsonObject.getInt("comprado"));
     }
-
 }

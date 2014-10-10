@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.NetworkImageView;
 
 import org.json.JSONArray;
 
@@ -66,11 +67,11 @@ public class ItemAdapter extends BaseAdapter {
 
 
 
-        ImageView imgIcon = (ImageView) convertView.findViewById(R.id.imageView);
+        NetworkImageView imgIcon = (NetworkImageView) convertView.findViewById(R.id.imageView);
         TextView nombre = (TextView) convertView.findViewById(R.id.name);
         TextView estado = (TextView) convertView.findViewById(R.id.state);
         Item row_pos = rowItem.get(position);
-        imgIcon.setImageResource(R.drawable.ic_launcher);
+        imgIcon.setImageUrl(getImageUrl(row_pos), ReinoApplication.getInstance().getImageLoader());
         nombre.setText(row_pos.nombre);
 
         if(row_pos.comprado==0) {
@@ -82,5 +83,12 @@ public class ItemAdapter extends BaseAdapter {
 
         return convertView;
 
+    }
+
+    private String getImageUrl(Item item) {
+        return Uri.parse(Config.getServer(context)).buildUpon()
+                .path(item.image)
+                .build()
+                .toString();
     }
 }
