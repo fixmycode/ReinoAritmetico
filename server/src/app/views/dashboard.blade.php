@@ -15,4 +15,5 @@
   </div>
 </div>
 
+{{URL::previous()}}
 @stop

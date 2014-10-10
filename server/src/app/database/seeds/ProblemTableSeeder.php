@@ -43,7 +43,7 @@ class ProblemTableSeeder extends Seeder {
         array('id'=>43,'problem'=>'8+9','correct_answer'=>'17',  'difficulty'=>'1', 'problem_type_id'=>'1'),
 
         array('id'=>45,'problem'=>'13+21','correct_answer'=>'34','difficulty'=>'2', 'problem_type_id'=>'1'),
-        array('id'=>46,'problem'=>'11-3', 'correct_answer'=>'9', 'difficulty'=>'2', 'problem_type_id'=>'2'),
+        array('id'=>46,'problem'=>'11-3', 'correct_answer'=>'8', 'difficulty'=>'2', 'problem_type_id'=>'2'),
         array('id'=>47,'problem'=>'11-4', 'correct_answer'=>'7',  'difficulty'=>'2', 'problem_type_id'=>'2'),
         array('id'=>48,'problem'=>'10-2', 'correct_answer'=>'8',  'difficulty'=>'2', 'problem_type_id'=>'2'),
         array('id'=>49,'problem'=>'13-4', 'correct_answer'=>'9',  'difficulty'=>'2', 'problem_type_id'=>'2'),
@@ -75,7 +75,7 @@ class ProblemTableSeeder extends Seeder {
         array('id'=>12,'problem'=>'3*2','correct_answer'=>'6',  'difficulty'=>'3', 'problem_type_id'=>'3'),
         array('id'=>13,'problem'=>'5*3','correct_answer'=>'15', 'difficulty'=>'3', 'problem_type_id'=>'3'),
         array('id'=>14,'problem'=>'7*9','correct_answer'=>'63', 'difficulty'=>'3', 'problem_type_id'=>'3'),
-        array('id'=>15,'problem'=>'5/1','correct_answer'=>'5',  'difficulty'=>'3', 'problem_type_id'=>'4'),
+        array('id'=>15,'problem'=>'50/10','correct_answer'=>'5',  'difficulty'=>'3', 'problem_type_id'=>'4'),
         array('id'=>16,'problem'=>'81/9','correct_answer'=>'9', 'difficulty'=>'3', 'problem_type_id'=>'4'),
         array('id'=>17,'problem'=>'8*8','correct_answer'=>'64', 'difficulty'=>'3', 'problem_type_id'=>'3'),
         array('id'=>18,'problem'=>'6*1','correct_answer'=>'6',  'difficulty'=>'3', 'problem_type_id'=>'3'),

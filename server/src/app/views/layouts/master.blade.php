@@ -4,6 +4,8 @@
         <meta charset="UTF-8">
         <title>BS :: {{$title or 'Home'}}</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+
+        @section('css')
         <!-- bootstrap 3.0.2 -->
         {{ HTML::style('AdminLTE/css/bootstrap.min.css') }}
         <!-- font Awesome -->
@@ -12,6 +14,7 @@
         {{ HTML::style('AdminLTE/css/ionicons.min.css') }}
         <!-- Theme style -->
         {{ HTML::style('AdminLTE/css/AdminLTE.css') }}
+        @show
         
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -140,14 +143,18 @@
 
         @section('js')
         <!-- jQuery 2.0.2 -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+<!--         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
         <script src="//code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+ -->
+         {{ HTML::script('js/dataTables/media/js/jquery.js')}}
 
         <!-- Bootstrap -->
         {{ HTML::script('AdminLTE/js/bootstrap.min.js') }}
 
         <!-- AdminLTE App -->
         {{ HTML::script('AdminLTE/js/AdminLTE/app.js') }}
+
+        {{ HTML::script('js/dataTables/media/js/jquery.dataTables.min.js')}}
         @show
 
 

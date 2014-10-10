@@ -15,7 +15,8 @@ class PlayersTableSeeder extends Seeder {
         $client = Client::where('name','=','Ruben Dario')->first();
         DB::table('players')->insert(
           array(
-            array("name" => "Jon Snow", 'android_id' => 'know', 'character_type_id'=>1, 'classroom_id'=>$classroom->id,'client_id'=>$client->id),
+            array("name" => "Jon Snow",   'android_id' => 'know',   'character_type_id' => 1, 'classroom_id' => $classroom->id, 'client_id' => $client->id, 'credits' => 50),
+            array("name" => "Arya Stark", 'android_id' => 'niddle', 'character_type_id' => 1, 'classroom_id' => $classroom->id, 'client_id' => $client->id, 'credits' => 50),
             )
         );
 	}
