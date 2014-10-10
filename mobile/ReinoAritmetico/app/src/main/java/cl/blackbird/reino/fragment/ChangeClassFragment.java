@@ -121,7 +121,7 @@ public class ChangeClassFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     if (cListener != null){
-                        cListener.onChangeClick(clase,costo);
+                        cListener.onChangeClick(charSpinner.getSelectedItemPosition(),costo);
                     }
                 }
             });
