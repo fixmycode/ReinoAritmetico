@@ -6,4 +6,5 @@
     <dimen name="join_game_button">160dp</dimen>
     <dimen name="game_button_text_size">30sp</dimen>
     <dimen name="question_text_size">40sp</dimen>
+    <dimen name="buy_items_button">160dp</dimen>
 </resources>

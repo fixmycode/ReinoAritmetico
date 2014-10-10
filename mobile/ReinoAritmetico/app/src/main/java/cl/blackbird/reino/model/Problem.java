@@ -3,7 +3,9 @@ package cl.blackbird.reino.model;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Problem {
+import java.io.Serializable;
+
+public class Problem implements Serializable {
     private int id;
     private String problem;
     private String correctAnswer;

@@ -9,21 +9,24 @@ import java.util.ArrayList;
 public class Player implements Serializable {
     public String androidID;
     public String name;
+    public int credits;
     public int characterType;
     public School school;
     public ClassRoom classRoom;
 
-    public Player(String name,int characterType, School school, ClassRoom classRoom) {
+    public Player(String name,int credits,int characterType, School school, ClassRoom classRoom) {
         this.androidID = null;
         this.name = name;
+        this.credits = credits;
         this.characterType =characterType;
         this.school = school;
         this.classRoom = classRoom;
     }
 
-    public Player(String name,int characterType, School school, ClassRoom classRoom, String androidID) {
+    public Player(String name,int credits,int characterType, School school, ClassRoom classRoom, String androidID) {
         this.androidID = androidID;
         this.name = name;
+        this.credits = credits;
         this.characterType = characterType;
         this.school = school;
         this.classRoom = classRoom;
@@ -47,6 +50,6 @@ public class Player implements Serializable {
         ArrayList<ClassRoom> classList = new ArrayList<ClassRoom>();
         classList.add(tempClassRoom);
         tempSchool = new School(schoolID, schoolName, classList);
-        return new Player(json.getString("name"), json.getInt("character_type"), tempSchool, tempClassRoom);
+        return new Player(json.getString("name"), json.getInt("credits"), json.getInt("character_type"), tempSchool, tempClassRoom);
     }
 }
