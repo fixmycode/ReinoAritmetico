@@ -5,7 +5,6 @@
     <string name="action_settings">Ajustes</string>
     <string name="loading">Cargando…</string>
     <string name="title_activity_register">Regístrate para jugar</string>
-    <string name="title_activity_store">Compra algo</string>
     <string name="register_first">Para poder jugar con tus amigos, primero debes registrarte en
         nuestro sistema. Este paso se hace una vez y nunca más se te pedirá registrarte en este
         dispositivo.</string>
@@ -56,10 +55,7 @@
     <string name="shake">¡Uno de tus amigos está en problema, sacúde el control para ayudarlo!</string>
     <string name="trap">¡Estás atrapado, pide ayuda a tus amigos!</string>
     <string name="event_description">esta imagen simboliza el evento</string>
-	<string name="warrior">Guerrero</string>
-    <string name="wizard">Mago</string>
-    <string name="archer">Arquero</string>
-    <string name="store">Tienda</string>
+
     <string-array name="characters">
         <item>Guerrero</item>
         <item>Mago</item>

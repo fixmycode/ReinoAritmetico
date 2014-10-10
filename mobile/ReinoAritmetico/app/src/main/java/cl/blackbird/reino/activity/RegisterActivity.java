@@ -50,7 +50,7 @@ public class RegisterActivity extends Activity implements RegisterFragment.Regis
      */
     private void getClients(){
         LoadingFragment.setLoadingMessage(this, R.string.preparing_clients);
-        String url = Uri.parse(Config.getServer(this)).buildUpon().path("api/v1/client/clients").build().toString();
+        String url = Uri.parse(Config.getServer(this)).buildUpon().path("clients").build().toString();
         JsonArrayRequest request = new JsonArrayRequest(url,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -87,7 +87,7 @@ public class RegisterActivity extends Activity implements RegisterFragment.Regis
      */
     private void tryToRegister(final Player player) {
         LoadingFragment.setLoadingMessage(this, R.string.saving_player);
-        String url = Uri.parse(Config.getServer(this)).buildUpon().path("api/v1/player/register").build().toString();
+        String url = Uri.parse(Config.getServer(this)).buildUpon().path("register").build().toString();
         StringRequest request = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -115,7 +115,6 @@ public class RegisterActivity extends Activity implements RegisterFragment.Regis
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("android_id", player.androidID);
                 params.put("name", player.name);
-                params.put("credits", String.valueOf(player.credits));
                 params.put("character_type", String.valueOf(player.characterType));
                 params.put("school", String.valueOf(player.school.id));
                 params.put("classroom", String.valueOf(player.classRoom.id));

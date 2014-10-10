@@ -5,7 +5,6 @@
     <string name="action_settings">Settings</string>
     <string name="loading">Loading…</string>
     <string name="title_activity_register">Register to play</string>
-    <string name="title_activity_store">Buy Something</string>
     <string name="register_first">To be able to play with your friends, you need to register in the
     system first. This is a one-time step, you won\'t be asked to register in this device ever again.</string>
     <string name="register_and_play">Register and play!</string>
@@ -54,19 +53,10 @@
     <string name="shake">One of your friends is in trouble, shake the controller to help!</string>
     <string name="trap">You\'re trapped, ask your friends for help!</string>
     <string name="event_description">this image symbolizes the event</string>
-    <string name="warrior">Warrior</string>
-    <string name="wizard">Wizard</string>
-    <string name="archer">Archer</string>
-    <string name="store">Store</string>
+
     <string-array name="characters">
         <item>Warrior</item>
         <item>Wizard</item>
         <item>Archer</item>
-    </string-array>
-    <string-array name="cascos">
-        <item>batman_head</item>
-    </string-array>
-    <string-array name="armas">
-        <item>sacred_sword</item>
     </string-array>
 </resources>

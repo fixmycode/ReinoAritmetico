@@ -228,7 +228,6 @@ public class RegisterFragment extends Fragment implements AdapterView.OnItemSele
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final String name = nameField.getText().toString();
         final int characterId = charSpinner.getSelectedItemPosition();
-        final int credits =0;
         final String characterName = charSpinner.getSelectedItem().toString();
         final School selectedSchool = (School) schoolSpinner.getSelectedItem();
         final ClassRoom selectedClassRoom = (ClassRoom) classSpinner.getSelectedItem();
@@ -238,7 +237,7 @@ public class RegisterFragment extends Fragment implements AdapterView.OnItemSele
         builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                registerNewPlayer(name, credits,characterId, selectedSchool, selectedClassRoom);
+                registerNewPlayer(name, characterId, selectedSchool, selectedClassRoom);
                 dialog.dismiss();
             }
         });
@@ -258,8 +257,8 @@ public class RegisterFragment extends Fragment implements AdapterView.OnItemSele
      * @param school the school
      * @param classRoom the classroom
      */
-    private void registerNewPlayer(String name,int credits, int characterType, School school, ClassRoom classRoom) {
-        Player player = new Player(name,credits, characterType, school, classRoom);
+    private void registerNewPlayer(String name, int characterType, School school, ClassRoom classRoom) {
+        Player player = new Player(name, characterType, school, classRoom);
         player.androidID = Settings.Secure.getString(
                 getActivity().getContentResolver(),
                 Settings.Secure.ANDROID_ID);

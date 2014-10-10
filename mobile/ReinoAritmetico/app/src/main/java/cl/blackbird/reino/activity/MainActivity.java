@@ -76,7 +76,7 @@ public class MainActivity extends Activity {
                 getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         String url = Uri.parse(Config.getServer(this)).buildUpon()
-                .path("api/v1/player/identify")
+                .path("identify")
                 .appendQueryParameter("id", androidId)
                 .build().toString();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,

@@ -29,11 +29,6 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activity.StoreActivity"
-            android:label="@string/title_activity_store"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name=".activity.GameActivity"
             android:label="@string/title_activity_game"
             android:screenOrientation="portrait"
