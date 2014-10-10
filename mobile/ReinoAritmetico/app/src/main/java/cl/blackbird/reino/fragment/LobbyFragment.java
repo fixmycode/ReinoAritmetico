@@ -28,9 +28,9 @@ public class LobbyFragment extends Fragment implements View.OnClickListener {
     private EditText lobbyCode;
     private ImageView characterImage;
     private Button joinButton;
-    private Button shopButton;
     private Player player;
     private TextView nameText;
+    private TextView characterTypeText;
     private TextView creditsText;
 
     @Override
@@ -58,16 +58,18 @@ public class LobbyFragment extends Fragment implements View.OnClickListener {
         creditsText =(TextView) layout.findViewById(R.id.creditsText);
         creditsText.setText("Creditos: "+String.valueOf(player.credits));
 
-        //shopButton=(Button) layout.findViewById(R.id.shopButton);
-        /*shopButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.onJoinShop();
-                Log.d("hola","hola");
-            }
-        });*/
-
-
+        characterTypeText = (TextView) layout.findViewById(R.id.characterTypeText);
+        int characterType = 0;
+        if(player.characterType==0){
+            characterType = R.string.warrior;
+        }
+        else if(player.characterType==1){
+            characterType = R.string.wizard;
+        }
+        else if(player.characterType == 2){
+            characterType = R.string.archer;
+        }
+        characterTypeText.setText(characterType);
 
         checkValidForm(lobbyCode.getText(), joinButton);
 
@@ -145,7 +147,6 @@ public class LobbyFragment extends Fragment implements View.OnClickListener {
      */
     public interface LobbyListener {
         public void onJoinServer(String code);
-        //public void onJoinShop();
     }
 
 }

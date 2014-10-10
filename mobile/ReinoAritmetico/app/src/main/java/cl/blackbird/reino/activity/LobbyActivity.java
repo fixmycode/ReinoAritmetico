@@ -151,6 +151,7 @@ public class LobbyActivity extends Activity implements LobbyFragment.LobbyListen
         store.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         store.putExtra("player",player);
         startActivity(store);
+        finish();
 
     }
 
@@ -233,13 +234,16 @@ public class LobbyActivity extends Activity implements LobbyFragment.LobbyListen
 
     private void eraseCharacter(){
         String url = Uri.parse(Config.getServer(this)).buildUpon()
-                .path("delete")
+                .path("/api/v1/player/delete")
                 .appendQueryParameter("id", player.androidID)
                 .build().toString();
+        final Intent i = new Intent(this,MainActivity.class);
         StringRequest request = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+
+                        startActivity(i);
                         finish();
                     }
                 },

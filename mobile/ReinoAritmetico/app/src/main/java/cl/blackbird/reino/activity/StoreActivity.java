@@ -39,7 +39,7 @@ import cl.blackbird.reino.model.Player;
 /**
  * Created by niko on 14/09/2014.
  */
-public class StoreActivity extends Activity implements StoreFragment.StoreListener,ListItemFragment.itemListener{
+public class StoreActivity extends Activity implements StoreFragment.StoreListener,ListItemFragment.itemListener,ChangeClassFragment.changeListener{
     private static final String TAG = "RASTORE";
     private Player player;
     private StoreFragment storeFragment;
@@ -92,16 +92,22 @@ public class StoreActivity extends Activity implements StoreFragment.StoreListen
 
     @Override
     public void onFinish() {
-
+        Intent lobby = new Intent(this,LobbyActivity.class);
+        lobby.putExtra("player",player);
+        lobby.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(lobby);
+        finish();
     }
 
     @Override
-    public void onItemList() {
+    public void onItemList(final int kind,final int type) {
         final String androidId = Settings.Secure.getString(
                 getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        String url = Uri.parse(Config.getServer(this)).buildUpon().path("item")
-                .appendQueryParameter("id", androidId).build().toString();
+        String url = Uri.parse(Config.getServer(this)).buildUpon().path("api/v1/item/list")
+                .appendQueryParameter("kind",String.valueOf(kind)).appendQueryParameter("type",String.valueOf(type))
+                .appendQueryParameter("player",androidId).build().toString();
+        Log.d("url",url);
         JsonArrayRequest request = new JsonArrayRequest(url,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -125,8 +131,11 @@ public class StoreActivity extends Activity implements StoreFragment.StoreListen
                 .commit();
     }
     @Override
-    public void onItemClick(final int id_item,final String androidID) {
-        String url = Uri.parse(Config.getServer(this)).buildUpon().path("buy").build().toString();
+    public void onItemClick(final int id_item,final int precio) {
+        final String androidId = Settings.Secure.getString(
+                getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        String url = Uri.parse(Config.getServer(this)).buildUpon().path("/api/v1/item/buy").build().toString();
         StringRequest request = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -135,6 +144,7 @@ public class StoreActivity extends Activity implements StoreFragment.StoreListen
                                 getApplicationContext(),
                                 "Compra exitosa",
                                 Toast.LENGTH_LONG).show();
+                        success(precio);
                     }
                 },
                 new Response.ErrorListener() {
@@ -149,8 +159,52 @@ public class StoreActivity extends Activity implements StoreFragment.StoreListen
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("uid",androidID);
-                params.put("id", Integer.toString(id_item));
+                params.put("android_id",androidId);
+                params.put("item_id", String.valueOf(id_item));
+                return params;
+            }
+        };
+        ReinoApplication.getInstance().getRequestQueue().add(request);
+    }
+    public void success(int precio){
+        player.credits= player.credits-precio;
+        Intent lobby = new Intent(this, LobbyActivity.class);
+        lobby.putExtra("player", player);
+        startActivity(lobby);
+        finish();
+    }
+
+    @Override
+    public void onChangeClick(final int clase,final int precio) {
+        final String androidId = Settings.Secure.getString(
+                getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        String url = Uri.parse(Config.getServer(this)).buildUpon().path("/api/v1/player/change-type").build().toString();
+        StringRequest request = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "Cambio de clase exitoso",
+                                Toast.LENGTH_LONG).show();
+                        success(precio);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "Error al cambiar",
+                                Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("android_id",androidId);
+                params.put("type_id", String.valueOf(clase));
                 return params;
             }
         };

@@ -19,8 +19,9 @@ public class Item {
     public String image;
     public int tipo;
     public int clase;
+    public int comprado;
 
-    public Item(int id,String nombre,String descripcion,String image,int precio,int tipo,int clase){
+    public Item(int id,String nombre,String descripcion,String image,int precio,int tipo,int clase,int comprado){
         this.androidID = null;
         this.id = id;
         this.precio = precio;
@@ -29,9 +30,10 @@ public class Item {
         this.descripcion = descripcion;
         this.tipo = tipo;
         this.clase = clase;
+        this.comprado=comprado;
 
     }
-    public Item(int id,String nombre,String descripcion,String image,int precio,int tipo,int clase, String androidID){
+    public Item(int id,String nombre,String descripcion,String image,int precio,int tipo,int clase,int comprado, String androidID){
 
         this.androidID = androidID;
         this.id = id;
@@ -41,11 +43,12 @@ public class Item {
         this.descripcion = descripcion;
         this.tipo = tipo;
         this.clase = clase;
+        this.comprado=comprado;
 
     }
 
     public static Item fromJSONObject(JSONObject jsonObject)throws JSONException{
-        return new Item(jsonObject.getInt("id"),jsonObject.getString("nombre"),jsonObject.getString("description"),jsonObject.getString("image_path"),jsonObject.getInt("price"),jsonObject.getInt("item_type_id"),jsonObject.getInt("character_type_id"));
+        return new Item(jsonObject.getInt("id"),jsonObject.getString("nombre"),jsonObject.getString("description"),jsonObject.getString("image_path"),jsonObject.getInt("price"),jsonObject.getInt("item_type_id"),jsonObject.getInt("character_type_id"),jsonObject.getInt("comprado"));
     }
 
 }

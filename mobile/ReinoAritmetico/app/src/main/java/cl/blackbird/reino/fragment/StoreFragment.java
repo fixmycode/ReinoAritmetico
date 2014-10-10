@@ -25,6 +25,8 @@ public class StoreFragment extends Fragment {
     private Button classButton;
     private Button okButton;
     private StoreListener sListener;
+    private Player player;
+    private int type;
     public StoreFragment() {
         //empty constructor
     }
@@ -48,6 +50,8 @@ public class StoreFragment extends Fragment {
         View layout = inflater.inflate(R.layout.store_layout, container, false);
 
         setButtons(layout);
+        player = (Player) getArguments().getSerializable("player");
+        type = player.characterType;
 
 
 
@@ -80,7 +84,7 @@ public class StoreFragment extends Fragment {
         helmetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sListener.onItemList();
+                sListener.onItemList(1,type);
 
             }
         });
@@ -88,7 +92,7 @@ public class StoreFragment extends Fragment {
         weaponButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sListener.onItemList();
+                sListener.onItemList(2,type);
             }
         });
         classButton=(Button) layout.findViewById(R.id.classButton);
@@ -108,7 +112,7 @@ public class StoreFragment extends Fragment {
     }
 
     public interface StoreListener{
-        public void onItemList();
+        public void onItemList(int kind,int type);
         public void onChangeClass();
         public void onFinish();
     }

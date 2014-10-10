@@ -40,7 +40,7 @@
     <string name="press_twice">Press twice to exit</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="server_address">Server Address</string>
-    <string name="default_server">http://citadel-cloud.ddns.net:8000</string>
+    <string name="default_server">http://blackbirdsw.noip.me</string>
     <string name="title_activity_game">GameActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="answer">Answer</string>
@@ -51,16 +51,18 @@
     <string name="your_question">Your Question</string>
     <string name="game_over">Game over! results are on the screen</string>
     <string name="game_error">Unexpected error during the game</string>
+    <string name="warrior">Warrior</string>
+    <string name="wizard">Wizard</string>
+    <string name="archer">Archer</string>
+    <string name="store">Store</string>
+    <string name="armors">Armors</string>
+    <string name="weapons">Weapons</string>
+    <string name="classes">Classes</string>
+    <string name="ok">OK</string>
 
     <string-array name="characters">
         <item>Warrior</item>
         <item>Wizard</item>
         <item>Archer</item>
-    </string-array>
-    <string-array name="cascos">
-        <item>batman_head</item>
-    </string-array>
-    <string-array name="armas">
-        <item>sacred_sword</item>
     </string-array>
 </resources>
