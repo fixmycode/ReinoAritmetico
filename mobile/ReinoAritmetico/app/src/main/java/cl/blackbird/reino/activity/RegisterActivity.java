@@ -87,7 +87,7 @@ public class RegisterActivity extends Activity implements RegisterFragment.Regis
      */
     private void tryToRegister(final Player player) {
         LoadingFragment.setLoadingMessage(this, R.string.saving_player);
-        String url = Uri.parse(Config.getServer(this)).buildUpon().path("register").build().toString();
+        String url = Uri.parse(Config.getServer(this)).buildUpon().path("api/v1/player/register").build().toString();
         StringRequest request = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override

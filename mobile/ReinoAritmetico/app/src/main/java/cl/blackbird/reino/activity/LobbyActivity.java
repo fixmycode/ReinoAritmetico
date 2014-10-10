@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -144,6 +145,15 @@ public class LobbyActivity extends Activity implements LobbyFragment.LobbyListen
             ReinoApplication.getInstance().getRequestQueue().add(request);
         }
     }
+    public void onClickShop(View v){
+        Log.d(TAG,"Joining Store");
+        Intent store= new Intent(this,StoreActivity.class);
+        store.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        store.putExtra("player",player);
+        startActivity(store);
+        finish();
+
+    }
 
 
     /**
@@ -227,7 +237,7 @@ public class LobbyActivity extends Activity implements LobbyFragment.LobbyListen
 
     private void eraseCharacter(){
         String url = Uri.parse(Config.getServer(this)).buildUpon()
-                .path("delete")
+                .path("/api/v1/player/delete")
                 .appendQueryParameter("id", player.androidID)
                 .build().toString();
         StringRequest request = new StringRequest(Request.Method.GET, url,

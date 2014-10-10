@@ -105,7 +105,10 @@ public class MainActivity extends Activity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d(TAG, "Error identifying the device");
-                        error.printStackTrace();
+                        error.printStackTrace();/*
+                        Log.d(String.valueOf(error.networkResponse),"error 1");
+                        Log.d(String.valueOf(error.networkResponse.statusCode),"error 2");
+                        Log.d(String.valueOf(registrationError),"error 3");*/
 
                         if(error.networkResponse != null && error.networkResponse.statusCode == 404 && !registrationError){
                             startRegistration();

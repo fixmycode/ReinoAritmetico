@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ff000000"
+    android:gravity="center_vertical"
+    android:weightSum="1">
+
+
+    <Button
+        android:layout_width="260dp"
+        android:layout_height="50dp"
+        android:text="@string/armors"
+        android:id="@+id/weaponButton"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_weight="0.12"
+        android:textSize="30dp" />
+
+    <Button
+        android:layout_width="260dp"
+        android:layout_height="50dp"
+        android:text="@string/weapons"
+        android:id="@+id/helmetButton"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_weight="0.12"
+        android:textSize="30dp" />
+
+    <Button
+        android:layout_width="260dp"
+        android:layout_height="50dp"
+        android:text="@string/classes"
+        android:id="@+id/classButton"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_weight="0.12"
+        android:textSize="30dp" />
+
+    <Button
+        android:layout_width="260dp"
+        android:layout_height="50dp"
+        android:text="@string/ok"
+        android:id="@+id/okButton"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_weight="0.12"
+        android:textSize="30dp" />
+</LinearLayout>
