@@ -125,10 +125,9 @@ class PlayerApiController extends \BaseController {
       return Response::json(array('msg' => 'error: tipo igual al anterior'), 404);  
 
     $player->credits = $player->credits - 500;
-    $player->character_type_id = $character_type->id;
-    $player->save();
+    $character_type->players()->save($player);
     
-    return Response::json($player, 200);
+    return Response::json(Player::with('characterType')->find(1)->toArray(), 200);
   }
 }
 
