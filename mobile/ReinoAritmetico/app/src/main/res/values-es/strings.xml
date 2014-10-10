@@ -52,6 +52,9 @@
     <string name="your_question">Tu Pregunta</string>
     <string name="game_over">Juego terminado! los resultados están en la pantalla</string>
     <string name="game_error">Error inesperado durante la partida</string>
+    <string name="shake">¡Uno de tus amigos está en problema, sacúde el control para ayudarlo!</string>
+    <string name="trap">¡Estás atrapado, pide ayuda a tus amigos!</string>
+    <string name="event_description">esta imagen simboliza el evento</string>
 
     <string-array name="characters">
         <item>Guerrero</item>

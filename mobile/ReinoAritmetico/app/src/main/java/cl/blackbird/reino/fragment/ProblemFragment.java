@@ -15,13 +15,13 @@ import cl.blackbird.reino.model.Problem;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link cl.blackbird.reino.fragment.MainGameFragment.OnGameInteractionListener} interface
+ * {@link cl.blackbird.reino.fragment.ProblemFragment.OnAnswerListener} interface
  * to handle interaction events.
  *
  */
-public class MainGameFragment extends Fragment implements View.OnClickListener{
-
-    private OnGameInteractionListener mListener;
+public class ProblemFragment extends Fragment implements View.OnClickListener{
+    public static final String TAG = "RAPROBLEMFRAG";
+    private OnAnswerListener mListener;
     private Problem currentProblem;
     private long currentTime;
     private TextView answerText;
@@ -59,6 +59,10 @@ public class MainGameFragment extends Fragment implements View.OnClickListener{
             button.setOnClickListener(this);
         }
 
+        if(getArguments() != null){
+            this.setProblem((Problem) getArguments().getSerializable("problem"));
+        }
+
         return layout;
     }
 
@@ -74,7 +78,8 @@ public class MainGameFragment extends Fragment implements View.OnClickListener{
         if (mListener != null && currentProblem != null) {
             currentProblem.setElapsedTime(System.currentTimeMillis() - currentTime);
             currentProblem.setAnswer(getAnswer());
-            mListener.onSendResponse(currentProblem);
+            mListener.onAnswer(currentProblem);
+            setProblem(null);
         }
     }
 
@@ -95,16 +100,27 @@ public class MainGameFragment extends Fragment implements View.OnClickListener{
         }
     }
 
+    public static ProblemFragment newInstance(Problem problem) {
+        ProblemFragment fragment = new ProblemFragment();
+        Bundle args = new Bundle();
+        args.putSerializable("problem", problem);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static ProblemFragment newInstance(){
+        return ProblemFragment.newInstance(null);
+    }
+
     public void setProblem(Problem problem) {
         this.currentProblem = problem;
         if(currentProblem != null){
             this.currentTime = System.currentTimeMillis();
             this.problemText.setText(problem.getProblem());
-            setAnswer("");
         } else {
             this.problemText.setText(R.string.no_question);
-
         }
+        setAnswer("");
         this.answerButton.setEnabled(currentProblem != null);
     }
 
@@ -112,7 +128,7 @@ public class MainGameFragment extends Fragment implements View.OnClickListener{
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnGameInteractionListener) activity;
+            mListener = (OnAnswerListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnGameInteractionListener");
@@ -141,8 +157,8 @@ public class MainGameFragment extends Fragment implements View.OnClickListener{
 
 
 
-    public interface OnGameInteractionListener {
-        public void onSendResponse(Problem problem);
+    public interface OnAnswerListener {
+        public void onAnswer(Problem problem);
     }
 
 }

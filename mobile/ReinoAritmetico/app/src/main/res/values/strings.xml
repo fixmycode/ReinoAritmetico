@@ -50,6 +50,9 @@
     <string name="your_question">Your Question</string>
     <string name="game_over">Game over! results are on the screen</string>
     <string name="game_error">Unexpected error during the game</string>
+    <string name="shake">One of your friends is in trouble, shake the controller to help!</string>
+    <string name="trap">You\'re trapped, ask your friends for help!</string>
+    <string name="event_description">this image symbolizes the event</string>
 
     <string-array name="characters">
         <item>Warrior</item>
