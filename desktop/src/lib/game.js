@@ -24,6 +24,7 @@ function Game(options) {
   this.j = 0;
   this.problemsCount = 0;
   this.wrong_players = [];
+  this.reward = 0;
 }
 
 Game.prototype.init = function(){
@@ -57,7 +58,7 @@ Game.prototype.init = function(){
         var a = JSON.parse(body);
         self.joinCode = a.uid;
         self.waiting = true;
-        self.reward = REWARD;
+        self.reward = 0;
         defer.resolve();
       })
       .on('error', defer.reject);
@@ -170,6 +171,7 @@ Game.prototype.start = function() {
       self.offset = 1;
       self.problemsCount = 0;
       self.shaken = 0;
+      self.reward = REWARD;
       for(var i = 0; i < self.players.length; i++) {
         self.players[i].j = i;
       }
