@@ -247,27 +247,29 @@ public class GameActivity extends Activity implements IOCallback,
 
     private void listenShakeOrTrap(JSONObject event, final int mode) throws JSONException {
         Log.i(TAG, String.format("%s!: %s", mode == SensorFragment.MODE_SHAKE ? "Shake" : "Trapped", event.toString()));
+        final String msg = event.getString("msg");
         if(Looper.myLooper() == Looper.getMainLooper()){
-            replaceSensorFragment(mode);
+            replaceSensorFragment(mode, msg);
         } else mHandler.post(new Runnable() {
             @Override
             public void run() {
-                replaceSensorFragment(mode);
+                replaceSensorFragment(mode, msg);
             }
         });
     }
 
-    private void replaceSensorFragment(int mode){
+    private void replaceSensorFragment(int mode, String msg){
         getFragmentManager().beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.container, SensorFragment.newInstance(mode), SensorFragment.TAG)
+                .replace(R.id.container, SensorFragment.newInstance(mode, msg), SensorFragment.TAG)
                 .commit();
     }
 
     private void listenGameEnd(JSONObject event) throws JSONException {
-        Log.i(TAG, String.format("Game end!"));
+        Log.i(TAG, String.format("Game end!: %s", event.toString()));
         Intent result = new Intent();
-        result.getExtras().putInt("reward", event.getInt("reward"));
+        int reward = event.getInt("reward");
+        result.putExtra("reward", reward);
         setResult(Activity.RESULT_OK, result);
         finish();
     }

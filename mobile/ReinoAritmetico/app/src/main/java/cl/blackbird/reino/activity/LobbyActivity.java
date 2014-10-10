@@ -118,7 +118,7 @@ public class LobbyActivity extends Activity implements LobbyFragment.LobbyListen
             joinServer(player, cachedServer);
         } else {
             String url = Uri.parse(Config.getServer(this)).buildUpon()
-                    .path("server")
+                    .path("api/v1/server/server")
                     .appendQueryParameter("uid", code)
                     .build().toString();
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -176,6 +176,9 @@ public class LobbyActivity extends Activity implements LobbyFragment.LobbyListen
         switch (resultCode) {
             case Activity.RESULT_OK:
                 Log.d(TAG, "Activity ended OK");
+                if(data != null && data.getExtras() != null){
+                    player.credits += data.getExtras().getInt("reward");
+                }
                 toastRes = R.string.game_over;
                 break;
             case Activity.RESULT_CANCELED:
