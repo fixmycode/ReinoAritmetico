@@ -13,6 +13,7 @@ Route::get('dashboard', ['as' => 'dashboard', function(){
 Route::resource('clientss', 'ClientsController');
 Route::resource('clientss.classrooms', 'ClientsClassroomsController');
 Route::resource('problems', 'ProblemController');
+Route::resource('items', 'ItemController');
 
 /**
  * La nueva forma de hacer llamados a la API deben conformarse al siguiente
