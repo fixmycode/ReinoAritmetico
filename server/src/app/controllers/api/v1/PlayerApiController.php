@@ -111,35 +111,23 @@ class PlayerApiController extends \BaseController {
     $number_of_paramters = count(Input::all());
     $player = Player::where('android_id','=',$android_id)->first();
 
-    if( ($android_id == null || $type_id == null) || $number_of_paramters != 2 || $player == null)  {
+    if( ($android_id == null || $type_id == null) || $number_of_paramters != 2 || $player == null)
       App::abort(400, "BAD REQUEST");
-    }
-    else{
-      $character_type = CharacterType::find($type_id);
-      if($character_type == null)
-        App::abort(404, "NOT FOUND");
-      else{
-        
-        if( ($player->credits - 100) < 0 ){
-          
-          App::abort(403, "FORBIDDEN");
-        }
-        else{
-          if($player->character_type_id == $type_id)
-            return Response::json("error: caracter igual al anterior", 404);
-          else{
-            
-            $player->credits = $player->credits - 100;
-            $player->character_type_id = $character_type->id;
-            $player->save();
-            
-            return Response::json($player, 200);
-          }
-        }
-      }
-    }
 
+    $character_type = CharacterType::whereUid($type_id)->first();
+    if($character_type == null)
+      App::abort(404, "NOT FOUND");
+      
+    if( ($player->credits - 500) < 0 )
+      App::abort(403, "FORBIDDEN");
+    
+    if($player->character_type->uid == $type_id)
+      return Response::json(array('msg' => 'error: tipo igual al anterior'), 404);  
 
+    $player->credits = $player->credits - 500;
+    $character_type->players()->save($player);
+    
+    return Response::json(Player::with('characterType')->find($player->id)->toArray(), 200);
   }
 }
 
