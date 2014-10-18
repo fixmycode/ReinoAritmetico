@@ -58,6 +58,8 @@
 $(document).ready(function() {
   
   $('#questionTable').dataTable({
+        "bFilter": false,
+        "bInfo": false,
         "filter": true,
         "language": {
             "lengthMenu": "Mostrar _MENU_ registros por pagina",
@@ -69,30 +71,29 @@ $(document).ready(function() {
                   "previous": "Anterior",
                   "next": "Siguiente"
                 }
+        },
+        "fnPreDrawCallback": function( oSettings ) {
+          $('.destroy').confirmation({
+            btnCancelLabel: 'Cancelar',
+            btnOkLabel: 'Eliminar',
+            onConfirm: function(event, element){
+              console.log(element.data("problem-id"));
+              var problemId = element.data("problem-id");
+              var APIurl = '{{ URL::route('problems.index') }}' + '/' + problemId;
+              $.ajax({
+                url: APIurl,
+                type: "DELETE",
+                success: function(res) {
+                  console.log(res);
+                  element.closest('tr').remove();
+                }
+              });
+            }
+          });
         }
   });
-  $('.dataTables_info').parent().remove();
-  $('.dataTables_filter').parent().remove();
-  $('.dataTables_paginate').parent().removeClass('col-xs-6').addClass('col-xs-12');
-  $('.dataTables_length').parent().removeClass('col-xs-6').addClass('col-xs-12');
   
-  $('.destroy').confirmation({
-    btnCancelLabel: 'Cancelar',
-    btnOkLabel: 'Eliminar',
-    onConfirm: function(event, element){
-      console.log(element.data("problem-id"));
-      var problemId = element.data("problem-id");
-      var APIurl = '{{ URL::route('problems.index') }}' + '/' + problemId;
-      $.ajax({
-        url: APIurl,
-        type: "DELETE",
-        success: function(res) {
-          console.log(res);
-          element.closest('tr').remove();
-        }
-      });
-    }
-  });
+  
 
   $('body').on('hidden.bs.modal', '.modal', function () {
     var $this = $(this);

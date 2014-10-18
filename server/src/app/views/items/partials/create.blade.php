@@ -7,7 +7,7 @@
   </div>
   <div class="box-body" style="display: none;">
   
-    {{ Form::model($newItem, array('url' => URL::route('problems.store'), 'method' => 'POST')) }}
+   {{ Form::model($newItem, array('url' => URL::route('problems.store'), 'method' => 'POST')) }}
       <div class="form-group">
           <label for="nombre">Nombre</label>
           {{ Form::text('nombre', $newItem->nombre, ['class' => 'form-control']) }}
@@ -19,16 +19,26 @@
       </div>
 
       <div class="form-group">
+          <label for="description">Precio</label>
+          {{ Form::text('price', $newItem->price, ['class' => 'form-control']) }}
+      </div>
+
+      <div class="form-group">
           <label for="exampleInputEmail1">Tipo</label>
-          {{Form::select('difficulty', $difficulty, $newItem->difficulty, array('class'=>'form-control'))}}
+          {{Form::select('item_type', $item_type, $newItem->type, array('class'=>'form-control'))}}
+      </div>
+
+      <div class="form-group">
+          <label for="exampleInputEmail1">Clase</label>
+          {{Form::select('character_type', $character_type, $newItem->character_type, array('class'=>'form-control'))}}
       </div>
       
-    {{--  <div class="box-footer">
+    <div class="box-footer">
         <button type="submit" class="btn btn-primary">Crear</button>
       </div>
-      --}}
       
-    {{ Form::close() }}
+      
+    {{ Form::close() }}   
 
 
     

@@ -5,16 +5,18 @@
 @include('partials.theModal')
 
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-7">
     <div class="box box-success">
       <div class="box-body no-padding">
-        <table class="table table-condensed table-hover" id='questionTable'>
+        <table class="table table-condensed table-hover" id='itemsTable'>
           <thead>
             <tr>
+              <th></th>
               <th style="width: 10px">#</th>
               <th>Nombre</th>t
               <th>Descripcion</th>
               <th>Precio</th>
+              <th>Clase</th>
               <th>Tipo</th>
               <th class="text-right">Acciones</th>
             </tr>
@@ -23,10 +25,12 @@
 
             @foreach ($items as $item )
             <tr>
+                <td> <img height="40px" src="{{ $item->image_path}}" alt=""></td>
                 <td>{{ $item->id}}</td>
                 <td> {{$item->nombre }}</td>
                 <td>{{ $item->description}}</td>
                 <td>{{ $item->price}}</td>
+                <td>{{$item->characterType->name}}</td>
                 <td>{{$item->itemType->nombre}}</td>
                 <td class="text-right">
                   <a href="#" class="label label-danger destroy" data-item-id="{{$item->id}}" title="Seguro?"><i class="fa fa-trash-o"></i></a>
@@ -41,7 +45,7 @@
       </div><!-- /.box-body -->
     </div>
   </div>
-  <div class="col-md-4 col-md-offset-1">
+  <div class="col-md-3 col-md-offset-1">
     @include('items.partials.create', ['newProblem' => new Problem])
   </div>
   
@@ -55,7 +59,9 @@
 <script>
 $(document).ready(function() {
   
-  $('#questionTable').dataTable({
+  $('#itemsTable').dataTable({
+        "bFilter": false,
+        "bInfo": false,
         "filter": true,
         "language": {
             "lengthMenu": "Mostrar _MENU_ registros por pagina",
@@ -67,30 +73,30 @@ $(document).ready(function() {
                   "previous": "Anterior",
                   "next": "Siguiente"
                 }
+        },
+        "fnPreDrawCallback": function( oSettings ) {
+          $('.destroy').confirmation({
+            btnCancelLabel: 'Cancelar',
+            btnOkLabel: 'Eliminar',
+            onConfirm: function(event, element){
+              console.log(element.data("item-id"));
+              var itemId = element.data("item-id");
+              var APIurl = '{{ URL::route('items.index') }}' + '/' + itemId;
+              $.ajax({
+                url: APIurl,
+                type: "DELETE",
+                success: function(res) {
+                  console.log(res);
+                  element.closest('tr').remove();
+                }
+              });
+            }
+          });
         }
   });
-  $('.dataTables_info').parent().remove();
-  $('.dataTables_filter').parent().remove();
-  $('.dataTables_paginate').parent().removeClass('col-xs-6').addClass('col-xs-12');
-  $('.dataTables_length').parent().removeClass('col-xs-6').addClass('col-xs-12');
   
-  $('.destroy').confirmation({
-    btnCancelLabel: 'Cancelar',
-    btnOkLabel: 'Eliminar',
-    onConfirm: function(event, element){
-      console.log(element.data("problem-id"));
-      var problemId = element.data("problem-id");
-      var APIurl = '{{ URL::route('items.index') }}' + '/' + problemId;
-      $.ajax({
-        url: APIurl,
-        type: "DELETE",
-        success: function(res) {
-          console.log(res);
-          element.closest('tr').remove();
-        }
-      });
-    }
-  });
+  
+  
 
   $('body').on('hidden.bs.modal', '.modal', function () {
     var $this = $(this);

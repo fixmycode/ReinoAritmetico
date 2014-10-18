@@ -38,7 +38,7 @@ class CreateItemTable extends Migration {
 						->on('character_type')
 						->onDelete('cascade');
 
-			$table->datetime('started');
+			$table->datetime('started')->nullable();
 			$table->datetime('ended')->nullable();
 		});
 

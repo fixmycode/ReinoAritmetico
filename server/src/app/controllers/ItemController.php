@@ -11,13 +11,24 @@ class ItemController extends \BaseController {
   {
 
     $items = Item::all();
+    $characterTypes = CharacterType::all();
     //$itemType = DB::table('item_type')->select('id', 'type')->get();
     $itemTypes = ItemType::all();
-    
+    $selectItemTypes = null;
+    $selectCharacterTypes = null;
+
+    foreach ($itemTypes as $itemType) {
+      $selectItemTypes[$itemType->id]=$itemType->nombre;
+    }
+    foreach ($characterTypes as $characterType) {
+      $selectCharacterTypes[$characterType->id]=$characterType->name;
+    }
+
     
     return View::make('items.index')
                   ->with('newItem', new Item())
-                  ->with('item_type', $itemTypes)
+                  ->with('item_type', $selectItemTypes)
+                  ->with('character_type', $selectCharacterTypes)
                   ->with('items', $items);
                   
   }
@@ -43,11 +54,13 @@ class ItemController extends \BaseController {
   public function store()
   {
 
-    $item = new Problem();
-    $item->item = Input::get('item');
-    $item->correct_answer = Input::get('correct_answer');
-    $item->item_type_id = 1; //Input::get('item_type_id');
-    $item->difficulty = Input::get('difficulty');
+    
+    $item = new Item();
+    $item->nombre = Input::get('nombre');
+    $item->description = Input::get('description');
+    $item->item_type_id = Input::get('item_type');
+    $item->price = Input::get('price');
+    $item->character_type_id = Input::get('character_type');
     $item->save();
     
     return Redirect::route('items.index');
@@ -75,12 +88,14 @@ class ItemController extends \BaseController {
   public function edit($id)
   {
     $item = Item::findOrFail($id);
-    $itemType = ProblemType::lists("type","id");
-    $difficulty = array("1"=>"Fácil", 2 => 'Medio', 3 => 'Difícil');
+
+    $selectItemTypes = ItemType::lists("nombre","id");
+
+    $selectCharacterTypes = CharacterType::lists("name","id");
 
     return View::make('items.partials.edit')
-                  ->with('item_type',$itemType )
-                  ->with('difficulty', $difficulty)
+                  ->with('item_type', $selectItemTypes)
+                  ->with('character_type', $selectCharacterTypes)
                   ->with('item', $item);
   }
 
@@ -94,10 +109,11 @@ class ItemController extends \BaseController {
   public function update($id)
   {
     $item = Item::find($id);
-    $item->item = Input::get('item');
-    $item->correct_answer = Input::get('correct_answer');
-    $item->item_type_id = 1;//Input::get('item_type_id');
-    $item->difficulty = Input::get('difficulty');
+    $item->nombre = Input::get('nombre');
+    $item->description = Input::get('description');
+    $item->item_type_id = Input::get('item_type');
+    $item->price = Input::get('price');
+    $item->character_type_id = Input::get('character_type');
     $item->save();
     return Redirect::route('items.index');
 

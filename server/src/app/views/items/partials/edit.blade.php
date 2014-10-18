@@ -4,26 +4,42 @@
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       <h4 class="modal-title">Editar Pregunta</h4>
     </div>
-    {{ Form::open(array('url' => URL::route('problems.update', $problem->id), 'method'=>"PUT")) }}
-    <div class="modal-body">
-    <label for="exampleInputEmail1">Pregunta</label>
-          {{ Form::text('problem', $problem->problem, ['class' => 'form-control']) }}
-        <div class="form-group">
-            <label for="exampleInputEmail1">Respuesta</label>
-            {{ Form::text('correct_answer', $problem->correct_answer, ['class' => 'form-control']) }}
-        </div>
+    
 
-        <div class="form-group">
-            <label for="exampleInputEmail1">Dificultad</label>
-            {{Form::select('difficulty', $difficulty, $problem->difficulty, array('class'=>'form-control'))}}
-        </div>
-        
+    {{ Form::open(array('url' => URL::route('items.update', $item->id), 'method' => 'PUT')) }}
+      <div class="form-group">
+          <label for="nombre">Nombre</label>
+          {{ Form::text('nombre', $item->nombre, ['class' => 'form-control']) }}
       </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-      <input type="submit" class="btn btn-primary" name="submit" value="Guardar">
-    </div>
-    {{ Form::close() }}     
+
+      <div class="form-group">
+          <label for="description">Descripcion</label>
+          {{ Form::text('description', $item->description, ['class' => 'form-control']) }}
+      </div>
+
+      <div class="form-group">
+          <label for="description">Precio</label>
+          {{ Form::text('price', $item->price, ['class' => 'form-control']) }}
+      </div>
+
+      <div class="form-group">
+          <label for="exampleInputEmail1">Tipo</label>
+          {{Form::select('item_type', $item_type, $item->type, array('class'=>'form-control'))}}
+      </div>
+
+      <div class="form-group">
+          <label for="exampleInputEmail1">Clase</label>
+          {{Form::select('character_type', $character_type, $item->character_type, array('class'=>'form-control'))}}
+      </div>
+      
+      
+      <div class="box-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary">Actualizar</button>
+      </div>
+      
+      
+    {{ Form::close() }}   
   </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
 
