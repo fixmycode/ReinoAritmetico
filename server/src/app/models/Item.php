@@ -4,6 +4,7 @@ class Item extends \Eloquent {
 
   public $timestamps = false;
 
+
   // Add your validation rules here
   public static $rules = [
     // 'title' => 'required'

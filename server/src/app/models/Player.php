@@ -12,20 +12,32 @@ class Player extends \Eloquent {
 	// Don't forget to fill this array
 	protected $fillable = ['name', 'android_id'];
 
-  /**
-   * 
-   */
-  public function classroom()
-  {
-    return $this->belongsTo('Classroom');
-  }
 
-  public function items(){
-    return $this->belongsToMany('Item');
-  }
+    public function classroom()
+    {
+      return $this->belongsTo('Classroom');
+    }
 
-  public function characterType(){
-    return $this->belongsTo('CharacterType');
-  }
+    public function items(){
+      return $this->belongsToMany('Item');
+    }
+
+    public function characterType(){
+      return $this->belongsTo('CharacterType');
+    }
+
+    public function hasInInventory($item_id){
+        $found = false;
+        $items = $this->items()->get();
+        if($items != null){
+            foreach($items as $item){
+                if($item->id == $item_id)
+                    $found=true;
+            }
+        }
+
+        return $found;
+    }
+
 
 }

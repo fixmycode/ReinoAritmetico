@@ -102,6 +102,43 @@ class ItemApiController extends \BaseController {
 		}
 	}
 
+    public function postEquip(){
+
+        $android_id  = Input::get("android_id");
+        $item_id  = Input::get("item_id");
+        $item_type_id = Input::get("item_type_id");
+
+        if($android_id != null && $item_id != null && $item_type_id != null ){
+
+            $player = Player::where("android_id","=",$android_id)->first();
+            $item = Item::find($item_id);
+            $item_type = ItemType::find($item_type_id);
+
+            if($player != null && $item != null && $item_type != null){
+                if($player->hasInInventory($item_id)){
+
+                    if($item->itemType->first()->isWeapon()){
+                        $player->weapon_id = $item->id;
+                        $player->save();
+                    }
+                    else if ( $item->itemType->first()->isArmor()){
+                        $player->armor_id = $item->id;
+                        $player->save();
+                    }
+
+                }
+                else
+                    App::abort(403, "FORBIDDEN");
+
+            }
+            else
+                App::abort(404, "NOT FOUND");
+
+        }
+        else
+            App::abort(404, "NOT FOUND");
+    }
+
 	
 
 }
