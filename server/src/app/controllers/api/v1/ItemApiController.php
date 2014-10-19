@@ -106,15 +106,13 @@ class ItemApiController extends \BaseController {
 
         $android_id  = Input::get("android_id");
         $item_id  = Input::get("item_id");
-        $item_type_id = Input::get("item_type_id");
 
-        if($android_id != null && $item_id != null && $item_type_id != null ){
+        if($android_id != null && $item_id != null){
 
             $player = Player::where("android_id","=",$android_id)->first();
             $item = Item::find($item_id);
-            $item_type = ItemType::find($item_type_id);
 
-            if($player != null && $item != null && $item_type != null){
+            if($player != null && $item != null){
                 if($player->hasInInventory($item_id)){
 
                     if($item->itemType->first()->isWeapon()){
