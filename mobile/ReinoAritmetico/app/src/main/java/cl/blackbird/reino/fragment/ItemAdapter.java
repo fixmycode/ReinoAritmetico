@@ -70,12 +70,14 @@ public class ItemAdapter extends BaseAdapter {
         NetworkImageView imgIcon = (NetworkImageView) convertView.findViewById(R.id.imageView);
         TextView nombre = (TextView) convertView.findViewById(R.id.name);
         TextView estado = (TextView) convertView.findViewById(R.id.state);
+        TextView desc = (TextView) convertView.findViewById(R.id.descripcion);
         Item row_pos = rowItem.get(position);
         imgIcon.setImageUrl(getImageUrl(row_pos), ReinoApplication.getInstance().getImageLoader());
         nombre.setText(row_pos.nombre);
+        desc.setText(row_pos.descripcion);
 
         if(row_pos.comprado==0) {
-            estado.setText(String.valueOf(row_pos.precio));
+            estado.setText(String.valueOf("$ "+row_pos.precio));
         }
         else{
             estado.setText("Comprado");

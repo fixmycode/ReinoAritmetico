@@ -66,6 +66,7 @@
     <string name="ok">Listo</string>
     <string name="credits" formatted="false">Créditos: $%d</string>
     <string name="ask_buy" formatted="false">Quieres comprar \"%s\" por $%d?</string>
+    <string name="ask_equip" formatted="false">Quieres equipar \"%s\"?</string>
     <string name="buy_success">Ítem comprado</string>
     <string name="buy_error">Ocurrió un error comprando el ítem</string>
     <string name="class_changed">Clase cambiada</string>

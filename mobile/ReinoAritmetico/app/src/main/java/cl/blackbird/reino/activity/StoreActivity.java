@@ -143,6 +143,12 @@ public class StoreActivity extends Activity implements
         };
         ReinoApplication.getInstance().getRequestQueue().add(request);
     }
+
+    @Override
+    public void onItemClick(int item_id) {
+
+    }
+
     public void itemBought(int price){
         player.credits -= price;
         Intent result = new Intent();

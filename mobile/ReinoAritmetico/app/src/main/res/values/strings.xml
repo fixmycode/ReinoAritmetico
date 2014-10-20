@@ -64,6 +64,7 @@
     <string name="ok">OK</string>
     <string name="credits" formatted="false">Credits: $%d</string>
     <string name="ask_buy" formatted="false">Do you want to purchase \"%s\" for $%d?</string>
+    <string name="ask_equip" formatted="false">Do you want to equip \"%s\"?</string>
     <string name="buy_success">Item Bought</string>
     <string name="buy_error">There was an error buying the item</string>
     <string name="class_changed">Class Changed</string>

@@ -58,22 +58,6 @@ public class ItemListFragment extends android.app.ListFragment {
         for (int i = 0; i < itemList.length(); i++) {
             newItem = Item.fromJSON(itemList.getJSONObject(i));
             Log.d(newItem.nombre,String.valueOf(newItem.comprado));
-            /*String url = Uri.parse(Config.getServer(getActivity())).buildUpon().path("api/v1/item/image")
-                    .appendQueryParameter("id",String.valueOf(newItem.id)).build().toString();
-            JsonArrayRequest request = new JsonArrayRequest(url,
-                    new Response.Listener<JSONArray>() {
-                        @Override
-                        public void onResponse(JSONArray response) {
-                            startItemList(response);
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(getActivity().getApplicationContext(),R.string.server_error,Toast.LENGTH_SHORT).show();
-                        }
-                    });
-            ReinoApplication.getInstance().getRequestQueue().add(request);*/
             listItem.add(newItem);
         }
         adapter = new ItemAdapter(getActivity().getApplicationContext(),listItem);
@@ -119,6 +103,28 @@ public class ItemListFragment extends android.app.ListFragment {
             dialog.show();
         }
 
+        else{
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(getString(R.string.ask_equip, i.nombre, i.precio));
+            builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    equipItem(id_item);
+                    dialog.dismiss();
+
+                }
+            });
+            builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
+        }
+
     }
 
     public void buyItem(int item_id,int price){
@@ -127,6 +133,11 @@ public class ItemListFragment extends android.app.ListFragment {
         }
 
     }
+    public void equipItem(int item_id){
+        if(iListener != null){
+            iListener.onItemClick(item_id);
+        }
+    }
     @Override
     public void setListAdapter(ListAdapter adapter) {
         super.setListAdapter(adapter);
@@ -134,5 +145,6 @@ public class ItemListFragment extends android.app.ListFragment {
 
     public interface itemListener{
         public void onItemClick(int item_id, int price);
+        public void onItemClick(int item_id);
     }
 }
