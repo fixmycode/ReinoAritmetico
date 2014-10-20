@@ -69,14 +69,6 @@ public class StoreActivity extends Activity implements
     }
 
     @Override
-    public void onDone() {
-        Intent result = new Intent();
-        result.putExtra("player", player);
-        setResult(Activity.RESULT_OK, result);
-        finish();
-    }
-
-    @Override
     public void onItemList(final int kind,final int type) {
         final String androidId = Settings.Secure.getString(
                 getContentResolver(),
