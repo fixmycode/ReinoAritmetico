@@ -104,6 +104,7 @@ class ItemApiController extends \BaseController {
 
     public function postEquip(){
 
+
         $android_id  = Input::get("android_id");
         $item_id  = Input::get("item_id");
 
@@ -115,14 +116,21 @@ class ItemApiController extends \BaseController {
             if($player != null && $item != null){
                 if($player->hasInInventory($item_id)){
 
-                    if($item->itemType->first()->isWeapon()){
-                        $player->weapon_id = $item->id;
-                        $player->save();
-                    }
-                    else if ( $item->itemType->first()->isArmor()){
-                        $player->armor_id = $item->id;
-                        $player->save();
-                    }
+                	if($player->hasEquipped($item_id)){
+                		$player->unEquip($item_id);
+                	}
+                	else{
+                		if($item->itemType->first()->isWeapon()){
+                		    $player->weapon_id = $item->id;
+                		    $player->save();
+                		}
+                		else if ( $item->itemType->first()->isArmor()){
+                		    $player->armor_id = $item->id;
+                		    $player->save();
+                		}
+                	}
+                	
+                    
 
                 }
                 else
@@ -135,6 +143,34 @@ class ItemApiController extends \BaseController {
         }
         else
             App::abort(404, "NOT FOUND");
+    }
+
+    public function getInventory(){
+		$android_id  = Input::get("android_id");
+
+		if($android_id != null){
+			$player = Player::where("android_id","=",$android_id)->first();
+
+            if($player != null ){
+            	$inventory = $player->items()->get(); //remains to be done
+            	foreach ($inventory as $item) {
+            		if($player->hasEquipped($item->id)){
+            			$item->equipped = true;
+
+            		}
+            		
+            	}
+
+
+            	return Response::json($inventory);
+            }
+            else
+            	App::abort(404, "NOT FOUND");
+
+
+		}
+		else
+			App::abort(404, "NOT FOUND");
     }
 
 	

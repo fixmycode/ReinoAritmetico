@@ -3,6 +3,8 @@
 class Item extends \Eloquent {
 
   public $timestamps = false;
+  public $equipped = false;
+
 
 
   // Add your validation rules here
