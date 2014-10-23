@@ -70,7 +70,7 @@ Game.prototype.init = function(){
     req.abort();
     defer.reject();
   });
-  
+
   req.write(data);
   req.end();
 
@@ -81,20 +81,42 @@ Game.prototype.end = function() {
   var defer = q.defer();
   var self = this;
 
-  var ai = _.pluck(self.players, 'android_id');
-  ai = _.reduce(ai, function(memo, num){ return memo + '&players[]=' + num; }, "");
+  var data = JSON.stringify( {
+    reward: self.reward,
+    players: _.map(self.players, function(n) { return _.pick(n, 'android_id')}),
+    answers: self.answers
+  } );
+  console.log(data);
 
   var options = {
       host: self.serverIpAddress,
       port: self.serverPort,
-      path: API + '/game/end?uid=' + self.joinCode + '&reward='+ self.reward + ai,
+      path: API + '/game/end?uid=' + self.joinCode,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': data.length
+      }
   };
 
-  http.get(options, function(res) {
-    delete self.joinCode
-    self.players.length = 0;
-    return defer.resolve();
-  }).on('error', console.log);
+  var req = http.request(options, function(res) {
+      res.setEncoding('utf8');
+      var body = "";
+
+      res.on('data', function (chunk) {
+        body += chunk;
+      })
+      .on('end', function() {
+        console.log(body);
+        delete self.joinCode;
+        self.players.length = 0;
+        defer.resolve();
+      })
+      .on('error', defer.reject);
+  });
+
+  req.write(data);
+  req.end();
 
   return defer.promise;
 }
@@ -121,7 +143,7 @@ Game.prototype.join = function (newPlayer) {
     return defer.promise;
   }
 
-  if ( _.findWhere(self.players, {name: newPlayer.name})             || 
+  if ( _.findWhere(self.players, {name: newPlayer.name})             ||
        _.findWhere(self.players, {android_id: newPlayer.android_id})
      )
   {
@@ -215,6 +237,7 @@ Game.prototype.submitAnswer = function(socketId, answer) {
 
   player.answers.push(answer);
   answer.player_name = player.name;
+  answer.player_android_id = player.android_id;
   self.answers.push(answer);
 
   /* Analyse wrong answres */

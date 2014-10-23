@@ -5,7 +5,7 @@ Route::any('/', function(){
 });
 
 Route::get('demo',function(){
-  
+
 });
 
 Route::get('dashboard', ['as' => 'dashboard', function(){
@@ -50,7 +50,6 @@ Route::group(['prefix' => 'api/v1'], function(){
   Route::controller('problem', 'ProblemApiController');
   Route::controller('server', 'ServerApiController');
   Route::controller('item', 'ItemApiController');
-
 });
 
 
