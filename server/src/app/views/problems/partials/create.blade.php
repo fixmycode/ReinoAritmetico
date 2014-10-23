@@ -21,10 +21,21 @@
           <label for="exampleInputEmail1">Dificultad</label>
           {{Form::select('difficulty', $difficulty, $newProblem->difficulty, array('class'=>'form-control'))}}
       </div>
+
+      <div class="form-group">
+        <select data-placeholder="Seleccione Tags" style="width: 350px" multiple="" class="tagSelect" name="tags[]">          
+          @foreach ($tags as $tag)
+            <option value="{{$tag->id}}">{{$tag->name}}</option>
+          @endforeach
+        </select>
+      </div>
+          
       
       <div class="box-footer">
         <button type="submit" class="btn btn-primary">Crear</button>
       </div>
+
+
       
     {{ Form::close() }}
 

@@ -1,6 +1,6 @@
 <?php
 
-class Problem extends \Eloquent {
+class Tag extends \Eloquent {
 
   public $timestamps = false;
 
@@ -16,14 +16,9 @@ class Problem extends \Eloquent {
    * 
    */
 
-  public function problem_type(){
-    return $this->belongsTo('ProblemType');
+  public function problems(){
+    return $this->belongsToMany('Problem')->get();
 
-  }
-
-  public function tags()
-  {
-    return $this->belongsToMany("Tag");
   }
   
 

@@ -4,6 +4,10 @@ Route::any('/', function(){
   return View::make('hello');
 });
 
+Route::get('demo',function(){
+  
+});
+
 Route::get('dashboard', ['as' => 'dashboard', function(){
   return View::make('dashboard')
           ->with('breadcrumbs', Breadcrumbs::render('dashboard'))
