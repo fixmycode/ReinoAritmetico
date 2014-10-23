@@ -25,7 +25,7 @@
 
             @foreach ($items as $item )
             <tr>
-                <td>{{ HTML::image($item->image_path, $item->nombre)}}</td>
+                <td class="max-square">{{ HTML::image($item->image_path, $item->nombre)}}</td>
                 <td>{{ $item->id}}</td>
                 <td> {{$item->nombre }}</td>
                 <td>{{ $item->description}}</td>

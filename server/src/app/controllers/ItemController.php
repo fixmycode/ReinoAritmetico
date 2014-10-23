@@ -53,15 +53,37 @@ class ItemController extends \BaseController {
    */
   public function store()
   {
+    $file = Input::file('image');
+    $name = $file->getClientOriginalName();
+    $armor_type_id = ItemType::getArmorId();
+    $weapon_type_id = ItemType::getWeaponId();
 
+    $path = '';
+    $relative_path = '';
     
-    $item = new Item();
-    $item->nombre = Input::get('nombre');
-    $item->description = Input::get('description');
-    $item->item_type_id = Input::get('item_type');
-    $item->price = Input::get('price');
-    $item->character_type_id = Input::get('character_type');
-    $item->save();
+    if(Input::get('item_type') == $weapon_type_id){
+      $path = public_path() . '/upload/items/armas';
+      $relative_path = "upload/items/armas/".$name;
+
+    }
+    if(Input::get('item_type') == $armor_type_id){
+      $path = public_path() . '/upload/items/armaduras';
+      $relative_path = "upload/items/armaduras/".$name;
+    }
+
+
+
+    $upload_success = Input::file('image')->move($path, $name);
+    if($upload_success){
+      $item = new Item();
+      $item->nombre = Input::get('nombre');
+      $item->description = Input::get('description');
+      $item->item_type_id = Input::get('item_type');
+      $item->price = Input::get('price');
+      $item->character_type_id = Input::get('character_type');
+      $item->image_path = $relative_path;
+      $item->save();  
+    }
     
     return Redirect::route('items.index');
   }
@@ -108,13 +130,42 @@ class ItemController extends \BaseController {
    */
   public function update($id)
   {
-    $item = Item::find($id);
-    $item->nombre = Input::get('nombre');
-    $item->description = Input::get('description');
-    $item->item_type_id = Input::get('item_type');
-    $item->price = Input::get('price');
-    $item->character_type_id = Input::get('character_type');
-    $item->save();
+
+    $file = Input::file('image');
+    $name = $file->getClientOriginalName();
+    $armor_type_id = ItemType::getArmorId();
+    $weapon_type_id = ItemType::getWeaponId();
+
+    $path = '';
+    $relative_path = '';
+    
+    if(Input::get('item_type') == $weapon_type_id){
+      $path = public_path() . '/upload/items/armas';
+      $relative_path = "upload/items/armas/".$name;
+
+    }
+    if(Input::get('item_type') == $armor_type_id){
+      $path = public_path() . '/upload/items/armaduras';
+      $relative_path = "upload/items/armaduras/".$name;
+    }
+
+
+
+    $upload_success = Input::file('image')->move($path, $name);
+    if($upload_success){
+      
+
+      $item = Item::find($id);
+      $item->nombre = Input::get('nombre');
+      $item->description = Input::get('description');
+      $item->item_type_id = Input::get('item_type');
+      $item->price = Input::get('price');
+      $item->character_type_id = Input::get('character_type');
+      $item->image_path = $relative_path;
+
+      $item->save();
+    }
+    
     return Redirect::route('items.index');
 
   }

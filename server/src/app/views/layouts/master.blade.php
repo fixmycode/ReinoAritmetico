@@ -14,6 +14,16 @@
         {{ HTML::style('AdminLTE/css/ionicons.min.css') }}
         <!-- Theme style -->
         {{ HTML::style('AdminLTE/css/AdminLTE.css') }}
+        
+        <style>
+        .max-square{
+            max-height: 60px;
+            max-width: 60px;
+            height: 60px;
+            width: 60px;
+        }
+        </style>
+
         @show
         
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

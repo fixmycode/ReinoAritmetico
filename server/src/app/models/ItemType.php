@@ -24,6 +24,15 @@ class ItemType extends \Eloquent {
         return $this->id == 2;
     }
 
+    public static function getArmorId(){
+        return 2;
+    }
+
+    public static function getWeaponId()
+    {
+        return 1;
+    }
+
   
 
 }

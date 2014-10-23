@@ -6,7 +6,7 @@
     </div>
     
 
-    {{ Form::open(array('url' => URL::route('items.update', $item->id), 'method' => 'PUT')) }}
+    {{ Form::open(array('url' => URL::route('items.update', $item->id), 'method' => 'PUT', 'files'=>true)) }}
       <div class="form-group">
           <label for="nombre">Nombre</label>
           {{ Form::text('nombre', $item->nombre, ['class' => 'form-control']) }}
@@ -30,6 +30,10 @@
       <div class="form-group">
           <label for="exampleInputEmail1">Clase</label>
           {{Form::select('character_type', $character_type, $item->character_type, array('class'=>'form-control'))}}
+      </div>
+      
+      <div class="form-group">
+        {{ Form::file('image') }}
       </div>
       
       

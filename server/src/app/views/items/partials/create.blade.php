@@ -7,7 +7,7 @@
   </div>
   <div class="box-body" style="display: none;">
 
-   {{ Form::model($newItem, array('url' => URL::route('problems.store'), 'method' => 'POST')) }}
+   {{ Form::model($newItem, array('url' => URL::route('items.store'), 'method' => 'POST' , 'files'=>true)) }}
       <div class="form-group">
           <label for="nombre">Nombre</label>
           {{ Form::text('nombre', $newItem->nombre, ['class' => 'form-control']) }}
@@ -29,6 +29,10 @@
       </div>
 
       <div class="form-group">
+        {{ Form::file('image') }}
+      </div>
+
+      <div class="form-group">
           <label for="exampleInputEmail1">Clase</label>
           {{Form::select('character_type', $character_type, $newItem->character_type, array('class'=>'form-control'))}}
       </div>
@@ -36,7 +40,7 @@
     <div class="box-footer">
         <button type="submit" class="btn btn-primary">Crear</button>
       </div>
-
+    
 
     {{ Form::close() }}
 
