@@ -152,7 +152,8 @@ class ItemApiController extends \BaseController {
 			$player = Player::where("android_id","=",$android_id)->first();
 
             if($player != null ){
-            	$inventory = $player->items()->get(); //remains to be
+
+            	$inventory = $player->items()->get(); //remains to be done
             	foreach ($inventory as $item) {
             		if($player->hasEquipped($item->id)){
             			$item->equipped = true;

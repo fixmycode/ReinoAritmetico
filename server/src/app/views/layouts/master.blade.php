@@ -114,6 +114,11 @@
                                 <i class="fa fa-th"></i> <span>Preguntas</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ route('items.index') }}">
+                                <i class="fa fa-th"></i> <span>Items</span>
+                            </a>
+                        </li>
 
                     </ul>
                 </section>

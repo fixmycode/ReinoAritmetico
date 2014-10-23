@@ -5,25 +5,36 @@
 @include('partials.theModal')
 
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-7">
     <div class="box box-success">
       <div class="box-body no-padding">
-        <table class="table table-condensed table-hover" id="clientTable">
+        <table class="table table-condensed table-hover" id='itemsTable'>
           <thead>
             <tr>
+              <th></th>
               <th style="width: 10px">#</th>
               <th>Nombre</th>
+              <th>Descripcion</th>
+              <th>Precio</th>
+              <th>Clase</th>
+              <th>Tipo</th>
               <th class="text-right">Acciones</th>
             </tr>
           </thead>
           <tbody>
-            @foreach ($clients as $index => $client )
+
+            @foreach ($items as $item )
             <tr>
-                <td>{{ $index + 1}}.</td>
-                <td><a href="{{ URL::route('clientss.classrooms.index', $client->id) }}">{{$client->name}}</a></td>
+                <td>{{ HTML::image($item->image_path, $item->nombre)}}</td>
+                <td>{{ $item->id}}</td>
+                <td> {{$item->nombre }}</td>
+                <td>{{ $item->description}}</td>
+                <td>{{ $item->price}}</td>
+                <td>{{$item->characterType->name}}</td>
+                <td>{{$item->itemType->nombre}}</td>
                 <td class="text-right">
-                  <a href="#" class="label label-danger destroy" data-client-id="{{$client->id}}" title="Seguro?"><i class="fa fa-trash-o"></i></a>
-                  <a href="#" class="label label-success" data-toggle="modal" data-target="#theModal" data-remote="{{ URL::route('clientss.edit', $client->id) }}"><i class="fa fa-pencil"></i></a>
+                  <a href="#" class="label label-danger destroy" data-item-id="{{$item->id}}" title="Seguro?"><i class="fa fa-trash-o"></i></a>
+                  <a href="#" class="label label-success" data-toggle="modal" data-target="#theModal" data-remote="{{ URL::route('items.edit', $item->id) }}"><i class="fa fa-pencil"></i></a>
                 </td>
             </tr>
             @endforeach
@@ -32,20 +43,21 @@
       </div><!-- /.box-body -->
     </div>
   </div>
-  <div class="col-md-4 col-md-offset-1">
-    @include('clients.partials.create', ['client' => new Client])
+  <div class="col-md-3 col-md-offset-1">
+    @include('items.partials.create', ['newProblem' => new Problem])
   </div>
+
 </div>
 @stop
 
 @section("js")
 @parent
 {{ HTML::script('js/vendor/bootstrap-confirmation.js') }}
-
+<script src="//cdn.datatables.net/plug-ins/a5734b29083/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 <script>
 $(document).ready(function() {
 
-  $('#clientTable').dataTable({
+  $('#itemsTable').dataTable({
         "bFilter": false,
         "bInfo": false,
         "filter": true,
@@ -62,24 +74,27 @@ $(document).ready(function() {
         },
         "fnPreDrawCallback": function( oSettings ) {
           $('.destroy').confirmation({
-              btnCancelLabel: 'Cancelar',
-              btnOkLabel: 'Eliminar',
-              onConfirm: function(event, element){
-                var clientId = element.data("client-id");
-                var APIurl = '{{ URL::route('clientss.index') }}' + '/' + clientId;
-                $.ajax({
-                  url: APIurl,
-                  type: "DELETE",
-                  success: function(res) {
-                    console.log(res);
-                    element.closest('tr').remove();
-                  }
-                });
-              }
-            });
+            btnCancelLabel: 'Cancelar',
+            btnOkLabel: 'Eliminar',
+            onConfirm: function(event, element){
+              console.log(element.data("item-id"));
+              var itemId = element.data("item-id");
+              var APIurl = '{{ URL::route('items.index') }}' + '/' + itemId;
+              $.ajax({
+                url: APIurl,
+                type: "DELETE",
+                success: function(res) {
+                  console.log(res);
+                  element.closest('tr').remove();
+                }
+              });
+            }
+          });
         }
   });
-  
+
+
+
 
   $('body').on('hidden.bs.modal', '.modal', function () {
     var $this = $(this);

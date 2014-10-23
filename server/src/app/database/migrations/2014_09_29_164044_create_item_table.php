@@ -38,7 +38,7 @@ class CreateItemTable extends Migration {
 						->on('character_type')
 						->onDelete('cascade');
 
-			$table->datetime('started');
+			$table->datetime('started')->nullable();
 			$table->datetime('ended')->nullable();
 		});
 
@@ -57,6 +57,15 @@ class CreateItemTable extends Migration {
 						->on('players')
 						->onDelete('cascade');
 		});
+
+        Schema::table('players', function($table) {
+
+            $table->foreign('armor_id')->references('id')
+                ->on('items');
+
+            $table->foreign('weapon_id')->references('id')
+                ->on('items');
+        });
 	}
 
 	/**
