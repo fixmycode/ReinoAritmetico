@@ -13,7 +13,7 @@
             <tr>
               <th></th>
               <th style="width: 10px">#</th>
-              <th>Nombre</th>t
+              <th>Nombre</th>
               <th>Descripcion</th>
               <th>Precio</th>
               <th>Clase</th>
@@ -25,7 +25,7 @@
 
             @foreach ($items as $item )
             <tr>
-                <td> <img height="40px" src="{{ $item->image_path}}" alt=""></td>
+                <td>{{ HTML::image($item->image_path, $item->nombre)}}</td>
                 <td>{{ $item->id}}</td>
                 <td> {{$item->nombre }}</td>
                 <td>{{ $item->description}}</td>
@@ -35,9 +35,7 @@
                 <td class="text-right">
                   <a href="#" class="label label-danger destroy" data-item-id="{{$item->id}}" title="Seguro?"><i class="fa fa-trash-o"></i></a>
                   <a href="#" class="label label-success" data-toggle="modal" data-target="#theModal" data-remote="{{ URL::route('items.edit', $item->id) }}"><i class="fa fa-pencil"></i></a>
-                </td> 
-                
-                
+                </td>
             </tr>
             @endforeach
           </tbody>
@@ -48,7 +46,7 @@
   <div class="col-md-3 col-md-offset-1">
     @include('items.partials.create', ['newProblem' => new Problem])
   </div>
-  
+
 </div>
 @stop
 
@@ -58,7 +56,7 @@
 <script src="//cdn.datatables.net/plug-ins/a5734b29083/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 <script>
 $(document).ready(function() {
-  
+
   $('#itemsTable').dataTable({
         "bFilter": false,
         "bInfo": false,
@@ -94,9 +92,9 @@ $(document).ready(function() {
           });
         }
   });
-  
-  
-  
+
+
+
 
   $('body').on('hidden.bs.modal', '.modal', function () {
     var $this = $(this);
