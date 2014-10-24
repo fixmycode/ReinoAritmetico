@@ -2,7 +2,7 @@
 
 class GameApiController extends \BaseController {
   /**
-   * URL: POST /start 
+   * URL: POST /start
    * data:
    * {
    *    address: 10.0.0.1:8000,
@@ -34,10 +34,11 @@ class GameApiController extends \BaseController {
    *   msg: 'Partida finalizada correctamente'
    * }
    */
-  public function getEnd() {
-    $uid = Input::get('uid', 0);
-    $reward = Input::get('reward', 0);
-    $players = Input::get('players', array());
+  public function postEnd() {
+    $uid     = Input::get('uid', 0);
+    $reward  = Input::json('reward', 0);
+    $players = Input::json('players', array());
+    $answers = Input::json('answers', array());
 
     // Update players credits
     foreach ($players as $player_uid) {
@@ -60,6 +61,7 @@ class GameApiController extends \BaseController {
 
     $game->save();
 
+    // @TODO: save answers by players
     return Response::json(['err' => false, 'msg' => 'Partida finalizada correctamente']);
   }
 
