@@ -17,7 +17,7 @@ class Tag extends \Eloquent {
    */
 
   public function problems(){
-    return $this->belongsToMany('Problem')->get();
+    return $this->belongsToMany('Problem');
 
   }
   

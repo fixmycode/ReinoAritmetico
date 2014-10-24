@@ -129,6 +129,11 @@
                                 <i class="fa fa-th"></i> <span>Items</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ route('tags.index') }}">
+                                <i class="fa fa-th"></i> <span>Tags</span>
+                            </a>
+                        </li>
 
                     </ul>
                 </section>
