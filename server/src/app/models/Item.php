@@ -3,14 +3,7 @@
 class Item extends \Eloquent {
 
   public $timestamps = false;
-  public $equipped = false;
 
-  protected $appends = array('equipped');
-
-  public function getEquippedAttribute()
-  {
-      return $this->equipped;
-  }
 
   // Add your validation rules here
   public static $rules = [

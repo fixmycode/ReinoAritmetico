@@ -5,7 +5,7 @@ class ItemApiController extends \BaseController {
 	public function getList()	{
 		$type = Input::get("type", null);//character_type
 		$kind = Input::get("kind", null);//item_type
-		$player_uid = DB::connection()->getPdo()->quote(Input::get("player", ''));
+		$player_uid = DB::connection()->getPdo()->quote(Input::get("player"));
 
 		// SELECT items.id, items.nombre, items.description, items.image_path, items.price, items.item_type_id, character_type.uid, (CASE WHEN (players.android_id = 'asdf') THEN 1 ELSE 0 END) as comprado from items
 		// LEFT JOIN item_player ON items.id = item_player.`item_id`
@@ -23,14 +23,18 @@ class ItemApiController extends \BaseController {
 				         'items.price',
 				         'items.item_type_id',
 				         'character_type.uid as character_type_id',
-				         DB::raw('(CASE WHEN (players.android_id = '.$player_uid.') THEN 1 ELSE 0 END) as comprado'));
+                 DB::raw('(CASE WHEN (players.armor_id = items.id OR players.weapon_id = items.id) THEN true ELSE false END) as equipped'),
+				         DB::raw('(CASE WHEN (players.android_id = '.$player_uid.') THEN true ELSE false END) as comprado'));
 
 		if ( ! is_null($type) ) {
-			$items = $items->where('character_type.uid','=', $type);
+			$items = $items->where('character_type.uid', '=', $type);
 		}
 		if ( ! is_null($kind) ) {
-			$items = $items->where('items.item_type_id','=', $kind);
+			$items = $items->where('items.item_type_id', '=', $kind);
 		}
+    if ( ! is_null(Input::get('player', null))) {
+      $items = $items->where('players.android_id', '=', Input::get('player'));
+    }
 
 		return Response::json($items->get());
 	}
@@ -102,25 +106,5 @@ class ItemApiController extends \BaseController {
   		}
       return Response::json(array('err' => false, 'msg' => 'El item ha sido equipado.'));
   	}
-  }
-
-  public function getInventory(){
-  	$android_id  = Input::get("android_id", 0);
-
-		$player = Player::whereAndroidId($android_id)->first();
-
-    if($player == null )
-      return Response::json(array('err' => true, 'msg' => 'Jugador no encontrados'), 404);
-
-  	$inventory = $player->items;
-  	foreach ($inventory as $item) {
-  		if($player->hasEquipped($item->id)){
-  			$item->equipped = true;
-  		}else {
-        $item->equipped = false;
-      }
-  	}
-
-  	return Response::json($inventory);
   }
 }
