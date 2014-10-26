@@ -58,14 +58,16 @@ class CreateItemTable extends Migration {
 						->onDelete('cascade');
 		});
 
-        Schema::table('players', function($table) {
+    Schema::table('players', function($table) {
 
-            $table->foreign('armor_id')->references('id')
-                ->on('items');
+        $table->foreign('armor_id')
+        		->references('id')
+            ->on('items');
 
-            $table->foreign('weapon_id')->references('id')
-                ->on('items');
-        });
+        $table->foreign('weapon_id')
+        		->references('id')
+            ->on('items');
+    });
 	}
 
 	/**
@@ -75,6 +77,11 @@ class CreateItemTable extends Migration {
 	 */
 	public function down()
 	{
+		Schema::table('players', function($table)
+		{
+		    $table->dropForeign('players_armor_id_foreign');
+		    $table->dropForeign('players_weapon_id_foreign');
+		});
 		Schema::drop('item_player');
 		Schema::drop('items');
 		Schema::drop('item_type');

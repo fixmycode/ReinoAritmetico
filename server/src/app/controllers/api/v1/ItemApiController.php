@@ -2,12 +2,7 @@
 
 class ItemApiController extends \BaseController {
 
-	
-	/**
-	 * lista todos los items habidos y por haber en el sistema y posee una serie de filtros que se implementarán como parámetros GET:
-	 * **/
-	public function getList()
-	{
+	public function getList()	{
 		$type = Input::get("type", null);//character_type
 		$kind = Input::get("kind", null);//item_type
 		$player_uid = DB::connection()->getPdo()->quote(Input::get("player", ''));
@@ -21,9 +16,9 @@ class ItemApiController extends \BaseController {
 		$items = Item::leftJoin('item_player', 'items.id', '=', 'item_player.item_id')
 								 ->leftJoin('players', 'players.id', '=', 'item_player.player_id')
 								 ->join('character_type', 'character_type.id', '=', 'items.character_type_id')
-				->select('items.id', 
-				         'items.nombre', 
-				         'items.description', 
+				->select('items.id',
+				         'items.nombre',
+				         'items.description',
 				         'items.image_path',
 				         'items.price',
 				         'items.item_type_id',
@@ -36,7 +31,7 @@ class ItemApiController extends \BaseController {
 		if ( ! is_null($kind) ) {
 			$items = $items->where('items.item_type_id','=', $kind);
 		}
-		
+
 		return Response::json($items->get());
 	}
 
@@ -44,7 +39,8 @@ class ItemApiController extends \BaseController {
 		$item_id = Input::get('id', 0);
 
 		$item = Item::find($item_id);
-		if ( ! $item) App::abort(404, "Item not found");
+		if ( ! $item)
+      return Response::json(array('err' => true, 'msg' => 'Item no encontrados'), 404);
 
 		if($item->image_path != null){
 			$response = Response::make(File::get(public_path($item->image_path)));
@@ -54,126 +50,77 @@ class ItemApiController extends \BaseController {
 	}
 
 	public function postBuy(){
-
 		$android_id = Input::get('android_id',null);
 		$item_id = Input::get('item_id',null);
 		$number_of_paramters = count(Input::all());
-		
-		
-		if( ($android_id == null || $item_id == null && $number_of_paramters != 2)){
-			App::abort(400, "BAD REQUEST");
-		}
-		else{
 
-			$player = Player::where('android_id','=',$android_id)->first();
-			$item = Item::find($item_id);
+		if( ($android_id == null || $item_id == null && $number_of_paramters != 2))
+      return Response::json(array('err' => true, 'msg' => 'Android ID e item ID son obligatorios'), 400);
 
-			if($player != null && $item != null){	
+		$player = Player::where('android_id','=',$android_id)->first();
+		$item = Item::find($item_id);
 
-					$player_has = false;
-					$player_items = $player->items()->get();
-					foreach ($player_items as $player_item) {
-						if($player_item->id == $item->id){
-							$player_has = true;
-						}
+		if($player == null || $item == null)
+      return Response::json(array('err' => true, 'msg' => 'Jugador o item no encontrados'), 404);
 
-							
-					}
+		if($player->hasInInventory($item->id)) // the player already owns it
+			return Response::json(array('err' => true, 'msg' => 'El jugador ya posee este item'), 405);
 
-					if($player_has){
-						App::abort(405, "Method NOT ALLOWED");
-					}
-					else{
-						$player_credits = $player->credits;
-						$item_price = $item->price;
-						if( ($player_credits-$item_price) < 0 )
-							App::abort(403, "FORBIDDEN");
-						else{
-						   $player->credits = $player_credits-$item_price;
-						   $player->save();
-						   $player->items()->save($item);
-						   return Response::json($player, 200);
+		if( $player->credits < $item->price )
+      return Response::json(array('err' => true, 'msg' => 'El jugador no posee creditos suficientes'), 403);
 
-						}
-					}
-			}
-			else
-				App::abort(404, "NOT FOUND");
-		}
+    $player->credits -= $item->price;
+    $player->save();
+    $player->items()->save($item);
+    return Response::json($player, 200);
 	}
 
-    public function postEquip(){
+  public function postEquip(){
+    $android_id  = Input::get("android_id", 0);
+    $item_id  = Input::get("item_id", 0);
 
+    $player = Player::whereAndroidId($android_id)->first();
+    $item = Item::find($item_id);
 
-        $android_id  = Input::get("android_id");
-        $item_id  = Input::get("item_id");
+    if($player == null || $item == null)
+      return Response::json(array('err' => true, 'msg' => 'Jugador o item no encontrados'), 404);
 
-        if($android_id != null && $item_id != null){
+    if( ! $player->hasInInventory($item_id))
+      return Response::json(array('err' => true, 'msg' => 'El jugador no posee este item'), 403);
 
-            $player = Player::where("android_id","=",$android_id)->first();
-            $item = Item::find($item_id);
+  	if($player->hasEquipped($item_id)){
+  		$player->unEquip($item_id);
+      return Response::json(array('err' => false, 'msg' => 'El item ha sido desequipado.'));
+  	}else{
+  		if($item->itemType->first()->isWeapon()){
+		    $player->weapon_id = $item->id;
+		    $player->save();
+  		}
+  		else if ( $item->itemType->first()->isArmor()){
+		    $player->armor_id = $item->id;
+		    $player->save();
+  		}
+      return Response::json(array('err' => false, 'msg' => 'El item ha sido equipado.'));
+  	}
+  }
 
-            if($player != null && $item != null){
-                if($player->hasInInventory($item_id)){
+  public function getInventory(){
+  	$android_id  = Input::get("android_id", 0);
 
-                	if($player->hasEquipped($item_id)){
-                		$player->unEquip($item_id);
-                	}
-                	else{
-                		if($item->itemType->first()->isWeapon()){
-                		    $player->weapon_id = $item->id;
-                		    $player->save();
-                		}
-                		else if ( $item->itemType->first()->isArmor()){
-                		    $player->armor_id = $item->id;
-                		    $player->save();
-                		}
-                	}
-                	
-                    
+		$player = Player::whereAndroidId($android_id)->first();
 
-                }
-                else
-                    App::abort(403, "FORBIDDEN");
+    if($player == null )
+      return Response::json(array('err' => true, 'msg' => 'Jugador no encontrados'), 404);
 
-            }
-            else
-                App::abort(404, "NOT FOUND");
+  	$inventory = $player->items;
+  	foreach ($inventory as $item) {
+  		if($player->hasEquipped($item->id)){
+  			$item->equipped = true;
+  		}else {
+        $item->equipped = false;
+      }
+  	}
 
-        }
-        else
-            App::abort(404, "NOT FOUND");
-    }
-
-    public function getInventory(){
-		$android_id  = Input::get("android_id");
-
-		if($android_id != null){
-			$player = Player::where("android_id","=",$android_id)->first();
-
-            if($player != null ){
-
-            	$inventory = $player->items()->get(); //remains to be done
-            	foreach ($inventory as $item) {
-            		if($player->hasEquipped($item->id)){
-            			$item->equipped = true;
-
-            		}
-            		
-            	}
-
-
-            	return Response::json($inventory);
-            }
-            else
-            	App::abort(404, "NOT FOUND");
-
-
-		}
-		else
-			App::abort(404, "NOT FOUND");
-    }
-
-	
-
+  	return Response::json($inventory);
+  }
 }

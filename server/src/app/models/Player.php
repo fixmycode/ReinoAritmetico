@@ -24,12 +24,12 @@ class Player extends \Eloquent {
 
     public function armor()
     {
-        return $this->belongsTo("Item","armor_id")->first();
+        return $this->belongsTo("Item","armor_id");
     }
 
     public function weapon()
     {
-        return $this->belongsTo("Item", "weapon_id")->first();
+        return $this->belongsTo("Item", "weapon_id");
     }
 
     public function characterType(){
@@ -38,20 +38,21 @@ class Player extends \Eloquent {
 
     public function hasInInventory($item_id){
         $found = false;
-        $items = $this->items()->get();
+        $items = $this->items;
+
         if($items != null){
             foreach($items as $item){
                 if($item->id == $item_id)
-                    $found=true;
+                    return true;
             }
         }
 
-        return $found;
+        return false;
     }
 
     public function hasEquipped($item_id){
-        $armorItem = $this->armor();
-        $weaponItem = $this->weapon();
+        $armorItem = $this->armor;
+        $weaponItem = $this->weapon;
 
         if( ($armorItem != null && $armorItem->id == $item_id) || ($weaponItem != null && $weaponItem->id == $item_id))
             return true;
@@ -60,8 +61,9 @@ class Player extends \Eloquent {
     }
 
     public function unEquip($item_id){
-        $armorItem = $this->armor();
-        $weaponItem = $this->weapon();
+        $armorItem = $this->armor;
+        $weaponItem = $this->weapon;
+
         if($armorItem != null && $armorItem->id == $item_id){
             $this->armor_id = null;
         }
