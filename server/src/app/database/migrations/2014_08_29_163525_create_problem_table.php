@@ -16,11 +16,11 @@ class CreateProblemTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('type');
-			
+
 			$table->integer('max_difficulty');
 			$table->datetime('started')->nullable();
 			$table->datetime('ended')->nullable();
-			
+
 		});
 
 		Schema::create('problems', function(Blueprint $table)
@@ -38,44 +38,6 @@ class CreateProblemTable extends Migration {
 	      		->on('problem_type')
 	      		->onDelete('cascade');
 		});
-
-		Schema::create('game_problem', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->integer('game_id')->unsigned();
-			$table->integer('problem_id')->unsigned();
-			$table->datetime('started')->nullable();
-			$table->datetime('ended')->nullable();
-
-			$table->foreign('problem_id')
-						->references('id')
-	      		->on('problems')
-	      		->onDelete('cascade');
-
-	    $table->foreign('game_id')
-	      		->references('id')
-	      		->on('games')
-	      		->onDelete('cascade');  
-		});
-
-		Schema::create('answers', function(Blueprint $table){
-			$table->increments('id');
-			$table->integer('answer_time');
-			$table->integer('player_id')->unsigned();
-			$table->integer('problem_id')->unsigned();
-			$table->string('answer_selected');
-			$table->boolean('answer_state');
-
-			$table->foreign('player_id')
-						->references('id')
-						->on('players')
-						->onDelete('cascade');
-
-			$table->foreign('problem_id')
-						->references('id')
-						->on('problems')
-						->onDelete('cascade');
-		});
 	}
 
 	/**
@@ -85,8 +47,6 @@ class CreateProblemTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop("game_problem");
-		Schema::drop("answers");
 		Schema::drop("problems");
 		Schema::drop("problem_type");
 	}
