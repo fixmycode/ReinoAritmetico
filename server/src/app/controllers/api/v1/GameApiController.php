@@ -35,12 +35,12 @@ class GameApiController extends \BaseController {
    * }
    */
   public function postEnd() {
-    $id     = Input::get('id', 0);
+    $game_id     = Input::get('id', 0);
     $reward  = Input::json('reward', 0);
-    $players = Input::json('players', array());
-    $answers = Input::json('answers', array());
+    $players = Input::json('players', []);
+    $answers = Input::json('answers', []);
 
-    if ( ! $game = Game::find($id)->first() )
+    if ( ! $game = Game::find($game_id)->first() )
       return Response::json(['err' => true, 'msg' => 'Partida no encontrada'], 404);
 
     // if ( ! is_null($game->ended) )
@@ -48,25 +48,29 @@ class GameApiController extends \BaseController {
 
     $game->ended = new DateTime();
     $game->uid = 'Done';
+    $game->save();
+
 
     // Update players credits
     $player_ids = [];
-    foreach ($players as $player) {
-      if ( $p = Player::whereAndroidId($player['android_id'])->first() ){
+    foreach ($players as $android_id) {
+      if ( $p = Player::whereAndroidId($android_id)->first() ){
         $p->addCredits($reward);
-        $player_ids[] = $p->id;
+        $player_ids[$android_id] = $p->id;
       }
     }
 
-    $game->players()->attach($player_ids);
+    $game->players()->attach(array_values($player_ids));
 
-    $game->save();
 
-    // @TODO: save answers by players
-    foreach ($players as $p) {
-      // if ( $gpp = GamePlayer::wherePlayerId($p->id)->whereGameId($game->id)->first()) {
-      //   $gpp->
-      // }
+
+
+    foreach ($player_ids as $android_id => $id) {
+      if ( $gpp = GamePlayer::wherePlayerId($id)->whereGameId($game->id)->first() ){
+        foreach ($answers[$android_id] as $answer) {
+          $gpp->problems()->attach($answer['id'], ['answer' => $answer['answer'], 'time_elapsed' => $answer['elapsed_time']]);
+        }
+      }
     }
     return Response::json(['err' => false, 'msg' => 'Partida finalizada correctamente']);
   }

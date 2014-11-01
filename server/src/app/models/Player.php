@@ -41,6 +41,11 @@ class Player extends \Eloquent {
         return $this->belongsToMany('Game')->withPivot('id');
     }
 
+    public function GamePlayer()
+    {
+        return $this->hasMany('GamePlayer');
+    }
+
     public function hasInInventory($item_id){
         $found = false;
         $items = $this->items;
