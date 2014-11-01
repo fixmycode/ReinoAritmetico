@@ -19,6 +19,8 @@ Route::resource('clientss.classrooms', 'ClientsClassroomsController');
 Route::resource('problems', 'ProblemController');
 Route::resource('items', 'ItemController');
 Route::resource('tags', 'TagController');
+Route::resource('reports', 'ReportController');
+
 
 /**
  * La nueva forma de hacer llamados a la API deben conformarse al siguiente

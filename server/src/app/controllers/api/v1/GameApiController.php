@@ -64,9 +64,9 @@ class GameApiController extends \BaseController {
 
     // @TODO: save answers by players
     foreach ($players as $p) {
-      if ( $gpp = GamePlayer::wherePlayerId($p->id)->whereGameId($game->id)->first()) {
-        $gpp->
-      }
+      // if ( $gpp = GamePlayer::wherePlayerId($p->id)->whereGameId($game->id)->first()) {
+      //   $gpp->
+      // }
     }
     return Response::json(['err' => false, 'msg' => 'Partida finalizada correctamente']);
   }

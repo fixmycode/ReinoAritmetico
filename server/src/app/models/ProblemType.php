@@ -21,4 +21,8 @@ class ProblemType extends \Eloquent {
     return $this->hasMany('Classroom');
   }
 
+  public static function getNombres(){
+    return DB::select(DB::raw('select problem_type.type from problem_type'));
+  }
+
 }
