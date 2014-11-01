@@ -21,6 +21,6 @@ class GamePlayer extends \Eloquent {
 
   public function scopeFindBoth($query, $gameId, $playerId)
   {
-    return $query->whereGameId($gameId)->wherePlayerId($playerId);
+    return $query->with('problems')->whereGameId($gameId)->wherePlayerId($playerId)->first();
   }
 }
