@@ -36,6 +36,11 @@ class Player extends \Eloquent {
       return $this->belongsTo('CharacterType');
     }
 
+    public function games()
+    {
+        return $this->belongsToMany('Game')->withPivot('id');
+    }
+
     public function hasInInventory($item_id){
         $found = false;
         $items = $this->items;
@@ -73,5 +78,9 @@ class Player extends \Eloquent {
         $this->save();
     }
 
+    public function addCredits($reward = 0) {
+        $this->credits += $reward;
+        $this->save();
+    }
 
 }
