@@ -19,7 +19,7 @@ Route::resource('clientss.classrooms', 'ClientsClassroomsController');
 Route::resource('problems', 'ProblemController');
 Route::resource('items', 'ItemController');
 Route::resource('tags', 'TagController');
-Route::resource('reports', 'ReportController');
+Route::controller('reports', 'ReportController');
 
 
 /**

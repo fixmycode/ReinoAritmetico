@@ -6,30 +6,12 @@
 <div class="row">
 
   <div class="col-md-7">
-    <h3>Cantidad de Juegos: {{$numberOfGames}}</h3>
+  <h3>Alumno: {{$player->name}}</h3>
     <div class="box box-success">
       <div id="container"></div>
     </div>
   </div>
-  <div class="col-md-5">
-    <table class="table table-condensed table-hover" id='playersTable'>
-          <thead>
-            <tr>
-              <th style="width: 10px">#</th>
-              <th>Nombre</th>
-            </tr>
-          </thead>
-          <tbody>
-
-            @foreach ($players as $player )
-            <tr>
-                <td> <a href="{{URL::to('reports/player')}}?player_id={{ $player->id}}">{{ $player->id}}</a></td>
-                <td> <a href="{{URL::to('reports/player')}}?player_id={{ $player->id}}">{{ $player->name}}</a></td>
-            </tr>
-            @endforeach
-          </tbody>
-        </table>
-  </div>
+  
   
 
 </div>
