@@ -35,21 +35,20 @@ class GameApiController extends \BaseController {
    * }
    */
   public function postEnd() {
-    $game_id     = Input::get('id', 0);
+    $game_id = Input::get('id', 0);
     $reward  = Input::json('reward', 0);
     $players = Input::json('players', []);
     $answers = Input::json('answers', []);
 
-    if ( ! $game = Game::find($game_id)->first() )
+    $game = Game::find($game_id);
+    if ( ! $game)
       return Response::json(['err' => true, 'msg' => 'Partida no encontrada'], 404);
 
-    // if ( ! is_null($game->ended) )
-    //   return Response::json(['err' => true, 'msg' => 'La partida ya finalizo'], 400);
+    if ( $game->uid == 'Done' )
+      return Response::json(['err' => true, 'msg' => 'La partida ya finalizo', 'uid' => $game->uid], 400);
 
     $game->ended = new DateTime();
     $game->uid = 'Done';
-    $game->save();
-
 
     // Update players credits
     $player_ids = [];
@@ -62,9 +61,6 @@ class GameApiController extends \BaseController {
 
     $game->players()->attach(array_values($player_ids));
 
-
-
-
     foreach ($player_ids as $android_id => $id) {
       if ( $gpp = GamePlayer::wherePlayerId($id)->whereGameId($game->id)->first() ){
         foreach ($answers[$android_id] as $answer) {
@@ -72,10 +68,11 @@ class GameApiController extends \BaseController {
         }
       }
     }
+    $game->save();
     return Response::json(['err' => false, 'msg' => 'Partida finalizada correctamente']);
   }
 
   public function missingMethod($parameters = array()) {
-    App::abort(404);
+    return Response::json(['err' => true, 'msg' => 'Endpoint no encontrado']);
   }
 }

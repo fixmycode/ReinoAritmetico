@@ -57,6 +57,7 @@ Game.prototype.init = function(){
         console.log(body);
         var a = JSON.parse(body);
         self.joinCode = a.uid;
+        self.id = a.id;
         self.waiting = true;
         self.reward = 0;
         defer.resolve();
@@ -81,17 +82,22 @@ Game.prototype.end = function() {
   var defer = q.defer();
   var self = this;
 
+  var answers = {};
+  _.each(self.players, function(p){
+    answers[p.android_id] = p.answers;
+  });
   var data = JSON.stringify( {
     reward: self.reward,
-    players: _.map(self.players, function(n) { return _.pick(n, 'android_id')}),
-    answers: self.answers
-  } );
+    players: _.map(self.players, function(n) { return n.android_id }),
+    answers: answers
+  });
+  console.log(self.id);
   console.log(data);
 
   var options = {
       host: self.serverIpAddress,
       port: self.serverPort,
-      path: API + '/game/end?uid=' + self.joinCode,
+      path: API + '/game/end?id=' + self.id,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -109,6 +115,7 @@ Game.prototype.end = function() {
       .on('end', function() {
         console.log(body);
         delete self.joinCode;
+        delete self.id;
         self.players.length = 0;
         defer.resolve();
       })
