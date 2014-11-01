@@ -13,22 +13,45 @@
   </div>
   <div class="col-md-5">
     <table class="table table-condensed table-hover" id='playersTable'>
-          <thead>
-            <tr>
-              <th style="width: 10px">#</th>
-              <th>Nombre</th>
-            </tr>
-          </thead>
-          <tbody>
+      <thead>
+        <tr>
+          <th style="width: 10px">#</th>
+          <th>Nombre</th>
+        </tr>
+      </thead>
+      <tbody>
 
-            @foreach ($players as $player )
-            <tr>
-                <td> <a href="{{URL::to('reports/player')}}?player_id={{ $player->id}}">{{ $player->id}}</a></td>
-                <td> <a href="{{URL::to('reports/player')}}?player_id={{ $player->id}}">{{ $player->name}}</a></td>
-            </tr>
-            @endforeach
-          </tbody>
-        </table>
+        @foreach ($players as $player )
+        <tr>
+            <td> <a href="{{URL::to('reports/player')}}?player_id={{ $player->id}}">{{ $player->id}}</a></td>
+            <td> <a href="{{URL::to('reports/player')}}?player_id={{ $player->id}}">{{ $player->name}}</a></td>
+        </tr>
+        @endforeach
+      </tbody>
+    </table>
+
+    <table class="table table-condensed table-hover" id='successTable'>
+      <thead>
+        <tr>
+          <th>Tipo</th>
+          <th>Correctas</th>
+          <th>Incorrectas</th>
+          <th>Success Rate</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        @foreach ($successRate as $type )
+        <tr>
+            <td> {{$type->type}}</td>
+            <td> {{$type->correct}}</td>
+            <td> {{$type->wrong}}</td>
+            <td> {{$type->success_rate}}</td>
+            
+        </tr>
+        @endforeach
+      </tbody>
+    </table>
   </div>
   
 

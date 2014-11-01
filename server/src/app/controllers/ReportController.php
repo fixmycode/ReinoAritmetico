@@ -17,11 +17,14 @@ class ReportController extends \BaseController {
 		foreach(ProblemType::getNombres() as $item){
 			array_push($categories, $item->type);
 		}
+		$successRate = GamePlayer::successRate();
+
 
 		$players = Player::all();
 		
 		return View::make('reports.index')
 					->with("numberOfGames", $numberOfGames)
+					->with("successRate", $successRate)
 					->with("averageData", json_encode($averageProblemArray))
 					->with("averageCategories", json_encode($categories))
 					->with("players", $players);
