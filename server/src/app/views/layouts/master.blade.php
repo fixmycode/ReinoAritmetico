@@ -135,7 +135,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('reports.index') }}">
+                            <a href="{{ URL::to('reports') }}">
                                 <i class="fa fa-th"></i> <span>Reportes</span>
                             </a>
                         </li>

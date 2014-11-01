@@ -10,13 +10,33 @@ class GamePlayer extends \Eloquent {
   }
 
 
-  public static function averageProblemTime()
+  public static function averageProblemTime($player_id)
   {
-  	return DB::select(DB::raw('select problem_type.type as name, avg(time_elapsed) as data from problems 
+  	$db = null;
+  	if($player_id == null){
+  		$db = DB::select(DB::raw('select problem_type.type as name, avg(time_elapsed) as data from problems 
 		join game_player_problem on problems.id = game_player_problem.problem_id
 		join problem_type on problem_type.id = problems.problem_type_id
-		group by problem_type_id')
-  	);
+		group by problem_type_id'));
+  	}
+  	else{
+  		$db = DB::select(DB::raw('select problem_type.type as name, avg(time_elapsed) as data from problems 
+		join game_player_problem on problems.id = game_player_problem.problem_id
+		join problem_type on problem_type.id = problems.problem_type_id
+		join game_player on game_player_problem.`game_player_id` = game_player.id
+		join players on game_player.player_id = players.id
+		where players.id = '.$player_id.'
+		group by problem_type_id'));
+
+  	}
+  	
+
+  	array_map(function($n){
+		  $n->data = [$n->data];
+		}, $db);
+
+  	return $db;
+  	
   }
 
   public function player()
