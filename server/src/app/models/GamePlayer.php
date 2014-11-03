@@ -14,13 +14,13 @@ class GamePlayer extends \Eloquent {
   {
   	$db = null;
   	if($player_id == null){
-  		$db = DB::select(DB::raw('select problem_type.type as name, avg(time_elapsed) as data from problems 
+  		$db = DB::select(DB::raw('select problem_type.type as name, avg(time_elapsed) as data from problems
 		join game_player_problem on problems.id = game_player_problem.problem_id
 		join problem_type on problem_type.id = problems.problem_type_id
 		group by problem_type_id'));
   	}
   	else{
-  		$db = DB::select(DB::raw('select problem_type.type as name, avg(time_elapsed) as data from problems 
+  		$db = DB::select(DB::raw('select problem_type.type as name, avg(time_elapsed) as data from problems
 		join game_player_problem on problems.id = game_player_problem.problem_id
 		join problem_type on problem_type.id = problems.problem_type_id
 		join game_player on game_player_problem.game_player_id = game_player.id
@@ -29,14 +29,14 @@ class GamePlayer extends \Eloquent {
 		group by problem_type_id'));
 
   	}
-  	
+
 
   	array_map(function($n){
-		  $n->data = [$n->data];
+		  $n->data = [(float)$n->data];
 		}, $db);
 
   	return $db;
-  	
+
   }
 
   public static function successRate(){
