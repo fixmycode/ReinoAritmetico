@@ -27,12 +27,13 @@ public class ItemListFragment extends android.app.ListFragment {
     private Item newItem;
     private List<Item> i = new ArrayList<Item>();
     ItemAdapter adapter;
-    String[] nombre;
     int precio;
 
     public ItemListFragment(){
 
-    }public static ItemListFragment newInstance(JSONArray itemsArray){
+    }
+
+    public static ItemListFragment newInstance(JSONArray itemsArray){
         ItemListFragment lif = new ItemListFragment();
         Bundle args = new Bundle();
         args.putString(ITEM_STRING,itemsArray.toString());
@@ -42,13 +43,14 @@ public class ItemListFragment extends android.app.ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if(getArguments()!=null){
             try {
                 JSONArray items = new JSONArray(getArguments().getString(ITEM_STRING));
                 buildAdapter(items);
             }
             catch(JSONException e) {
-                Log.e(TAG, "Error reading items");;
+                Log.e(TAG, "Error reading items");
             }
         }
 
@@ -57,7 +59,6 @@ public class ItemListFragment extends android.app.ListFragment {
         List<Item> listItem = new ArrayList<Item>();
         for (int i = 0; i < itemList.length(); i++) {
             newItem = Item.fromJSON(itemList.getJSONObject(i));
-            Log.d(newItem.nombre,String.valueOf(newItem.comprado));
             listItem.add(newItem);
         }
         adapter = new ItemAdapter(getActivity().getApplicationContext(),listItem);
@@ -84,13 +85,25 @@ public class ItemListFragment extends android.app.ListFragment {
         if(i.comprado==0) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage(getString(R.string.ask_buy, i.nombre, i.precio));
+            builder.setMessage(getString(R.string.ask_buy, i.nombre, precio));
             builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     buyItem(id_item,precio);
                     dialog.dismiss();
+                    popUp();
+                }
+                public void popUp(){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage(getString(R.string.ask_buy,"hola ", precio));
+                    builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            equipItem(id_item);
+                            dialog.dismiss();
+                        }
+                    });
                 }
             });
             builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
@@ -104,24 +117,48 @@ public class ItemListFragment extends android.app.ListFragment {
         }
 
         else{
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage(getString(R.string.ask_equip, i.nombre, i.precio));
-            builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    equipItem(id_item);
-                    dialog.dismiss();
 
-                }
-            });
-            builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
-            AlertDialog dialog = builder.create();
-            dialog.show();
+            if(i.equipped==0) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage(getString(R.string.ask_equip, i.nombre, i.precio));
+                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        equipItem(id_item);
+                        dialog.dismiss();
+
+
+                    }
+                });
+                builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+            else{
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage(getString(R.string.ask_unequip, i.nombre, i.precio));
+                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        equipItem(id_item);
+                        dialog.dismiss();
+
+                    }
+                });
+                builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
 
         }
 

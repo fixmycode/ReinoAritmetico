@@ -80,7 +80,11 @@ public class ItemAdapter extends BaseAdapter {
             estado.setText(String.valueOf("$ "+row_pos.precio));
         }
         else{
-            estado.setText("Comprado");
+            if(row_pos.equipped==1){
+                estado.setText("Equipado");
+            }
+            else
+                estado.setText("Comprado");
         }
 
         return convertView;

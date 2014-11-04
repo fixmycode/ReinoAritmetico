@@ -100,19 +100,11 @@ public class StoreFragment extends Fragment {
                 sListener.onChangeClass();
             }
         });
-        okButton=(Button) layout.findViewById(R.id.okButton);
-        okButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sListener.onDone();
-            }
-        });
     }
 
     public interface StoreListener{
         public void onItemList(int kind,int type);
         public void onChangeClass();
-        public void onDone();
     }
 
 }

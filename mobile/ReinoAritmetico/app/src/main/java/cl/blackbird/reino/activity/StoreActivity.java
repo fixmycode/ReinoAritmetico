@@ -69,14 +69,6 @@ public class StoreActivity extends Activity implements
     }
 
     @Override
-    public void onDone() {
-        Intent result = new Intent();
-        result.putExtra("player", player);
-        setResult(Activity.RESULT_OK, result);
-        finish();
-    }
-
-    @Override
     public void onItemList(final int kind,final int type) {
         final String androidId = Settings.Secure.getString(
                 getContentResolver(),
@@ -145,7 +137,39 @@ public class StoreActivity extends Activity implements
     }
 
     @Override
-    public void onItemClick(int item_id) {
+    public void onItemClick(final int item_id) {
+        final String androidId = Settings.Secure.getString(
+                getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        String url = Uri.parse(Config.getServer(this)).buildUpon().path("/api/v1/item/equip").build().toString();
+        StringRequest request = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(
+                                getApplicationContext(),
+                                R.string.buy_success,
+                                Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(
+                                getApplicationContext(),
+                                R.string.buy_error,
+                                Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("android_id",androidId);
+                params.put("item_id", String.valueOf(item_id));
+                return params;
+            }
+        };
+        ReinoApplication.getInstance().getRequestQueue().add(request);
 
     }
 
