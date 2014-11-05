@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -151,6 +152,8 @@ public class ItemListFragment extends android.app.ListFragment {
 
     }
 
+
+
     public void buyItem(int item_id,int price){
         if (iListener != null){
             iListener.onItemClick(item_id, price);
@@ -162,6 +165,7 @@ public class ItemListFragment extends android.app.ListFragment {
             iListener.onItemClick(item_id);
         }
     }
+
     @Override
     public void setListAdapter(ListAdapter adapter) {
         super.setListAdapter(adapter);
@@ -170,5 +174,15 @@ public class ItemListFragment extends android.app.ListFragment {
     public interface itemListener{
         public void onItemClick(int item_id, int price);
         public void onItemClick(int item_id);
+        public void onReturn();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            iListener.onReturn();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

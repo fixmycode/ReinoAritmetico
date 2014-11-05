@@ -18,12 +18,8 @@ public class StoreFragment extends Fragment {
 
     public static final String TAG = "RAFSTORE";
 
-    private Button helmetButton;
-    private Button weaponButton;
-    private Button classButton;
     private StoreListener sListener;
     private Player player;
-    private int type;
     public StoreFragment() {
         //empty constructor
     }
@@ -48,10 +44,6 @@ public class StoreFragment extends Fragment {
 
         setButtons(layout);
         player = (Player) getArguments().getSerializable("player");
-        type = player.characterType;
-
-
-
         return layout;
     }
 
@@ -77,22 +69,22 @@ public class StoreFragment extends Fragment {
     }
 
     public void setButtons(View layout){
-        helmetButton=(Button) layout.findViewById(R.id.helmetButton);
+        Button helmetButton = (Button) layout.findViewById(R.id.helmetButton);
         helmetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sListener.onItemList(1,type);
+                sListener.onItemList(1, player.characterType);
 
             }
         });
-        weaponButton=(Button) layout.findViewById(R.id.weaponButton);
+        Button weaponButton = (Button) layout.findViewById(R.id.weaponButton);
         weaponButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sListener.onItemList(2,type);
+                sListener.onItemList(2, player.characterType);
             }
         });
-        classButton=(Button) layout.findViewById(R.id.classButton);
+        Button classButton = (Button) layout.findViewById(R.id.classButton);
         classButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

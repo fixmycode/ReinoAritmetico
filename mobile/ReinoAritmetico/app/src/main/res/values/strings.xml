@@ -74,6 +74,8 @@
     <string name="change_error">There was an error changing your class</string>
     <string name="change_type">Change class: $%d</string>
     <string name="same_class">You already have that class</string>
+    <string name="item_list_error">There was an error obtaining the item list</string>
+    <string name="getting_items">Obtaining item list</string>
 
     <string-array name="characters">
         <item>Warrior</item>

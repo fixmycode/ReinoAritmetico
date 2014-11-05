@@ -29,12 +29,10 @@ import cl.blackbird.reino.R;
 import cl.blackbird.reino.ReinoApplication;
 import cl.blackbird.reino.fragment.ChangeTypeFragment;
 import cl.blackbird.reino.fragment.ItemListFragment;
+import cl.blackbird.reino.fragment.LoadingFragment;
 import cl.blackbird.reino.fragment.StoreFragment;
 import cl.blackbird.reino.model.Player;
 
-/**
- * Created by niko on 14/09/2014.
- */
 public class StoreActivity extends Activity implements
         StoreFragment.StoreListener,
         ItemListFragment.itemListener,
@@ -76,7 +74,7 @@ public class StoreActivity extends Activity implements
         String url = Uri.parse(Config.getServer(this)).buildUpon().path("api/v1/item/list")
                 .appendQueryParameter("kind",String.valueOf(kind)).appendQueryParameter("type",String.valueOf(type))
                 .appendQueryParameter("player",androidId).build().toString();
-        Log.d("url",url);
+        LoadingFragment.setLoadingMessage(this, R.string.getting_items);
         JsonArrayRequest request = new JsonArrayRequest(url,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -87,7 +85,8 @@ public class StoreActivity extends Activity implements
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(),R.string.server_error,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),R.string.item_list_error,Toast.LENGTH_SHORT).show();
+                        onReturn();
                     }
                 });
         ReinoApplication.getInstance().getRequestQueue().add(request);
@@ -172,6 +171,15 @@ public class StoreActivity extends Activity implements
         };
         ReinoApplication.getInstance().getRequestQueue().add(request);
 
+    }
+
+    @Override
+    public void onReturn() {
+        Log.d(TAG, "on Return");
+        getFragmentManager().beginTransaction()
+                .replace(R.id.container, StoreFragment.newInstance(player))
+                .commit();
+        getFragmentManager().popBackStack();
     }
 
     public void itemBought(int price){
