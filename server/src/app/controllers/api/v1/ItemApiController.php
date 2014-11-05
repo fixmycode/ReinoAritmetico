@@ -32,9 +32,6 @@ class ItemApiController extends \BaseController {
 		if ( ! is_null($kind) ) {
 			$items = $items->where('items.item_type_id', '=', $kind);
 		}
-    if ( ! is_null(Input::get('player', null))) {
-      $items = $items->where('players.android_id', '=', Input::get('player'));
-    }
 
 		return Response::json($items->get());
 	}
