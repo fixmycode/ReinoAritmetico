@@ -54,7 +54,6 @@ Game.prototype.init = function(){
         body += chunk;
       })
       .on('end', function() {
-        console.log(body);
         var a = JSON.parse(body);
         self.joinCode = a.uid;
         self.id = a.id;
@@ -78,7 +77,8 @@ Game.prototype.init = function(){
   return defer.promise;
 }
 
-Game.prototype.end = function() {
+Game.prototype.end = function(failedd) {
+  var failed = false | failedd;
   var defer = q.defer();
   var self = this;
 
@@ -87,12 +87,10 @@ Game.prototype.end = function() {
     answers[p.android_id] = p.answers;
   });
   var data = JSON.stringify( {
-    reward: self.reward,
+    reward: failed ? 0 : self.reward,
     players: _.map(self.players, function(n) { return n.android_id }),
     answers: answers
   });
-  console.log(self.id);
-  console.log(data);
 
   var options = {
       host: self.serverIpAddress,
@@ -113,7 +111,6 @@ Game.prototype.end = function() {
         body += chunk;
       })
       .on('end', function() {
-        console.log(body);
         delete self.joinCode;
         delete self.id;
         self.players.length = 0;
@@ -181,33 +178,47 @@ Game.prototype.start = function() {
   var defer = q.defer();
 
   // Fetch Problems from server
+  players = [];
+  self.players.forEach(function(p){
+    players.push(p.android_id);
+  });
+  var data = JSON.stringify({
+    players: players
+  });
   var options = {
       host: self.serverIpAddress,
       port: self.serverPort,
-      path: API + '/problem/questions?quantity='+ parseInt(self.problemsPerPlayer) +'&difficulty='+ self.difficulty
-  };
-  var req = http.get(options, function(res) {
-    res.setEncoding('utf8');
-    var body = "";
-
-    res.on('data', function (chunk) {
-      body += chunk;
-    })
-    .on('end', function() {
-      var a = JSON.parse(body);
-      self.problems = a;
-      self.j = 0;
-      self.offset = 1;
-      self.problemsCount = 0;
-      self.shaken = 0;
-      self.reward = REWARD;
-      for(var i = 0; i < self.players.length; i++) {
-        self.players[i].j = i;
+      path: API + '/game/go?quantity='+ parseInt(self.problemsPerPlayer) +'&difficulty='+ self.difficulty,
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          'Content-Length': data.length
       }
-      _.each(self.players, self.sendProblem, self);
-      defer.resolve();
-    })
-    .on('error', defer.reject);
+  };
+
+  var req = http.request(options, function(res) {
+      res.setEncoding('utf8');
+      var body = "";
+
+      res.on('data', function (chunk) {
+        body += chunk;
+      })
+      .on('end', function() {
+        var a = JSON.parse(body);
+        self.problems = a.problems;
+        self.resources = a.players.players;
+        self.j = 0;
+        self.offset = 1;
+        self.problemsCount = 0;
+        self.shaken = 0;
+        self.reward = REWARD;
+        for(var i = 0; i < self.players.length; i++) {
+          self.players[i].j = i;
+        }
+        _.each(self.players, self.sendProblem, self);
+        defer.resolve();
+      })
+      .on('error', defer.reject);
   });
 
   req.on('error', function(e) {
@@ -216,6 +227,9 @@ Game.prototype.start = function() {
 
   self.playing = true;
   self.waiting = false;
+
+  req.write(data);
+  req.end();
 
   return defer.promise;
 }
@@ -265,7 +279,6 @@ Game.prototype.submitAnswer = function(socketId, answer) {
       self.wrong_players[0].socket.emit('trapped', {msg: 'Has sido atrapado! pidele ayuda a tus amigos!'});
       return 'trapped';
     }else if(self.wrong_players.length === self.players.length){ //Everyone got it wrong!!
-      console.log('Todos MAL!');
       self.wrong_players[0].socket.broadcast.emit('shake', {msg: '¡Te están atacando! ¡Sacude!'});
       self.wrong_players[0].socket.emit('shake', {msg: '¡Te están atacando! ¡Sacude!'});
       return 'defend-yourselvs';

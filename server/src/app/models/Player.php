@@ -88,4 +88,52 @@ class Player extends \Eloquent {
         $this->save();
     }
 
+    public static function getPlayers($players = [])
+    {
+        $result = [];
+        foreach ($players as $p) {
+          if( ! ($player = Player::with('armor', 'weapon')->whereAndroidId($p)->first()) )
+            return Response::json(['err' => true, 'msg' => 'Error de jugadores, alguien no existe'], 404);
+
+            if ( ! $player->armor_id) {
+              $weapon = Item::find(1);
+              $armor = Item::find(7);
+              $result['players'][$p] = [
+                'head' => [
+                  'resource' => url('/').'/'.$armor->image_path,
+                  'center' => [
+                    'x' => $armor->headX,
+                    'y' => $armor->headY,
+                  ]
+                ],
+                'hand' => [
+                  'resource' => url('/').'/'.$weapon->image_path,
+                  'center' => [
+                    'x' => $weapon->headX,
+                    'y' => $weapon->headY,
+                  ]
+                ]
+              ];
+            }else {
+              $result['players'][$p] = [
+                'head' => [
+                  'resource' => url('/').'/'.$player->armor->image_path,
+                  'center' => [
+                    'x' => $player->armor->headX,
+                    'y' => $player->armor->headY,
+                  ]
+                ],
+                'hand' => [
+                  'resource' => url('/').'/'.$player->weapon->image_path,
+                  'center' => [
+                    'x' => $player->weapon->headX,
+                    'y' => $player->weapon->headY,
+                  ]
+                ]
+              ];
+            }
+        }
+        return $result;
+    }
+
 }

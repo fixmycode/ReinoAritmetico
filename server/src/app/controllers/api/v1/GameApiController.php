@@ -17,60 +17,31 @@ class GameApiController extends \BaseController {
     $game = new Game();
 
     $game->address = Input::get('address');
-    $players = Input::json('players');
-    if (count($players) > 5 || count($players) < 2)
-      return Response::json(['err' => true, 'msg' => 'Numero ilegal de jugadores'], 405);
 
-    $result = [];
-    foreach ($players as $p) {
-      if( ! ($player = Player::with('armor', 'weapon')->whereAndroidId($p)->first()) )
-        return Response::json(['err' => true, 'msg' => 'Error de jugadores, alguien no existe'], 404);
-
-        if ( ! $player->armor_id) {
-          $weapon = Item::find(1);
-          $armor = Item::find(7);
-          $result['players'][$p] = [
-            'head' => [
-              'resource' => url('/').'/'.$armor->image_path,
-              'center' => [
-                'x' => $armor->headX,
-                'y' => $armor->headY,
-              ]
-            ],
-            'hand' => [
-              'resource' => url('/').'/'.$weapon->image_path,
-              'center' => [
-                'x' => $weapon->headX,
-                'y' => $weapon->headY,
-              ]
-            ]
-          ];
-        }else {
-          $result['players'][$p] = [
-            'head' => [
-              'resource' => url('/').'/'.$player->armor->image_path,
-              'center' => [
-                'x' => $player->armor->headX,
-                'y' => $player->armor->headY,
-              ]
-            ],
-            'hand' => [
-              'resource' => url('/').'/'.$player->weapon->image_path,
-              'center' => [
-                'x' => $player->weapon->headX,
-                'y' => $player->weapon->headY,
-              ]
-            ]
-          ];
-        }
-
-    }
-    return Response::json($result);
     $game->uid     = Game::generateShortUid();
     $game->started = new DateTime();
 
     $game->save();
     return Response::json(['uid' => $game->uid, 'id' => $game->id]);
+  }
+
+  public function postGo()
+  {
+    $quantity   = Input::get('quantity');
+    $difficulty = Input::get('difficulty');
+    $players    = Input::json('players', []);
+
+    $players = Input::json('players');
+    if (count($players) > 5 || count($players) < 2)
+      return Response::json(['err' => true, 'msg' => 'Numero ilegal de jugadores'], 405);
+
+    if($quantity && $difficulty){
+      $result = Player::getPlayers($players);
+      $problems = DB::table('problems')->where('difficulty','=',$difficulty)->orderByRaw("RAND()")->take($quantity)->get();
+      return Response::json(["problems" => $problems, "players"=> $result]);
+    }
+
+    return null;
   }
 
 

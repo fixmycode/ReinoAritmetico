@@ -15,7 +15,7 @@ angular.module('RAApp').controller("MainGameCtrl", function ($scope, $location) 
 
 angular.module('RAApp').controller("welcomeCtrl", function ($scope, $routeParams) {
     if (game.waiting || game.playing) {
-        game.end().then(function(){
+        game.end(true).then(function(){
             io.sockets.emit('game end');
         });
     }
@@ -50,7 +50,7 @@ angular.module('RAApp').controller("configQuestCtrl", function ($scope, $locatio
 });
 
 angular.module('RAApp').controller("waitingCtrl", function ($scope, $routeParams, $window) {
-   
+
     $scope.quests = getQuests();
 
     $scope.quest = $scope.quests[$routeParams.questIndex];
@@ -65,7 +65,7 @@ angular.module('RAApp').controller("waitingCtrl", function ($scope, $routeParams
     });
 
     $scope.match = $window.game;
-    
+
     $window.game.init().then(function() {
         $scope.$digest();
     }).fail(function(){
@@ -78,7 +78,7 @@ angular.module('RAApp').controller("waitingCtrl", function ($scope, $routeParams
 });
 
 angular.module('RAApp').controller("playCtrl", function ($scope, $routeParams, $window, $location) {
-   
+
     $scope.quests = getQuests();
 
     $scope.quest = $scope.quests[$routeParams.questIndex];
@@ -100,11 +100,11 @@ angular.module('RAApp').controller("playCtrl", function ($scope, $routeParams, $
             });
         }else if( an === 'trapped') {
             $scope.$apply(function(){
-                $scope.an = true;    
+                $scope.an = true;
             });
         }else if( an == 'defend-yourselvs'){
             $scope.$apply(function(){
-                $scope.defendYourselvs = true;    
+                $scope.defendYourselvs = true;
             });
         }else{
             $scope.an = false;
@@ -115,8 +115,8 @@ angular.module('RAApp').controller("playCtrl", function ($scope, $routeParams, $
 
     $scope.$on('player rescued', function(e, data){
         $scope.$apply(function(){
-            $scope.an = false;  
-            $scope.defendYourselvs = false;  
+            $scope.an = false;
+            $scope.defendYourselvs = false;
         });
     });
 

@@ -57,7 +57,7 @@ angular.module('RAApp').run(function($rootScope) {
             $rootScope.$broadcast('update players');
         });
 
-        socket.on('submit answer', function(answer){ 
+        socket.on('submit answer', function(answer){
             $rootScope.$broadcast('player answered', {'socket': socket.id, 'answer': answer});
         });
 
@@ -105,19 +105,19 @@ angular.module('RAApp').run(function($rootScope) {
 
     win.on('close', function(){
         if (game.playing) {
-            game.end().then(function(){
-                win.close(true);    
+            game.end(true).then(function(){
+                win.close(true);
             }).fail(function(){
                 win.close(true);
-            });    
+            });
         }else {
             win.close(true);
         }
-        
+
     });
 
     $(document).on('click', '.maximize-app', function () {
-    
+
         if(win.isFullscreen){
             win.toggleFullscreen();
         }else{
