@@ -23,8 +23,11 @@ class ItemApiController extends \BaseController {
 				         'items.price',
 				         'items.item_type_id',
 				         'character_type.uid as character_type_id',
-                 DB::raw('(CASE WHEN (players.armor_id = items.id OR players.weapon_id = items.id) THEN true ELSE false END) as equipped'),
-				         DB::raw('(CASE WHEN (players.android_id = '.$player_uid.') THEN true ELSE false END) as comprado'));
+                 DB::raw('(CASE WHEN (players.android_id = '.$player_uid.' AND (players.armor_id = items.id OR players.weapon_id = items.id)) THEN true ELSE false END) as equipped'),
+				         DB::raw('(CASE WHEN (players.android_id = '.$player_uid.') THEN true ELSE false END) as comprado'))
+                 ->orderBy('equipped', 'DESC')
+                 ->orderBy('comprado', 'DESC')
+                 ->orderBy('id');
 
 		if ( ! is_null($type) ) {
 			$items = $items->where('character_type.uid', '=', $type);
