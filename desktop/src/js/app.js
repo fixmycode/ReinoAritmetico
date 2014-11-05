@@ -3,6 +3,8 @@ var q          = require('q');
 var io         = require('socket.io').listen(3000);
 var createGame = require('./lib/game.js');
 var ip         = require('ip');
+var http       = require('http');
+var fs         = require('fs');
 
 var game = createGame();
 var settings = {
@@ -13,6 +15,12 @@ var settings = {
 io.set('log level', 1);
 
 angular.module('RAApp', ['ngRoute', 'timer']);
+
+http.createServer(function(req, res) {
+    var img = fs.readFileSync('./resources/stage.png');
+     res.writeHead(200, {'Content-Type': 'image/png' });
+     res.end(img, 'binary');
+}).listen(3001);
 
 Object.size = function(obj) {
     var size = 0, key;
@@ -117,16 +125,16 @@ angular.module('RAApp').run(function($rootScope) {
     });
 
     $(document).on('click', '.maximize-app', function () {
-
-        if(win.isFullscreen){
-            win.toggleFullscreen();
-        }else{
-            if (screen.availHeight <= win.height) {
-                win.unmaximize();
-            }else {
-                win.maximize();
-            }
-        }
+        win.toggleFullscreen();
+        // if(win.isFullscreen){
+        //     win.toggleFullscreen();
+        // }else{
+        //     if (screen.availHeight <= win.height) {
+        //         win.unmaximize();
+        //     }else {
+        //         win.maximize();
+        //     }
+        // }
     });
 
     $(document).on('click', '.minimize-app', function () {
@@ -140,6 +148,9 @@ angular.module('RAApp').run(function($rootScope) {
 
     $(document).bind('keydown', 'ctrl+d', function(){
         win.showDevTools();
+    });
+    $(document).bind('keydown', 'esc', function(){
+
     });
  });
 }) (jQuery);

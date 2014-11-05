@@ -3,6 +3,7 @@ var querystring = require('querystring');
 var ip          = require('ip');
 var q           = require('q');
 var _           = require('underscore');
+var gx          = require('./game-graphics.js');
 
 var REWARD      = 50;
 var TRAPPED_ODD = 0.5;
@@ -205,6 +206,7 @@ Game.prototype.start = function() {
       })
       .on('end', function() {
         var a = JSON.parse(body);
+        gx(self);
         self.problems = a.problems;
         self.resources = a.players.players;
         self.j = 0;
@@ -253,6 +255,13 @@ Game.prototype.submitAnswer = function(socketId, answer) {
       .filter(function(p) { return p.socket.id == socketId; })
       .first()
       .value();
+
+    self.gx.players.forEach(function(p){
+      if (p.android_id === player.android_id){
+        p.attack();
+        return;
+      }
+    });
 
   self.answeringPlayers = _.without(self.answeringPlayers, player); // Remove player from waiting list
 
