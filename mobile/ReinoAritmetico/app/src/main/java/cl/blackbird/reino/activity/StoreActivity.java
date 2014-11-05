@@ -148,8 +148,9 @@ public class StoreActivity extends Activity implements
                     public void onResponse(String response) {
                         Toast.makeText(
                                 getApplicationContext(),
-                                R.string.buy_success,
+                                R.string.equip_success,
                                 Toast.LENGTH_LONG).show();
+                        itemEquipped();
                     }
                 },
                 new Response.ErrorListener() {
@@ -157,7 +158,7 @@ public class StoreActivity extends Activity implements
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(
                                 getApplicationContext(),
-                                R.string.buy_error,
+                                R.string.equip_error,
                                 Toast.LENGTH_LONG).show();
                     }
                 }){
@@ -175,6 +176,12 @@ public class StoreActivity extends Activity implements
 
     public void itemBought(int price){
         player.credits -= price;
+        Intent result = new Intent();
+        result.putExtra("player", player);
+        setResult(Activity.RESULT_OK, result);
+        finish();
+    }
+    public void itemEquipped(){
         Intent result = new Intent();
         result.putExtra("player", player);
         setResult(Activity.RESULT_OK, result);

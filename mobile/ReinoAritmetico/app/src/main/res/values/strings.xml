@@ -68,6 +68,8 @@
     <string name="ask_unequip" formatted="false">Do you want to unequip \"%s\"?</string>
     <string name="buy_success">Item Bought</string>
     <string name="buy_error">There was an error buying the item</string>
+    <string name="equip_success">Item equipped</string>
+    <string name="equip_error">There was an error equipping the item</string>
     <string name="class_changed">Class Changed</string>
     <string name="change_error">There was an error changing your class</string>
     <string name="change_type">Change class: $%d</string>
