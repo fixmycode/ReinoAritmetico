@@ -91,19 +91,6 @@ public class ItemListFragment extends android.app.ListFragment {
                 public void onClick(DialogInterface dialog, int which) {
                     buyItem(id_item,precio);
                     dialog.dismiss();
-                    popUp();
-                }
-                public void popUp(){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setMessage(getString(R.string.ask_buy,"hola ", precio));
-                    builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            equipItem(id_item);
-                            dialog.dismiss();
-                        }
-                    });
                 }
             });
             builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
@@ -120,7 +107,7 @@ public class ItemListFragment extends android.app.ListFragment {
 
             if(i.equipped==0) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage(getString(R.string.ask_equip, i.nombre, i.precio));
+                builder.setMessage(getString(R.string.ask_equip, i.nombre));
                 builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -141,7 +128,7 @@ public class ItemListFragment extends android.app.ListFragment {
             }
             else{
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage(getString(R.string.ask_unequip, i.nombre, i.precio));
+                builder.setMessage(getString(R.string.ask_unequip, i.nombre));
                 builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
