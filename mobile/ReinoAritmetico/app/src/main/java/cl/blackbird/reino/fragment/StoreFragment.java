@@ -21,7 +21,6 @@ public class StoreFragment extends Fragment {
     private Button helmetButton;
     private Button weaponButton;
     private Button classButton;
-    private Button okButton;
     private StoreListener sListener;
     private Player player;
     private int type;
