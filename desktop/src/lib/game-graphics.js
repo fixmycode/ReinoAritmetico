@@ -4,25 +4,33 @@ var images = {};
 var loader;
 var helmets;
 var weapons;
-var SPOTS = [{x: 100, y: 280}, {x: 170, y: 380}, {x:80, y: 540}]
-var Player = function(game, x, y){
-    this.x = x || pos.x;
-    this.y = y || pos.y;
+var SPOTS = [
+    {x: 0.20, y: 0.75},
+    {x: 0.25, y: 0.85},
+    {x: 0.22, y: 0.95}
+];
+
+var Player = function(game, android_id, xp, yp){
+    this.xp = xp;
+    this.yp = yp;
+    this.android_id = android_id;
     this.game = game;
     this.pose = "relax";
     this.playerType = "wizard";
-    this.helmet = null;//new Helmet(2, this);
-    this.weapon = null;//new Weapon(2, this);
+    this.helmet = new Helmet(this);
+    this.weapon = new Weapon(this);
 }
 
 Player.prototype.render = function() {
     var self = this;
-    var x = self.x - poses[self.playerType][self.pose].base.x * images[self.playerType + '_'+self.pose].width;
-    var y = self.y - poses[self.playerType][self.pose].base.y * images[self.playerType + '_'+self.pose].height;
+    var xt = self.xp * self.game.gameSize.x;
+    var yt = self.yp * self.game.gameSize.y;
+    var x = xt - poses[self.playerType][self.pose].base.x * images[self.playerType + '_'+self.pose].width;
+    var y = yt - poses[self.playerType][self.pose].base.y * images[self.playerType + '_'+self.pose].height;
 
-    // this.weapon.render(x + images[self.playerType + '_'+self.pose].width *poses[self.playerType][self.pose].hand.x, y + images[self.playerType + '_'+self.pose].height * poses[self.playerType][self.pose].hand.y, poses[self.playerType][self.pose].handRot);
+    this.weapon.render(x + images[self.playerType + '_'+self.pose].width *poses[self.playerType][self.pose].hand.x, y + images[self.playerType + '_'+self.pose].height * poses[self.playerType][self.pose].hand.y, poses[self.playerType][self.pose].handRot);
     self.game.ctx.drawImage(images[self.playerType + '_'+self.pose], x, y);
-    // this.helmet.render(x + images[self.playerType + '_'+self.pose].width *poses[self.playerType][self.pose].head.x, y + images[self.playerType + '_'+self.pose].height * poses[self.playerType][self.pose].head.y, poses[self.playerType][self.pose].headRot);
+    this.helmet.render(x + images[self.playerType + '_'+self.pose].width *poses[self.playerType][self.pose].head.x, y + images[self.playerType + '_'+self.pose].height * poses[self.playerType][self.pose].head.y, poses[self.playerType][self.pose].headRot);
 };
 
 Player.prototype.attack = function(){
@@ -44,12 +52,11 @@ Player.prototype.attack = function(){
   }, 200);
 }
 
-var Helmet = function(id, player) {
-    this.id = id || 0;
+var Helmet = function(player) {
     this.player = player;
-    this.x = helmets[this.id].center.x;
-    this.y = helmets[this.id].center.y;
-    this.img = images['helmets_'+this.id];
+    this.x = this.player.game.engine.resources[this.player.android_id].head.center.x || 0.5;
+    this.y = this.player.game.engine.resources[this.player.android_id].head.center.y || 0.2;
+    this.img = images['helmets_'+this.player.android_id];
 };
 
 Helmet.prototype.render = function(headX, headY, rot) {
@@ -64,12 +71,11 @@ Helmet.prototype.render = function(headX, headY, rot) {
     ctx.restore();
 }
 
-var Weapon = function(id, player) {
-    this.id = id || 0;
+var Weapon = function(player) {
     this.player = player;
-    this.x = weapons[this.id].center.x;
-    this.y = weapons[this.id].center.y;
-    this.img = images['weapons_'+this.id];
+    this.x = this.player.game.engine.resources[this.player.android_id].hand.center.x || 0.5;
+    this.y = this.player.game.engine.resources[this.player.android_id].hand.center.y || 0.5;
+    this.img = images['weapons_'+this.player.android_id];
 };
 
 Weapon.prototype.render = function(handX, handY, rot) {
@@ -96,7 +102,7 @@ var Game = function(engine) {
 
     self.players = [];
     self.engine.players.forEach(function(p, i) {
-        self.players.push( new Player(self, SPOTS[i].x, SPOTS[i].y) );
+        self.players.push( new Player(self, p.android_id, SPOTS[i].x, SPOTS[i].y) );
         self.players[i].android_id = p.android_id;
         if (p.character_type === "0"){
             self.players[i].playerType = "warrior";
@@ -105,12 +111,11 @@ var Game = function(engine) {
         }else{
             self.players[i].playerType = "archer";
         }
-
     });
 
     resizeCanvas();
     function update() {
-        self.ctx.drawImage(images.stage, 0, self.gameSize.y - images.stage.height, images.stage.width, images.stage.height);
+        self.ctx.drawImage(images.stage, 0, (self.gameSize.y - images.stage.height)*0.7, images.stage.width, images.stage.height);
         self.players.forEach(function(p) {
             p.render();
         });
@@ -132,6 +137,10 @@ module.exports = function(engine) {
 
     images['stage'] = loader.addImage('file://'+process.cwd()+'/resources/stage.png');
 
+    engine.players.forEach(function(p){
+        images['helmets_'+p.android_id] = loader.addImage(engine.resources[p.android_id].head.resource);
+        images['weapons_'+p.android_id] = loader.addImage(engine.resources[p.android_id].hand.resource);
+    });
     $.get('file://'+process.cwd()+'/resources/poses/poses.json', function(data){
       poses = JSON.parse(data);
       ["warrior", "archer", "wizard"].forEach(function(playerType, i) {
@@ -142,24 +151,6 @@ module.exports = function(engine) {
     }).done(function(){
         loader.start();
     });
-
-    // $.get('resources/items/helmets.json', function(data){
-    //   helmets = data;
-    //   _.each(data, function(i){
-    //     images['helmets_'+i.id] = loader.addImage('resources/items/helmets/' + i.path);
-    //   });
-    // });
-
-    // $.get('resources/items/weapons.json', function(data){
-    //   weapons = data;
-    //   _.each(data, function(i){
-    //     images['weapons_'+i.id] = loader.addImage('resources/items/weapons/' + i.path);
-    //   });
-    // }).done(function(){
-    //   loader.start();
-    // });
-
-
 
     loader.addCompletionListener(function() {
         new Game(engine);

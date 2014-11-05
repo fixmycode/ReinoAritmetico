@@ -109,8 +109,8 @@ class Player extends \Eloquent {
                 'hand' => [
                   'resource' => url('/').'/'.$weapon->image_path,
                   'center' => [
-                    'x' => $weapon->headX,
-                    'y' => $weapon->headY,
+                    'x' => $weapon->handX,
+                    'y' => $weapon->handY,
                   ]
                 ]
               ];
@@ -126,8 +126,8 @@ class Player extends \Eloquent {
                 'hand' => [
                   'resource' => url('/').'/'.$player->weapon->image_path,
                   'center' => [
-                    'x' => $player->weapon->headX,
-                    'y' => $player->weapon->headY,
+                    'x' => $player->weapon->handX,
+                    'y' => $player->weapon->handY,
                   ]
                 ]
               ];

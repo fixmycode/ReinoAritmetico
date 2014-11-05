@@ -206,7 +206,6 @@ Game.prototype.start = function() {
       })
       .on('end', function() {
         var a = JSON.parse(body);
-        gx(self);
         self.problems = a.problems;
         self.resources = a.players.players;
         self.j = 0;
@@ -214,6 +213,7 @@ Game.prototype.start = function() {
         self.problemsCount = 0;
         self.shaken = 0;
         self.reward = REWARD;
+        gx(self);
         for(var i = 0; i < self.players.length; i++) {
           self.players[i].j = i;
         }
