@@ -24,13 +24,13 @@ class ItemController extends \BaseController {
       $selectCharacterTypes[$characterType->id]=$characterType->name;
     }
 
-    
+
     return View::make('items.index')
                   ->with('newItem', new Item())
                   ->with('item_type', $selectItemTypes)
                   ->with('character_type', $selectCharacterTypes)
                   ->with('items', $items);
-                  
+
   }
 
 
@@ -60,7 +60,7 @@ class ItemController extends \BaseController {
 
     $path = '';
     $relative_path = '';
-    
+
     if(Input::get('item_type') == $weapon_type_id){
       $path = public_path() . '/upload/items/armas';
       $relative_path = "upload/items/armas/".$name;
@@ -78,13 +78,17 @@ class ItemController extends \BaseController {
       $item = new Item();
       $item->nombre = Input::get('nombre');
       $item->description = Input::get('description');
+      $item->headX = Input::get('headX', 0);
+      $item->headY = Input::get('headY', 0);
+      $item->handX = Input::get('handX', 0);
+      $item->handY = Input::get('handY', 0);
       $item->item_type_id = Input::get('item_type');
       $item->price = Input::get('price');
       $item->character_type_id = Input::get('character_type');
       $item->image_path = $relative_path;
-      $item->save();  
+      $item->save();
     }
-    
+
     return Redirect::route('items.index');
   }
 
@@ -130,42 +134,42 @@ class ItemController extends \BaseController {
    */
   public function update($id)
   {
-
     $file = Input::file('image');
-    $name = $file->getClientOriginalName();
-    $armor_type_id = ItemType::getArmorId();
-    $weapon_type_id = ItemType::getWeaponId();
+    $item = Item::findOrFail($id);
 
-    $path = '';
-    $relative_path = '';
-    
-    if(Input::get('item_type') == $weapon_type_id){
-      $path = public_path() . '/upload/items/armas';
-      $relative_path = "upload/items/armas/".$name;
+    if ($file){
+      $name = $file->getClientOriginalName();
 
-    }
-    if(Input::get('item_type') == $armor_type_id){
-      $path = public_path() . '/upload/items/armaduras';
-      $relative_path = "upload/items/armaduras/".$name;
-    }
+      $armor_type_id = ItemType::getArmorId();
+      $weapon_type_id = ItemType::getWeaponId();
 
+      $path = '';
+      $relative_path = '';
 
-
-    $upload_success = Input::file('image')->move($path, $name);
-    if($upload_success){
-      
-
-      $item = Item::find($id);
-      $item->nombre = Input::get('nombre');
-      $item->description = Input::get('description');
-      $item->item_type_id = Input::get('item_type');
-      $item->price = Input::get('price');
-      $item->character_type_id = Input::get('character_type');
+      if(Input::get('item_type') == $weapon_type_id){
+        $path = public_path() . '/upload/items/armas';
+        $relative_path = "upload/items/armas/".$name;
+      }
+      if(Input::get('item_type') == $armor_type_id){
+        $path = public_path() . '/upload/items/armaduras';
+        $relative_path = "upload/items/armaduras/".$name;
+      }
+      $upload_success = Input::file('image')->move($path, $name);
       $item->image_path = $relative_path;
-
-      $item->save();
     }
-    
+
+    $item->nombre = Input::get('nombre');
+    $item->description = Input::get('description');
+    $item->item_type_id = Input::get('item_type');
+    $item->headX = Input::get('headX', 0);
+    $item->headY = Input::get('headY', 0);
+    $item->handX = Input::get('handX', 0);
+    $item->handY = Input::get('handY', 0);
+    $item->price = Input::get('price');
+    $item->character_type_id = Input::get('character_type');
+
+    $item->save();
+
     return Redirect::route('items.index');
 
   }
@@ -183,7 +187,7 @@ class ItemController extends \BaseController {
     $item = Item::findOrFail($id);
 
     $item->delete();
-    
+
   }
 
 

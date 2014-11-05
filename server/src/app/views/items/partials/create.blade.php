@@ -31,6 +31,22 @@
       <div class="form-group">
         {{ Form::file('image') }}
       </div>
+      <div class="form-group">
+          <label for="description">head.x</label>
+          {{ Form::text('headX', $newItem->headX, ['class' => 'form-control']) }}
+      </div>
+      <div class="form-group">
+          <label for="description">head.y</label>
+          {{ Form::text('headY', $newItem->headY, ['class' => 'form-control']) }}
+      </div>
+      <div class="form-group">
+          <label for="description">hand.x</label>
+          {{ Form::text('handX', $newItem->handX, ['class' => 'form-control']) }}
+      </div>
+      <div class="form-group">
+          <label for="description">hand.y</label>
+          {{ Form::text('handY', $newItem->handY, ['class' => 'form-control']) }}
+      </div>
 
       <div class="form-group">
           <label for="exampleInputEmail1">Clase</label>
@@ -40,7 +56,7 @@
     <div class="box-footer">
         <button type="submit" class="btn btn-primary">Crear</button>
       </div>
-    
+
 
     {{ Form::close() }}
 
