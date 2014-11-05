@@ -10,17 +10,19 @@ public function run(){
         DB::table('item_type')->insert(array('nombre' => 'Armaduras', 'description'=>'Cascos, corazas, blindaje, escudos, etc'));
 
         DB::table('items')->insert(
-            array(
-                             'nombre' => 'Casco de pony',
-                        'description' => 'Controla el poder del arcoiris',
-                              'price' => '0',
-                         'image_path' => 'upload/items/armaduras/pony.png',
-                       'item_type_id' => '2',
-                  'character_type_id' => '1',
-                              'headX' => '0.55',
-                              'heady' => '0.46'
-            ),
-            array(
+          array(
+                           'nombre' => 'Casco de pony',
+                      'description' => 'Controla el poder del arcoiris',
+                            'price' => '0',
+                       'image_path' => 'upload/items/armaduras/pony.png',
+                     'item_type_id' => '2',
+                'character_type_id' => '1',
+                            'headX' => '0.48',
+                            'heady' => '0.60'
+          )
+        );
+        DB::table('items')->insert(
+                                   array(
                              'nombre' => 'Espada de palo',
                         'description' => 'Rasguña a tu oponente',
                               'price' => '0',
@@ -29,8 +31,9 @@ public function run(){
                   'character_type_id' => '1',
                               'handX' => '0.5',
                               'handy' => '0.792'
-            ),
-            array(
+            )
+       );
+        DB::table('items')->insert(array(
                              'nombre' => 'Casco de bronce',
                         'description' => 'Casco para warriors principiantes',
                               'price' => '15',
@@ -39,18 +42,20 @@ public function run(){
                   'character_type_id' => '1',
                               'headX' => '0.55',
                               'heady' => '0.57'
-            ),
-            array(
+            )
+        );
+        DB::table('items')->insert(array(
                              'nombre' => 'Sombrero de lana',
                         'description' => 'Casco para wizards principiantes',
                               'price' => '15',
-                         'image_path' => 'upload/items/armaduras/warrior.png',
+                         'image_path' => 'upload/items/armaduras/wizard.png',
                        'item_type_id' => '2',
                   'character_type_id' => '3',
-                              'headX' => '0.55',
-                              'heady' => '0.57'
-            ),
-            array(
+                              'headX' => '0.56',
+                              'heady' => '0.72'
+            )
+        );
+        DB::table('items')->insert(array(
                              'nombre' => 'Capucha Greener',
                         'description' => 'Capucha para arqueros principiantes',
                               'price' => '15',
@@ -59,8 +64,9 @@ public function run(){
                   'character_type_id' => '3',
                               'headX' => '0.55',
                               'heady' => '0.46'
-            ),
-            array(
+            )
+        );
+        DB::table('items')->insert(array(
                              'nombre' => 'Espada de piedra',
                         'description' => 'Deberas ser fuere para levantarla',
                               'price' => '15',
@@ -69,8 +75,9 @@ public function run(){
                   'character_type_id' => '1',
                               'handX' => '0.5',
                               'handy' => '0.792'
-            ),
-            array(
+            )
+        );
+        DB::table('items')->insert(array(
                              'nombre' => 'Espada de hierro',
                         'description' => 'Cuídala, se gasta',
                               'price' => '15',
@@ -79,8 +86,9 @@ public function run(){
                   'character_type_id' => '2',
                               'handX' => '0.5',
                               'handy' => '0.791'
-            ),
-            array(
+            )
+        );
+        DB::table('items')->insert(array(
                              'nombre' => 'Espada de acero',
                         'description' => 'Corta sin parar',
                               'price' => '15',
