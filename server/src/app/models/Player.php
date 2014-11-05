@@ -95,9 +95,9 @@ class Player extends \Eloquent {
           if( ! ($player = Player::with('armor', 'weapon')->whereAndroidId($p)->first()) )
             return Response::json(['err' => true, 'msg' => 'Error de jugadores, alguien no existe'], 404);
 
-            if ( ! $player->armor_id) {
-              $weapon = Item::find(1);
-              $armor = Item::find(7);
+            if ( ! $player->armor_id || ! $player->weapon_id) {
+              $armor = Item::find(1); // Casco por default
+              $weapon = Item::find(2); // Arma por default
               $result['players'][$p] = [
                 'head' => [
                   'resource' => url('/').'/'.$armor->image_path,

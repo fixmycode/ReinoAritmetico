@@ -5,9 +5,9 @@ var loader;
 var helmets;
 var weapons;
 var SPOTS = [
-    {x: 0.20, y: 0.75},
-    {x: 0.25, y: 0.85},
-    {x: 0.22, y: 0.95}
+    {x: 0.20, y: 0.70},
+    {x: 0.30, y: 0.80},
+    {x: 0.25, y: 0.90}
 ];
 
 var Player = function(game, android_id, xp, yp){
