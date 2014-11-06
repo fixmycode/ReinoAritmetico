@@ -98,8 +98,6 @@ class Player extends \Eloquent {
     }
 
     public function equip(Item $item) {
-      echo "#{$this->id} #{$item->id}";
-
       if( ! $this->hasInInventory($item->id))
         return Response::json(array('err' => true, 'msg' => 'El jugador no posee este item'), 403);
 
