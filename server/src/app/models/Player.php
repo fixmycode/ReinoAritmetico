@@ -46,6 +46,20 @@ class Player extends \Eloquent {
         return $this->hasMany('GamePlayer');
     }
 
+    public function buy(Item $item)
+    {
+        if($this->hasInInventory($item->id)) // the this already owns it
+          return Response::json(array('err' => true, 'msg' => 'El jugador ya posee este item'), 405);
+
+        if( $this->credits < $item->price )
+          return Response::json(array('err' => true, 'msg' => 'El jugador no posee creditos suficientes'), 403);
+
+        $this->credits -= $item->price;
+        $this->items()->save($item);
+        $this->save();
+        return Response::json($this, 200);
+    }
+
     public function hasInInventory($item_id){
         $found = false;
         $items = $this->items;
@@ -75,15 +89,17 @@ class Player extends \Eloquent {
         $weaponItem = $this->weapon;
 
         if($armorItem != null && $armorItem->id == $item_id){
-            $this->armor_id = null;
+            $this->armor_id = 1;
         }
         if($weaponItem != null && $weaponItem->id == $item_id){
-            $this->weapon_id = null;
+            $this->weapon_id = 2;
         }
         $this->save();
     }
 
     public function equip(Item $item) {
+      echo "#{$this->id} #{$item->id}";
+
       if( ! $this->hasInInventory($item->id))
         return Response::json(array('err' => true, 'msg' => 'El jugador no posee este item'), 403);
 

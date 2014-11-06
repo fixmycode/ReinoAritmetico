@@ -12,7 +12,6 @@ class ItemApiController extends \BaseController {
 		// LEFT JOIN players ON players.id = item_player.`player_id`
 		// JOIN item_type ON items.item_type_id = item_type.id
 		// JOIN character_type ON items.`character_type_id` = character_type.id;
-
 		$items = Item::leftJoin('item_player', 'items.id', '=', 'item_player.item_id')
 								 ->leftJoin('players', 'players.id', '=', 'item_player.player_id')
 								 ->join('character_type', 'character_type.id', '=', 'items.character_type_id')
@@ -25,6 +24,8 @@ class ItemApiController extends \BaseController {
 				         'character_type.uid as character_type_id',
                  DB::raw('(CASE WHEN (players.android_id = '.$player_uid.' AND (players.armor_id = items.id OR players.weapon_id = items.id)) THEN true ELSE false END) as equipped'),
 				         DB::raw('(CASE WHEN (players.android_id = '.$player_uid.') THEN true ELSE false END) as comprado'))
+                 ->where('items.id', '!=', 1)
+                 ->where('items.id', '!=', 2)
                  ->orderBy('equipped', 'DESC')
                  ->orderBy('comprado', 'DESC')
                  ->orderBy('id');
@@ -67,16 +68,7 @@ class ItemApiController extends \BaseController {
 		if($player == null || $item == null)
       return Response::json(array('err' => true, 'msg' => 'Jugador o item no encontrados'), 404);
 
-		if($player->hasInInventory($item->id)) // the player already owns it
-			return Response::json(array('err' => true, 'msg' => 'El jugador ya posee este item'), 405);
-
-		if( $player->credits < $item->price )
-      return Response::json(array('err' => true, 'msg' => 'El jugador no posee creditos suficientes'), 403);
-
-    $player->credits -= $item->price;
-    $player->save();
-    $player->items()->save($item);
-    return Response::json($player, 200);
+		return $player->buy($item);
 	}
 
   public function postEquip(){
