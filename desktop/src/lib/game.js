@@ -158,6 +158,7 @@ Game.prototype.join = function (newPlayer) {
   }
 
   newPlayer.answers = [];
+  newPlayer.character_type = newPlayer.character_type.toString();
   self.players.push(newPlayer);
   newPlayer.socket.emit('info', {msg: 'Te as unido a la partida como ' + newPlayer.name});
   defer.resolve();

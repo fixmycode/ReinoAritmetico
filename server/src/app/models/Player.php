@@ -83,6 +83,23 @@ class Player extends \Eloquent {
         $this->save();
     }
 
+    public function equip(Item $item) {
+      if( ! $this->hasInInventory($item->id))
+        return Response::json(array('err' => true, 'msg' => 'El jugador no posee este item'), 403);
+
+      if($this->hasEquipped($item->id)) {
+        $this->unEquip($item->id);
+        return Response::json(array('err' => false, 'msg' => 'El item ha sido desequipado.'));
+      }
+
+      if ( $item->itemType->isWeapon() ) $this->weapon()->associate($item);
+      if ( $item->itemType->isArmor() ) $this->armor()->associate($item);
+
+      $this->save();
+
+      return Response::json(array('err' => false, 'msg' => 'El item ha sido equipado.'));
+    }
+
     public function addCredits($reward = 0) {
         $this->credits += $reward;
         $this->save();

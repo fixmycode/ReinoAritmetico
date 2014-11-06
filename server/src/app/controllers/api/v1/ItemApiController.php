@@ -81,30 +81,14 @@ class ItemApiController extends \BaseController {
 
   public function postEquip(){
     $android_id  = Input::get("android_id", 0);
-    $item_id  = Input::get("item_id", 0);
+    $item_id     = Input::get("item_id", 0);
 
     $player = Player::whereAndroidId($android_id)->first();
-    $item = Item::find($item_id);
+    $item   = Item::find($item_id);
 
     if($player == null || $item == null)
       return Response::json(array('err' => true, 'msg' => 'Jugador o item no encontrados'), 404);
 
-    if( ! $player->hasInInventory($item_id))
-      return Response::json(array('err' => true, 'msg' => 'El jugador no posee este item'), 403);
-
-  	if($player->hasEquipped($item_id)){
-  		$player->unEquip($item_id);
-      return Response::json(array('err' => false, 'msg' => 'El item ha sido desequipado.'));
-  	}else{
-  		if($item->itemType->first()->isWeapon()){
-		    $player->weapon_id = $item->id;
-		    $player->save();
-  		}
-  		else if ( $item->itemType->first()->isArmor()){
-		    $player->armor_id = $item->id;
-		    $player->save();
-  		}
-      return Response::json(array('err' => false, 'msg' => 'El item ha sido equipado.'));
-  	}
+    return $player->equip($item);
   }
 }
