@@ -154,6 +154,11 @@ body {
     padding-top: 40px;
 }
 
+.container-playing {
+    padding: 0 !important;
+    min-height: 0 !important;
+}
+
 //Forms
 input[type=radio].css-checkbox {
     display: none;

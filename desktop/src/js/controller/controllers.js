@@ -1,10 +1,7 @@
 angular.module('RAApp').controller("MainGameCtrl", function ($scope, $location) {
     $scope.headerSrc = "_partials/header.html";
 
-    console.log("'" + ip.address() + "'");
-
     $scope.quests = getQuests();
-
     $scope.settings = settings;
 
     $scope.saveSettings = function(){
@@ -14,6 +11,8 @@ angular.module('RAApp').controller("MainGameCtrl", function ($scope, $location) 
 });
 
 angular.module('RAApp').controller("welcomeCtrl", function ($scope, $routeParams) {
+    $('#screen').hide();
+    $('#container').removeClass('container-playing');
     if (game.waiting || game.playing) {
         game.end(true).then(function(){
             io.sockets.emit('game end');
@@ -34,10 +33,33 @@ angular.module('RAApp').controller("configQuestCtrl", function ($scope, $locatio
     $scope.newQuest = {
         name: '',
         numPlayers: '',
-        dificulty: 0
+        difficulty: 0,
+        problemsPerPlayer: ''
     };
+    var  error;
 
     $scope.submit = function(start) {
+        $scope.errors = [];
+        error = false;
+        if ($scope.newQuest.numPlayers < 2 || $scope.newQuest.numPlayers > 5 || ! $.isNumeric($scope.newQuest.numPlayers)){
+            $scope.errors.push("Deben habe entre 2 y 5 jugadores");
+            error = true;
+        }
+        if ($scope.newQuest.name == '') {
+            $scope.errors.push("Debes asignar un nombre para la misión");
+            error = true;
+        }
+        if ( ! $.isNumeric($scope.newQuest.problemsPerPlayer) ) {
+            $scope.errors.push("Debes asignar cuantas preguntas responderá cada jugador");
+            error = true;
+        }
+        if ( $scope.newQuest.difficulty == 0 ) {
+            $scope.errors.push("Debes escojer una dificultad");
+            error = true;
+        }
+        if (error){
+            return;
+        }
         $scope.quests.push($scope.newQuest);
         setQuests($scope.quests);
 
@@ -88,7 +110,17 @@ angular.module('RAApp').controller("playCtrl", function ($scope, $routeParams, $
 
     $scope.match.start();
     $scope.an = false;
+    $scope.pauseGame = false;
+    $scope.gameEnded = false;
 
+    $scope.$on('pause game', function(e, data){
+        console.log('2. pausing Game');
+        $scope.$apply(function(){
+            $scope.pauseGame = ! $scope.pauseGame;
+        });
+
+        console.log($scope.pauseGame);
+    });
     $scope.$on('player answered', function(e, data) {
         var an = $scope.match.submitAnswer(data.socket, data.answer);
 
@@ -97,6 +129,10 @@ angular.module('RAApp').controller("playCtrl", function ($scope, $routeParams, $
                 $scope.match.playing = false;
                 io.sockets.emit('game end', {reward: $scope.match.reward});
                 $scope.match.end();
+                $('#screen').hide();
+                $('#container').removeClass('container-playing');
+                $scope.gameEnded = true;
+                $scope.$broadcast('timer-stop');
             });
         }else if( an === 'trapped') {
             $scope.$apply(function(){
@@ -112,28 +148,25 @@ angular.module('RAApp').controller("playCtrl", function ($scope, $routeParams, $
             $scope.$digest();
         }
     });
-
     $scope.$on('player rescued', function(e, data){
         $scope.$apply(function(){
             $scope.an = false;
             $scope.defendYourselvs = false;
         });
     });
-
     $scope.$on('resume game', function(e, data){
+        $scope.$broadcast('timer-resume');
         $scope.match.resume();
         $scope.$digest();
     });
-
     $scope.$on('player disconnected', function(e, socketId) {
+        $scope.$broadcast('timer-stop');
         $scope.match.playerFell(socketId);
         $scope.$digest();
     });
-
     $scope.$on('update players', function(event, args) {
         $scope.$digest();
     });
-
     $scope.averageTime = function(){
         var time = 0.0;
         var sum = _.reduce($scope.match.answers, function(time, num){ return time + parseFloat(num.elapsed_time); }, 0);

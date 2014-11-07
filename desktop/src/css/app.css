@@ -192,12 +192,18 @@ body {
   padding-top: 40px;
 }
 
-/* line 158, ../sass/app.scss */
+/* line 157, ../sass/app.scss */
+.container-playing {
+  padding: 0 !important;
+  min-height: 0 !important;
+}
+
+/* line 163, ../sass/app.scss */
 input[type=radio].css-checkbox {
   display: none;
 }
 
-/* line 162, ../sass/app.scss */
+/* line 167, ../sass/app.scss */
 input[type=radio].css-checkbox + label.css-label {
   padding-left: 29px;
   height: 24px;
@@ -209,12 +215,12 @@ input[type=radio].css-checkbox + label.css-label {
   cursor: pointer;
 }
 
-/* line 174, ../sass/app.scss */
+/* line 179, ../sass/app.scss */
 input[type=radio].css-checkbox:checked + label.css-label {
   background-position: 0 -24px;
 }
 
-/* line 177, ../sass/app.scss */
+/* line 182, ../sass/app.scss */
 label.css-label {
   background-image: url(../img/checkbox.png);
   -webkit-touch-callout: none;
@@ -225,17 +231,17 @@ label.css-label {
   user-select: none;
 }
 
-/* line 187, ../sass/app.scss */
+/* line 192, ../sass/app.scss */
 legend {
   color: #e6ffff;
 }
 
-/* line 191, ../sass/app.scss */
+/* line 196, ../sass/app.scss */
 .btn {
   border-radius: 1px;
 }
 
-/* line 196, ../sass/app.scss */
+/* line 201, ../sass/app.scss */
 .form-dark input[type=text] {
   background: none;
   border: none;
@@ -246,12 +252,12 @@ legend {
   padding: 0 !important;
   border-radius: 0;
 }
-/* line 206, ../sass/app.scss */
+/* line 211, ../sass/app.scss */
 .form-dark input[type=text]:focus {
   border-bottom-color: #df740c;
 }
 
-/* line 212, ../sass/app.scss */
+/* line 217, ../sass/app.scss */
 .tone-down {
   opacity: .5;
   -webkit-transition: 0.3s ease-in opacity;
@@ -259,39 +265,39 @@ legend {
   -o-transition: 0.3s ease-in opacity;
   transition: 0.3s ease-in opacity;
 }
-/* line 217, ../sass/app.scss */
+/* line 222, ../sass/app.scss */
 .tone-down:hover {
   opacity: 1;
 }
 
-/* line 222, ../sass/app.scss */
+/* line 227, ../sass/app.scss */
 a {
   color: inherit;
 }
 
-/* line 226, ../sass/app.scss */
+/* line 231, ../sass/app.scss */
 a:hover {
   text-decoration: none;
   color: inherit;
 }
 
-/* line 232, ../sass/app.scss */
+/* line 237, ../sass/app.scss */
 #players {
   text-align: center;
   vertical-align: top;
 }
 
-/* line 237, ../sass/app.scss */
+/* line 242, ../sass/app.scss */
 .player {
   vertical-align: top;
   display: inline-block;
 }
-/* line 241, ../sass/app.scss */
+/* line 246, ../sass/app.scss */
 .player img {
   width: 150px;
 }
 
-/* line 246, ../sass/app.scss */
+/* line 251, ../sass/app.scss */
 #join-code {
   text-align: center;
   background: #6fc3df;
@@ -303,34 +309,34 @@ a:hover {
   font-weight: light;
   margin: 30px 0;
 }
-/* line 257, ../sass/app.scss */
+/* line 262, ../sass/app.scss */
 #join-code.start {
   background: #e6ffff;
   color: black;
 }
 
-/* line 263, ../sass/app.scss */
+/* line 268, ../sass/app.scss */
 .game-log {
   overflow: scroll;
   height: 220px;
 }
 
-/* line 268, ../sass/app.scss */
+/* line 273, ../sass/app.scss */
 #players-ongoing-game {
   text-align: center;
   vertical-align: top;
 }
-/* line 273, ../sass/app.scss */
+/* line 278, ../sass/app.scss */
 #players-ongoing-game img {
   width: 100px;
 }
 
-/* line 278, ../sass/app.scss */
+/* line 283, ../sass/app.scss */
 .game-info {
   font-size: 12px;
 }
 
-/* line 282, ../sass/app.scss */
+/* line 287, ../sass/app.scss */
 .paused {
   position: absolute;
   top: 0;
@@ -344,7 +350,7 @@ a:hover {
   text-align: center;
 }
 
-/* line 295, ../sass/app.scss */
+/* line 300, ../sass/app.scss */
 h1 small, h2 small, h3 small, h4 small, h5 small, h6 small, .h1 small, .h2 small, .h3 small, .h4 small, .h5 small, .h6 small, h1 .small, h2 .small, h3 .small, h4 .small, h5 .small, h6 .small, .h1 .small, .h2 .small, .h3 .small, .h4 .small, .h5 .small, .h6 .small {
   color: #a2a2a2;
 }

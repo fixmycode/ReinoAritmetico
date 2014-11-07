@@ -1,8 +1,9 @@
 var _          = require('underscore');
 var q          = require('q');
-var io         = require('socket.io').listen(3000);
+var io         = require('socket.io').listen(3000, {log:false});
 var createGame = require('./lib/game.js');
 var ip         = require('ip');
+
 
 var game = createGame();
 var settings = {
@@ -10,7 +11,7 @@ var settings = {
     serverPort: '80'
 }
 
-io.set('log level', 1);
+
 
 angular.module('RAApp', ['ngRoute', 'timer']);
 
@@ -33,6 +34,11 @@ function getQuests() {
 
 angular.module('RAApp').run(function($rootScope) {
     // Socket comunication
+
+    $(document).bind('keydown', 'esc', function(){
+        console.log('1. pausing Game');
+        $rootScope.$broadcast('pause game');
+    });
 
     io.on('connection', function (socket) {
 
@@ -140,9 +146,6 @@ angular.module('RAApp').run(function($rootScope) {
 
     $(document).bind('keydown', 'ctrl+d', function(){
         win.showDevTools();
-    });
-    $(document).bind('keydown', 'esc', function(){
-
     });
  });
 }) (jQuery);

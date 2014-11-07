@@ -59,11 +59,16 @@ class GameApiController extends \BaseController {
     $reward  = Input::json('reward', 0);
     $players = Input::json('players', []);
     $answers = Input::json('answers', []);
+    $failed = Input::json('failed', false);
 
     $game = Game::find($game_id);
     if ( ! $game)
       return Response::json(['err' => true, 'msg' => 'Partida no encontrada'], 404);
 
+    if ($failed) {
+      $game->delete();
+      return Response::json(['err' => false, 'msg' => 'Partida eliminada'], 200);
+    }
     if ( $game->uid == 'Done' )
       return Response::json(['err' => true, 'msg' => 'La partida ya finalizo', 'uid' => $game->uid], 400);
 

@@ -88,9 +88,10 @@ Game.prototype.end = function(failedd) {
     answers[p.android_id] = p.answers;
   });
   var data = JSON.stringify( {
-    reward: failed ? 0 : self.reward,
-    players: _.map(self.players, function(n) { return n.android_id }),
-    answers: answers
+    reward:  failed ? 0  : self.reward,
+    players: failed ? [] : _.map(self.players, function(n) { return n.android_id }),
+    answers: failed ? [] : answers,
+    failed: failed
   });
 
   var options = {
@@ -112,6 +113,7 @@ Game.prototype.end = function(failedd) {
         body += chunk;
       })
       .on('end', function() {
+        console.log(body);
         delete self.joinCode;
         delete self.id;
         self.players.length = 0;
@@ -119,6 +121,8 @@ Game.prototype.end = function(failedd) {
       })
       .on('error', defer.reject);
   });
+
+  self.playing = false;
 
   req.write(data);
   req.end();
@@ -215,6 +219,8 @@ Game.prototype.start = function() {
         self.shaken = 0;
         self.reward = REWARD;
         gx(self);
+        self.playing = true;
+        self.waiting = false;
         for(var i = 0; i < self.players.length; i++) {
           self.players[i].j = i;
         }
@@ -227,9 +233,6 @@ Game.prototype.start = function() {
   req.on('error', function(e) {
     defer.reject();
   });
-
-  self.playing = true;
-  self.waiting = false;
 
   req.write(data);
   req.end();

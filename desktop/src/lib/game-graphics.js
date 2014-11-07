@@ -152,8 +152,15 @@ module.exports = function(engine) {
         loader.start();
     });
 
+    var $progress = $('#loading-bar');
+    loader.addProgressListener(function(e) {
+        $progress.width((100 * e.completedCount / e.totalCount) + '%');
+        $progress.text(e.completedCount + ' / ' + e.totalCount);
+    });
+
     loader.addCompletionListener(function() {
+        $('#loading').hide();
+        $('#container').addClass('container-playing');
         new Game(engine);
-        console.log(images);
     });
 };
