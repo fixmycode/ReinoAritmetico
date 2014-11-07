@@ -4,10 +4,16 @@ var images = {};
 var loader;
 var helmets;
 var weapons;
+var monsterRand;
+
+var MONSTER  = ['monster1.png', 'monster2.png']; // Mounstros disponibles
+
 var SPOTS = [
     {x: 0.20, y: 0.70},
-    {x: 0.30, y: 0.80},
-    {x: 0.25, y: 0.90}
+    {x: 0.37, y: 0.80},
+    {x: 0.285, y: 0.87},
+    {x: 0.16, y: 0.90},
+    {x: 0.20, y: 0.95}
 ];
 
 var Player = function(game, android_id, xp, yp){
@@ -100,6 +106,25 @@ Weapon.prototype.render = function(handX, handY, rot) {
     ctx.restore();
 }
 
+var Monster = function(game, id){
+    this.game = game;
+    this.id = id;
+    this.x = 0.60;
+    this.y = 0.80;
+}
+
+Monster.prototype.render = function(){
+    var self = this;
+
+    var self = this;
+    var xt = self.x * self.game.gameSize.x;
+    var yt = self.y * self.game.gameSize.y;
+    var x = xt - poses['monster'][self.id].x * images['monster'].width;
+    var y = yt - poses['monster'][self.id].y * images['monster'].height;
+
+    self.game.ctx.drawImage(images['monster'], x, y);
+}
+
 var Game = function(engine) {
     engine.gx = this;
     this.engine = engine;
@@ -109,6 +134,8 @@ var Game = function(engine) {
     this.ctx = canvasElement.getContext('2d');
     this.gameSize = { x: this.ctx.canvas.width, y: this.ctx.canvas.height };
     var self = this;
+
+    self.monster = new Monster(self, monsterRand);
 
     self.players = [];
     self.engine.players.forEach(function(p, i) {
@@ -124,28 +151,33 @@ var Game = function(engine) {
     });
 
     resizeCanvas();
-    function update() {
-        self.ctx.drawImage(images.stage, 0, (self.gameSize.y - images.stage.height)*0.7, images.stage.width, images.stage.height);
-        self.players.forEach(function(p) {
-            p.render();
-        });
-    }
-    this.update = update;
 
     window.addEventListener('resize', resizeCanvas, false);
     function resizeCanvas(){
         self.ctx.canvas.width = window.innerWidth;
         self.ctx.canvas.height = window.innerHeight - 40;
         self.gameSize = { x: self.ctx.canvas.width, y: self.ctx.canvas.height };
-        update();
+        self.update();
     }
 };
+
+Game.prototype.update = function() {
+    var self = this;
+    self.ctx.drawImage(images.stage, 0, (self.gameSize.y - images.stage.height)*0.7, images.stage.width, images.stage.height);
+    self.monster.render();
+    self.players.forEach(function(p) {
+        p.render();
+    });
+}
 
 module.exports = function(engine) {
     loader = window.loader;
     $ = window.$;
+    _ = window._;
 
-    images['stage'] = loader.addImage('file://'+process.cwd()+'/resources/stage.png');
+    monsterRand = _.random(MONSTER.length-1);
+    images['stage']   = loader.addImage('file://'+process.cwd()+'/resources/stage.png');
+    images['monster'] = loader.addImage('file://'+process.cwd()+'/resources/'+MONSTER[monsterRand]);
 
     engine.players.forEach(function(p){
         images['helmets_'+p.android_id] = loader.addImage(engine.resources[p.android_id].head.resource);

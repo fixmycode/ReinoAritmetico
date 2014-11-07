@@ -53,6 +53,10 @@ angular.module('RAApp').controller("configQuestCtrl", function ($scope, $locatio
             $scope.errors.push("Debes asignar cuantas preguntas responderá cada jugador");
             error = true;
         }
+        if ( parseInt($scope.newQuest.numPlayers) > parseInt($scope.newQuest.problemsPerPlayer) ) {
+            $scope.errors.push("Debe haber igual o mas preguntas que jugadores");
+            error = true;
+        }
         if ( $scope.newQuest.difficulty == 0 ) {
             $scope.errors.push("Debes escojer una dificultad");
             error = true;

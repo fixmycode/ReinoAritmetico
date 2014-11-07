@@ -264,7 +264,6 @@ Game.prototype.submitAnswer = function(socketId, answer) {
     self.gx.players.forEach(function(p){
       if (p.android_id === player.android_id){
         p.attack();
-        console.log('Attack');
       }
     });
   }
