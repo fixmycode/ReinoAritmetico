@@ -13,12 +13,12 @@
     <string name="select_char">Selecciona tu personaje</string>
     <string name="select_school">Selecciona tu colegio</string>
     <string name="select_class">Selecciona tu clase</string>
-    <string name="full_name_hint">Tu name completo</string>
+    <string name="full_name_hint">Tu nombre completo</string>
     <string name="server_error">Ocurrió un error en el servidor, por favor reinicia la
         aplicación.</string>
     <string name="welcome_player">Que bueno verte de nuevo, %s!</string>
-    <string name="welcome_player_error">Algo extraño pasó y no pude leer tu name…</string>
-    <string name="register_dialog" formatted="false">Tu name es %s, estudiante del %s, actualmente estás en %s y elegiste ser un %s, ¿correcto?</string>
+    <string name="welcome_player_error">Algo extraño pasó y no pude leer tu nombre…</string>
+    <string name="register_dialog" formatted="false">Tu nombre es %s, estudiante del %s, actualmente estás en %s y elegiste ser un %s, ¿correcto?</string>
     <string name="register_error">Ocurrió un problema con tu registro, ¿te importaría intentarlo de
         nuevo?</string>
     <string name="yes">Sí</string>
@@ -61,7 +61,7 @@
     <string name="archer">Arquero</string>
     <string name="store">Tienda</string>
     <string name="trap">¡Estás atrapado, pide ayuda a tus amigos!</string>
-    <string name="armors">Armaduras</string>
+    <string name="armors">Cascos</string>
 	<string name="weapons">Armas</string>
     <string name="event_description">esta imagen simboliza el evento</string>
 	<string name="classes">Cambiar clase</string>
