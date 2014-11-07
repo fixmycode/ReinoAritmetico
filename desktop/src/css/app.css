@@ -291,6 +291,7 @@ a:hover {
 .player {
   vertical-align: top;
   display: inline-block;
+  margin: 0 10px;
 }
 /* line 246, ../sass/app.scss */
 .player img {
@@ -351,6 +352,32 @@ a:hover {
 }
 
 /* line 300, ../sass/app.scss */
+.trapped {
+  position: absolute;
+  text-transform: uppercase;
+  width: 500px;
+  left: 50%;
+  margin-left: -250px;
+  height: 200px;
+  padding: 0;
+  top: 60px;
+  background: #eee;
+  border: 8px solid #979276;
+  box-shadow: 0 0 12px 2px #333;
+  border-radius: 20px;
+  color: #333;
+  position: absolute;
+  text-align: center;
+  font-size: 24px;
+  padding: 40px 0;
+}
+/* line 319, ../sass/app.scss */
+.trapped i {
+  margin-bottom: 10px;
+  display: block;
+}
+
+/* line 325, ../sass/app.scss */
 h1 small, h2 small, h3 small, h4 small, h5 small, h6 small, .h1 small, .h2 small, .h3 small, .h4 small, .h5 small, .h6 small, h1 .small, h2 .small, h3 .small, h4 .small, h5 .small, h6 .small, .h1 .small, .h2 .small, .h3 .small, .h4 .small, .h5 .small, .h6 .small {
   color: #a2a2a2;
 }

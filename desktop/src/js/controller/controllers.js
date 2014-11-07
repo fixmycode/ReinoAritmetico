@@ -53,6 +53,10 @@ angular.module('RAApp').controller("configQuestCtrl", function ($scope, $locatio
             $scope.errors.push("Debes asignar cuantas preguntas responderá cada jugador");
             error = true;
         }
+        if ( parseInt($scope.newQuest.numPlayers) > parseInt($scope.newQuest.problemsPerPlayer) ) {
+            $scope.errors.push("Debe haber igual o mas preguntas que jugadores");
+            error = true;
+        }
         if ( $scope.newQuest.difficulty == 0 ) {
             $scope.errors.push("Debes escojer una dificultad");
             error = true;
@@ -125,15 +129,17 @@ angular.module('RAApp').controller("playCtrl", function ($scope, $routeParams, $
         var an = $scope.match.submitAnswer(data.socket, data.answer);
 
         if (an === 'end'){
+            setTimeout(function(){
             $scope.$apply(function(){
-                $scope.match.playing = false;
-                io.sockets.emit('game end', {reward: $scope.match.reward});
-                $scope.match.end();
-                $('#screen').hide();
-                $('#container').removeClass('container-playing');
-                $scope.gameEnded = true;
-                $scope.$broadcast('timer-stop');
-            });
+                    $scope.match.playing = false;
+                    io.sockets.emit('game end', {reward: $scope.match.reward});
+                    $scope.match.end();
+                    $('#screen').hide();
+                    $('#container').removeClass('container-playing');
+                    $scope.gameEnded = true;
+                    $scope.$broadcast('timer-stop');
+                });
+            }, 1000);
         }else if( an === 'trapped') {
             $scope.$apply(function(){
                 $scope.an = true;

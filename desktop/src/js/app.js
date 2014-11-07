@@ -33,10 +33,8 @@ function getQuests() {
 }
 
 angular.module('RAApp').run(function($rootScope) {
-    // Socket comunication
 
     $(document).bind('keydown', 'esc', function(){
-        console.log('1. pausing Game');
         $rootScope.$broadcast('pause game');
     });
 
@@ -72,12 +70,18 @@ angular.module('RAApp').run(function($rootScope) {
             if (game.wrong_players.length === game.players.length && game.shaken == game.players.length) { // Everyone wrong
                 game.shaken = 0;
                 $rootScope.$broadcast('player rescued');
+                game.gx.players.forEach(function(p){
+                  p.relax();
+                });
                 game.wrong_players.length = 0; // Clear waitingPlayers
                 _.each(game.players, game.sendProblem, game); // Keep playing
             }else if (game.wrong_players.length === 1 && game.shaken === game.players.length - 1) { // All those who had to shake, shook
                 game.shaken = 0;
                 $rootScope.$broadcast('player rescued', game.wrong_players[0]);
                 game.wrong_players.length = 0; // Clear waitingPlayers
+                game.gx.players.forEach(function(p){
+                  p.relax();
+                });
                 _.each(game.players, game.sendProblem, game); // Keep playing
             }
         });
