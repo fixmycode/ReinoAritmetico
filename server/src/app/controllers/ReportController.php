@@ -14,8 +14,8 @@ class ReportController extends \BaseController {
 		$averageProblemArray = GamePlayer::averageProblemTime(null);
 		
 		$categories = array();
-		foreach(ProblemType::getNombres() as $item){
-			array_push($categories, $item->type);
+		foreach(Tag::getNombres() as $item){
+			array_push($categories, $item->name);
 		}
 		$successRate = GamePlayer::successRate();
 

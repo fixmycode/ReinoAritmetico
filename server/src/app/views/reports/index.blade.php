@@ -43,7 +43,7 @@
 
         @foreach ($successRate as $type )
         <tr>
-            <td> {{$type->type}}</td>
+            <td> {{$type->tag}}</td>
             <td> {{$type->correct}}</td>
             <td> {{$type->wrong}}</td>
             <td> {{$type->success_rate}}</td>

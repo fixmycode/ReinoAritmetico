@@ -12,10 +12,10 @@
           <thead>
             <tr>
               <th style="width: 10px">#</th>
-              <th>Pregunta</th>
-              <th>Respuesta</th>
-              <th>Dificultad</th>
-              <th>Tags</th>
+              <th class="center-text">Pregunta</th>
+              <th class="center-text">Respuesta</th>
+              <th class="center-text">Dificultad</th>
+              <th class="center-text">Tags</th>
               <th class="text-right">Acciones</th>
             </tr>
           </thead>
@@ -23,15 +23,15 @@
 
             @foreach ($problems as $problem )
             <tr>
-                <td>{{ $problem->id}}.</td>
-                <td>{{ $problem->problem}}</td>
-                <td>{{ $problem->correct_answer}}</td>
+                <td class="center-text">{{ $problem->id}}.</td>
+                <td class="center-text">{{ $problem->problem}}</td>
+                <td class="center-text">{{ $problem->correct_answer}}</td>
                 @if ($problem->difficulty == 1)
-                <td>{{ $problem->difficulty }}. Fácil</td>
+                <td class="center-text">{{ $problem->difficulty }}. Fácil</td>
                 @elseif ($problem->difficulty == 2)
-                <td>{{ $problem->difficulty }}. Medio</td>
+                <td class="center-text">{{ $problem->difficulty }}. Medio</td>
                 @else
-                <td>{{ $problem->difficulty }}. Difícil</td>
+                <td class="center-text">{{ $problem->difficulty }}. Difícil</td>
                 @endif
                 
                 <td>
