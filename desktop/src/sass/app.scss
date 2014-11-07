@@ -242,7 +242,7 @@ a:hover {
 .player {
     vertical-align: top;
     display: inline-block;
-
+    margin: 0 10px;
     img {
         width: 150px;
     }
@@ -295,6 +295,31 @@ a:hover {
     background: rgba(0, 0, 0, .8);
     z-index: 2;
     text-align: center;
+}
+
+.trapped{
+    position: absolute;
+    text-transform: uppercase;
+    width: 500px;
+    left: 50%;
+    margin-left: -250px;
+    height: 200px;
+    padding: 0;
+    top: 60px;
+    background: #eee;
+    border: 8px solid rgb(151, 146, 118);
+    box-shadow: 0 0 12px 2px #333;
+    border-radius: 20px;
+    color: #333;
+    position: absolute;
+    text-align: center;
+    font-size: 24px;
+    padding: 40px 0;
+
+    i {
+        margin-bottom: 10px;
+        display: block;
+    }
 }
 
 h1 small, h2 small, h3 small, h4 small, h5 small, h6 small, .h1 small, .h2 small, .h3 small, .h4 small, .h5 small, .h6 small, h1 .small, h2 .small, h3 .small, h4 .small, h5 .small, h6 .small, .h1 .small, .h2 .small, .h3 .small, .h4 .small, .h5 .small, .h6 .small {

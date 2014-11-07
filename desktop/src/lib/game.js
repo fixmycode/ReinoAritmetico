@@ -6,7 +6,7 @@ var _           = require('underscore');
 var gx          = require('./game-graphics.js');
 
 var REWARD      = 50;
-var TRAPPED_ODD = 0.5;
+var TRAPPED_ODD = 1.0;
 var API         = '/api/v1';
 
 function Game(options) {
@@ -256,16 +256,18 @@ Game.prototype.submitAnswer = function(socketId, answer) {
   var self = this;
 
   var player = _.chain(self.players)
-      .filter(function(p) { return p.socket.id == socketId; })
-      .first()
-      .value();
+                .filter(function(p) { return p.socket.id == socketId; })
+                .first()
+                .value();
 
+  if (answer.answer.toString() === answer.correct_answer.toString()) {
     self.gx.players.forEach(function(p){
       if (p.android_id === player.android_id){
         p.attack();
-        return;
+        console.log('Attack');
       }
     });
+  }
 
   self.answeringPlayers = _.without(self.answeringPlayers, player); // Remove player from waiting list
 
@@ -290,10 +292,20 @@ Game.prototype.submitAnswer = function(socketId, answer) {
     if (self.wrong_players.length === 1 && Math.random() <= TRAPPED_ODD) { // Trap someone!
       self.wrong_players[0].socket.broadcast.emit('shake', {msg: '¡Rápido! Sacude para salvar a '+ self.wrong_players[0].name});
       self.wrong_players[0].socket.emit('trapped', {msg: 'Has sido atrapado! pidele ayuda a tus amigos!'});
+      self.gx.players.forEach(function(p){
+        if (self.wrong_players[0].android_id === p.android_id){
+          p.damage();
+          console.log("d1");
+        }
+      });
       return 'trapped';
     }else if(self.wrong_players.length === self.players.length){ //Everyone got it wrong!!
       self.wrong_players[0].socket.broadcast.emit('shake', {msg: '¡Te están atacando! ¡Sacude!'});
       self.wrong_players[0].socket.emit('shake', {msg: '¡Te están atacando! ¡Sacude!'});
+      self.gx.players.forEach(function(p){
+          p.damage();
+          console.log("d2");
+      });
       return 'defend-yourselvs';
     }
     self.wrong_players.length = 0;

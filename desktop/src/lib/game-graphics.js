@@ -36,20 +36,30 @@ Player.prototype.render = function() {
 Player.prototype.attack = function(){
     var self = this;
 
-  self.pose = "attack1";
-  self.game.update();
-  setTimeout(function(){
-    self.pose = "attack2";
+    self.pose = "attack1";
     self.game.update();
     setTimeout(function(){
-      self.pose = "attack3";
-      self.game.update();
-      setTimeout(function(){
-        self.pose = "relax";
+        self.pose = "attack2";
         self.game.update();
-      }, 300);
+        setTimeout(function(){
+            self.pose = "attack3";
+            self.game.update();
+            setTimeout(function(){
+                self.pose = "relax";
+                self.game.update();
+            }, 300);
+        }, 200);
     }, 200);
-  }, 200);
+}
+
+Player.prototype.damage = function(){
+    this.pose = "damage";
+    this.game.update();
+}
+
+Player.prototype.relax = function(){
+    this.pose = "relax";
+    this.game.update();
 }
 
 var Helmet = function(player) {
