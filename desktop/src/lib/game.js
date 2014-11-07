@@ -3,9 +3,10 @@ var querystring = require('querystring');
 var ip          = require('ip');
 var q           = require('q');
 var _           = require('underscore');
+var gx          = require('./game-graphics.js');
 
 var REWARD      = 50;
-var TRAPPED_ODD = 0.5;
+var TRAPPED_ODD = 1.0;
 var API         = '/api/v1';
 
 function Game(options) {
@@ -54,9 +55,9 @@ Game.prototype.init = function(){
         body += chunk;
       })
       .on('end', function() {
-        console.log(body);
         var a = JSON.parse(body);
         self.joinCode = a.uid;
+        self.id = a.id;
         self.waiting = true;
         self.reward = 0;
         defer.resolve();
@@ -70,31 +71,61 @@ Game.prototype.init = function(){
     req.abort();
     defer.reject();
   });
-  
+
   req.write(data);
   req.end();
 
   return defer.promise;
 }
 
-Game.prototype.end = function() {
+Game.prototype.end = function(failedd) {
+  var failed = false | failedd;
   var defer = q.defer();
   var self = this;
 
-  var ai = _.pluck(self.players, 'android_id');
-  ai = _.reduce(ai, function(memo, num){ return memo + '&players[]=' + num; }, "");
+  var answers = {};
+  _.each(self.players, function(p){
+    answers[p.android_id] = p.answers;
+  });
+  var data = JSON.stringify( {
+    reward:  failed ? 0  : self.reward,
+    players: failed ? [] : _.map(self.players, function(n) { return n.android_id }),
+    answers: failed ? [] : answers,
+    failed: failed
+  });
 
   var options = {
       host: self.serverIpAddress,
       port: self.serverPort,
-      path: API + '/game/end?uid=' + self.joinCode + '&reward='+ self.reward + ai,
+      path: API + '/game/end?id=' + self.id,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': data.length
+      }
   };
 
-  http.get(options, function(res) {
-    delete self.joinCode
-    self.players.length = 0;
-    return defer.resolve();
-  }).on('error', console.log);
+  var req = http.request(options, function(res) {
+      res.setEncoding('utf8');
+      var body = "";
+
+      res.on('data', function (chunk) {
+        body += chunk;
+      })
+      .on('end', function() {
+        console.log(body);
+        delete self.joinCode;
+        delete self.id;
+        self.players.length = 0;
+        defer.resolve();
+      })
+      .on('error', defer.reject);
+  });
+
+  self.playing = false;
+
+  req.write(data);
+  req.end();
 
   return defer.promise;
 }
@@ -121,7 +152,7 @@ Game.prototype.join = function (newPlayer) {
     return defer.promise;
   }
 
-  if ( _.findWhere(self.players, {name: newPlayer.name})             || 
+  if ( _.findWhere(self.players, {name: newPlayer.name})             ||
        _.findWhere(self.players, {android_id: newPlayer.android_id})
      )
   {
@@ -131,6 +162,7 @@ Game.prototype.join = function (newPlayer) {
   }
 
   newPlayer.answers = [];
+  newPlayer.character_type = newPlayer.character_type.toString();
   self.players.push(newPlayer);
   newPlayer.socket.emit('info', {msg: 'Te as unido a la partida como ' + newPlayer.name});
   defer.resolve();
@@ -152,41 +184,58 @@ Game.prototype.start = function() {
   var defer = q.defer();
 
   // Fetch Problems from server
+  players = [];
+  self.players.forEach(function(p){
+    players.push(p.android_id);
+  });
+  var data = JSON.stringify({
+    players: players
+  });
   var options = {
       host: self.serverIpAddress,
       port: self.serverPort,
-      path: API + '/problem/questions?quantity='+ parseInt(self.problemsPerPlayer) +'&difficulty='+ self.difficulty
-  };
-  var req = http.get(options, function(res) {
-    res.setEncoding('utf8');
-    var body = "";
-
-    res.on('data', function (chunk) {
-      body += chunk;
-    })
-    .on('end', function() {
-      var a = JSON.parse(body);
-      self.problems = a;
-      self.j = 0;
-      self.offset = 1;
-      self.problemsCount = 0;
-      self.shaken = 0;
-      self.reward = REWARD;
-      for(var i = 0; i < self.players.length; i++) {
-        self.players[i].j = i;
+      path: API + '/game/go?quantity='+ parseInt(self.problemsPerPlayer) +'&difficulty='+ self.difficulty,
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          'Content-Length': data.length
       }
-      _.each(self.players, self.sendProblem, self);
-      defer.resolve();
-    })
-    .on('error', defer.reject);
+  };
+
+  var req = http.request(options, function(res) {
+      res.setEncoding('utf8');
+      var body = "";
+
+      res.on('data', function (chunk) {
+        body += chunk;
+      })
+      .on('end', function() {
+        var a = JSON.parse(body);
+        self.problems = a.problems;
+        self.resources = a.players.players;
+        self.j = 0;
+        self.offset = 1;
+        self.problemsCount = 0;
+        self.shaken = 0;
+        self.reward = REWARD;
+        gx(self);
+        self.playing = true;
+        self.waiting = false;
+        for(var i = 0; i < self.players.length; i++) {
+          self.players[i].j = i;
+        }
+        _.each(self.players, self.sendProblem, self);
+        defer.resolve();
+      })
+      .on('error', defer.reject);
   });
 
   req.on('error', function(e) {
     defer.reject();
   });
 
-  self.playing = true;
-  self.waiting = false;
+  req.write(data);
+  req.end();
 
   return defer.promise;
 }
@@ -207,18 +256,27 @@ Game.prototype.submitAnswer = function(socketId, answer) {
   var self = this;
 
   var player = _.chain(self.players)
-      .filter(function(p) { return p.socket.id == socketId; })
-      .first()
-      .value();
+                .filter(function(p) { return p.socket.id == socketId; })
+                .first()
+                .value();
+
+  if (answer.answer.toString() === answer.correct_answer.toString()) {
+    self.gx.players.forEach(function(p){
+      if (p.android_id === player.android_id){
+        p.attack();
+      }
+    });
+  }
 
   self.answeringPlayers = _.without(self.answeringPlayers, player); // Remove player from waiting list
 
   player.answers.push(answer);
   answer.player_name = player.name;
+  answer.player_android_id = player.android_id;
   self.answers.push(answer);
 
   /* Analyse wrong answres */
-  if (answer.answer !== answer.correct_answer) {
+  if (answer.answer.toString() !== answer.correct_answer.toString()) {
     self.wrong_players.push(player);
   }
 
@@ -233,11 +291,20 @@ Game.prototype.submitAnswer = function(socketId, answer) {
     if (self.wrong_players.length === 1 && Math.random() <= TRAPPED_ODD) { // Trap someone!
       self.wrong_players[0].socket.broadcast.emit('shake', {msg: '¡Rápido! Sacude para salvar a '+ self.wrong_players[0].name});
       self.wrong_players[0].socket.emit('trapped', {msg: 'Has sido atrapado! pidele ayuda a tus amigos!'});
+      self.gx.players.forEach(function(p){
+        if (self.wrong_players[0].android_id === p.android_id){
+          p.damage();
+          console.log("d1");
+        }
+      });
       return 'trapped';
     }else if(self.wrong_players.length === self.players.length){ //Everyone got it wrong!!
-      console.log('Todos MAL!');
       self.wrong_players[0].socket.broadcast.emit('shake', {msg: '¡Te están atacando! ¡Sacude!'});
       self.wrong_players[0].socket.emit('shake', {msg: '¡Te están atacando! ¡Sacude!'});
+      self.gx.players.forEach(function(p){
+          p.damage();
+          console.log("d2");
+      });
       return 'defend-yourselvs';
     }
     self.wrong_players.length = 0;

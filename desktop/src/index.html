@@ -13,16 +13,27 @@
     <script type="text/javascript" src="components/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="components/jquery.hotkeys/jquery.hotkeys.js"></script>
     <script type="text/javascript" src="components/bootstrap/dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="components/PxLoader/PxLoader.js"></script>
+    <script type="text/javascript" src="components/PxLoader/PxLoaderImage.js"></script>
+    <script>
+    window.loader = new PxLoader();
+    </script>
     <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript" src="js/service/services.js"></script>
     <script type="text/javascript" src="js/controller/controllers.js"></script>
     <script type="text/javascript" src="js/router/routes.js"></script>
 </head>
 
-<body class="container" data-ng-controller="MainGameCtrl">
-    <div data-ng-include src="headerSrc"></div>
+<body  data-ng-controller="MainGameCtrl">
+    <canvas id="screen"></canvas>
+
+    <div class="container">
+        <div data-ng-include src="headerSrc"></div>
+    </div>
     <div id="container">
-        <div data-ng-view=""></div>
+        <div class="container">
+            <div data-ng-view=""></div>
+        </div>
     </div>
     <script>
     $(function(){

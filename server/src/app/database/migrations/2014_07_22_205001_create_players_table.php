@@ -30,6 +30,8 @@ class CreatePlayersTable extends Migration {
 			$table->integer('classroom_id')->unsigned();
 			$table->integer('character_type_id')->unsigned();
 			$table->integer('client_id')->unsigned();
+            $table->integer('armor_id')->unsigned()->nullable();
+            $table->integer('weapon_id')->unsigned()->nullable();
 
 			$table->foreign('client_id')->references('id')
 							->on('clients');
@@ -37,9 +39,11 @@ class CreatePlayersTable extends Migration {
 			$table->foreign('character_type_id')->references('id')
 							->on('character_type');
 
-			$table->foreign('classroom_id')
-	      ->references('id')->on('classrooms')
-	      ->onDelete('cascade');
+			$table->foreign('classroom_id')->references('id')
+                            ->on('classrooms');
+
+
+
 		});
 	}
 

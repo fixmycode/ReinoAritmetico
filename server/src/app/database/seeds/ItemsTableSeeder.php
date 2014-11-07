@@ -9,272 +9,236 @@ public function run(){
         DB::table('item_type')->insert(array('nombre' => 'Armas',     'description'=>'Espadas, arcos, hachas, dagas, etc'));
         DB::table('item_type')->insert(array('nombre' => 'Armaduras', 'description'=>'Cascos, corazas, blindaje, escudos, etc'));
 
-        /* WARRIOR ITEMS */
         DB::table('items')->insert(
-            array(
-                        'nombre' => 'Hacha Simple', 
-                   'description' => 'Hacha de madera',
-                         'price' => '15', 
-                    'image_path' => 'upload/items/armas/axe2.png',
-                  'item_type_id' => '1',
-             'character_type_id' => '1'
+          array(
+                           'nombre' => 'Pelo',
+                      'description' => 'Pelo Elvis',
+                            'price' => '0',
+                       'image_path' => 'upload/items/armaduras/default.png',
+                     'item_type_id' => '2',
+                            'headX' => '0.48',
+                            'heady' => '0.60'
+          )
+        );
+        DB::table('items')->insert(
+                                   array(
+                             'nombre' => 'Espada de palo',
+                        'description' => 'Rasguña a tu oponente',
+                              'price' => '0',
+                         'image_path' => 'upload/items/armas/default.png',
+                       'item_type_id' => '1',
+                              'handX' => '0.60',
+                              'handY' => '0.74'
             )
         );
-
+        DB::table('items')->insert(array(
+                             'nombre' => 'Casco de bronce',
+                        'description' => 'Casco para warriors principiantes',
+                              'price' => '15',
+                         'image_path' => 'upload/items/armaduras/warrior.png',
+                       'item_type_id' => '2',
+                  'character_type_id' => '1',
+                              'headX' => '0.55',
+                              'heady' => '0.57'
+            )
+        );
+        DB::table('items')->insert(array(
+                             'nombre' => 'Sombrero de lana',
+                        'description' => 'Casco para wizards principiantes',
+                              'price' => '15',
+                         'image_path' => 'upload/items/armaduras/wizard.png',
+                       'item_type_id' => '2',
+                  'character_type_id' => '2',
+                              'headX' => '0.56',
+                              'heady' => '0.72'
+            )
+        );
+        DB::table('items')->insert(array(
+                             'nombre' => 'Capucha Greener',
+                        'description' => 'Capucha para arqueros principiantes',
+                              'price' => '15',
+                         'image_path' => 'upload/items/armaduras/archer.png',
+                       'item_type_id' => '2',
+                  'character_type_id' => '3',
+                              'headX' => '0.55',
+                              'heady' => '0.46'
+            )
+        );
         DB::table('items')->insert(
-            array(
-                             'nombre' => 'Hacha Sigma', 
-                        'description' => 'Excelente arma contra las sumas',
-                              'price' => '150', 
-                         'image_path' => 'upload/items/armas/dark_soul_axe.png',
+          array(
+                           'nombre' => 'Android',
+                      'description' => 'Protegete contra manzanas mordidas',
+                            'price' => '18',
+                       'image_path' => 'upload/items/armaduras/android.png',
+                     'item_type_id' => '2',
+                            'headX' => '0.65',
+                            'heady' => '0.66'
+          )
+        );
+        DB::table('items')->insert(
+          array(
+                           'nombre' => 'Applace',
+                      'description' => '¿No tienes donde llegar? Este casco te busca un lugar y te guia a el',
+                            'price' => '20',
+                       'image_path' => 'upload/items/armaduras/applace.png',
+                     'item_type_id' => '2',
+                            'headX' => '0.50',
+                            'heady' => '0.68'
+          )
+        );
+        DB::table('items')->insert(
+          array(
+                           'nombre' => 'Gorro BBSW',
+                      'description' => 'Gorro contra todo tipo de opareciones y problemas',
+                            'price' => '25',
+                       'image_path' => 'upload/items/armaduras/bbhat.png',
+                     'item_type_id' => '2',
+                            'headX' => '0.44',
+                            'heady' => '0.66'
+          )
+        );
+        DB::table('items')->insert(
+          array(
+                           'nombre' => 'Lechuza',
+                      'description' => 'Te da alas',
+                            'price' => '18',
+                       'image_path' => 'upload/items/armaduras/lechuza.png',
+                     'item_type_id' => '2',
+                            'headX' => '0.50',
+                            'heady' => '0.565'
+          )
+        );
+        DB::table('items')->insert(
+          array(
+                           'nombre' => 'Lego',
+                      'description' => 'Si te pisan, dolera mucho',
+                            'price' => '22',
+                       'image_path' => 'upload/items/armaduras/lego.png',
+                     'item_type_id' => '2',
+                            'headX' => '0.5',
+                            'heady' => '0.58'
+          )
+        );
+        DB::table('items')->insert(
+          array(
+                           'nombre' => 'Pont',
+                      'description' => 'Vence a tu enemigo de forma fabulosa',
+                            'price' => '15',
+                       'image_path' => 'upload/items/armaduras/pony.png',
+                     'item_type_id' => '2',
+                            'headX' => '0.45',
+                            'heady' => '0.65'
+          )
+        );
+        DB::table('items')->insert(
+          array(
+                           'nombre' => 'Wuqi',
+                      'description' => 'Para que nunca te quedes sin trabajo',
+                            'price' => '20',
+                       'image_path' => 'upload/items/armaduras/wuqi.png',
+                     'item_type_id' => '2',
+                            'headX' => '0.55',
+                            'heady' => '0.50'
+          )
+        );
+        DB::table('items')->insert(array(
+                             'nombre' => 'Espada de piedra',
+                        'description' => 'Deberas ser fuere para levantarla',
+                              'price' => '15',
+                         'image_path' => 'upload/items/armas/sword1.png',
                        'item_type_id' => '1',
-                  'character_type_id' => '1'
-             )
+                  'character_type_id' => '1',
+                              'handX' => '0.53',
+                              'handY' => '0.75'
+            )
         );
-
-        DB::table('items')->insert(
-            array(
-                             'nombre' => 'Espada Integral', 
-                        'description' => 'Areas bajo la curva, ningún problema!',
-                              'price' => '250', 
-                         'image_path' => 'upload/items/armas/dragon_sword.png',
+        DB::table('items')->insert(array(
+                             'nombre' => 'Espada de llamas',
+                        'description' => 'Con precaución, puedes quemarte',
+                              'price' => '30',
+                         'image_path' => 'upload/items/armas/sword2.png',
                        'item_type_id' => '1',
-                  'character_type_id' => '1'
-             )
+                  'character_type_id' => '1',
+                              'handX' => '0.5',
+                              'handY' => '0.791'
+            )
         );
-
-        DB::table('items')->insert(
-            array(
-                             'nombre' => 'Espada Euler', 
-                        'description' => 'La mas rapida de todas',
-                              'price' => '600', 
-                         'image_path' => 'upload/items/armas/demon_sword.png',
+        DB::table('items')->insert(array(
+                             'nombre' => 'Espada robot',
+                        'description' => 'Extiende tu brazo bionico',
+                              'price' => '22',
+                         'image_path' => 'upload/items/armas/sword3.png',
                        'item_type_id' => '1',
-                  'character_type_id' => '1'
-             )
+                  'character_type_id' => '1',
+                              'handX' => '0.6',
+                              'handY' => '0.74'
+            )
         );
-
-        DB::table('items')->insert(
-            array(
-                             'nombre' => 'Armadura Euler', 
-                        'description' => 'La mas fuerte de todas, aun que la derives sige manteniendose firme',
-                              'price' => '1000', 
-                         'image_path' => 'upload/items/armaduras/dragon_slayer_armor.png',
-                       'item_type_id' => '2',
-                  'character_type_id' => '1'
-             )
-        );
-
-        DB::table('items')->insert(
-            array(
-                             'nombre' => 'Escudo Simple', 
-                        'description' => 'Escudo simple',
-                              'price' => '15', 
-                         'image_path' => 'upload/items/armaduras/shield_of_disorientation.png',
-                       'item_type_id' => '2',
-                  'character_type_id' => '1'
-             )
-        );
-
-        DB::table('items')->insert(
-            array(
-                             'nombre' => 'Casco de División', 
-                        'description' => 'Las divisiónes no te pueden tocar',
-                              'price' => '25', 
-                         'image_path' => 'upload/items/armaduras/golden_helmet_of_deception.png',
-                       'item_type_id' => '2',
-                  'character_type_id' => '1'
-             )
-        );
-
-        DB::table('items')->insert(
-            array(
-                             'nombre' => 'Escudo de Cartesianas', 
-                        'description' => 'Para que nunca te sientas sin un origen',
-                              'price' => '50', 
-                         'image_path' => 'upload/items/armaduras/arms_of_faith.png',
-                       'item_type_id' => '2',
-                  'character_type_id' => '1'
-             )
-        );
-
-        /* WIZARD ITEMS */
-        DB::table('items')->insert(
-            array(
-                             'nombre' => 'Daga Simple', 
-                        'description' => 'Converger nunca fue tan rápido',
-                              'price' => '15', 
-                         'image_path' => 'upload/items/armas/dagger.png',
+        DB::table('items')->insert(array(
+                             'nombre' => 'Bastón del laplaciano',
+                        'description' => 'Deriva sin parar',
+                              'price' => '30',
+                         'image_path' => 'upload/items/armas/staff1.png',
                        'item_type_id' => '1',
-                  'character_type_id' => '2'
-             )
+                  'character_type_id' => '2',
+                              'handX' => '0.48',
+                              'handY' => '0.40'
+            )
         );
-
-        DB::table('items')->insert(
-            array(
-                             'nombre' => 'Bastón de Newton', 
-                        'description' => 'Ningún problema no tendra matemáticas',
-                              'price' => '20', 
-                         'image_path' => 'upload/items/armas/elder_staff_of_wisdom.png',
+        DB::table('items')->insert(array(
+                             'nombre' => 'Bastón exponencial',
+                        'description' => 'Euler esta orgulloso',
+                              'price' => '60',
+                         'image_path' => 'upload/items/armas/staff2.png',
                        'item_type_id' => '1',
-                  'character_type_id' => '2'
-             )
+                  'character_type_id' => '2',
+                              'handX' => '0.50',
+                              'handY' => '0.38'
+            )
         );
-
-        DB::table('items')->insert(
-            array(
-                             'nombre' => 'Bastón Logaritmico', 
-                        'description' => 'Converger nunca fue tan rápido',
-                              'price' => '150', 
-                         'image_path' => 'upload/items/armas/staff_of_the_magi.png',
+        DB::table('items')->insert(array(
+                             'nombre' => 'Bastón de la muerte',
+                        'description' => 'Aniquila a tus enemigos',
+                              'price' => '100',
+                         'image_path' => 'upload/items/armas/staff3.png',
                        'item_type_id' => '1',
-                  'character_type_id' => '2'
-             )
+                  'character_type_id' => '2',
+                              'handX' => '0.55',
+                              'handY' => '0.38'
+            )
         );
-
-        DB::table('items')->insert(
-            array(
-                             'nombre' => 'Tridente Jacobiano', 
-                        'description' => 'Derivadas multiples no son un drama',
-                              'price' => '800', 
-                         'image_path' => 'upload/items/armas/trident_of_sorrow.png',
-                       'item_type_id' => '1',
-                  'character_type_id' => '2'
-             )
-        );
-
-        DB::table('items')->insert(
-            array(
-                             'nombre' => 'Armadura Jacobiano', 
-                        'description' => 'Derivadas multiples no son un drama',
-                              'price' => '1000', 
-                         'image_path' => 'upload/items/armaduras/wizard_robe_class_4.png',
-                       'item_type_id' => '2',
-                  'character_type_id' => '2'
-             )
-        );
-
-        DB::table('items')->insert(
-            array(
-                             'nombre' => 'Mascara Lineal',
-                        'description' => 'Protección Simple',
-                              'price' => '25', 
-                         'image_path' => 'upload/items/armaduras/mask_of_power.png',
-                       'item_type_id' => '2',
-                  'character_type_id' => '2'
-             )
-        );
-
-        DB::table('items')->insert(
-            array(
-                             'nombre' => 'Túnica Numérica', 
-                        'description' => 'Los metodos numéricos convergen rápidamente',
-                              'price' => '250', 
-                         'image_path' => 'upload/items/armaduras/cursed_egyptian_armor.png',
-                       'item_type_id' => '2',
-                  'character_type_id' => '2'
-             )
-        );
-
-        DB::table('items')->insert(
-            array(
-                             'nombre' => 'Túnica R3', 
-                        'description' => 'En R3 no tienes problemas para integrar',
-                              'price' => '150', 
-                         'image_path' => 'upload/items/armaduras/wizard_robe_class_2.png',
-                       'item_type_id' => '2',
-                  'character_type_id' => '2'
-             )
-        );
-
-        /* ARCHER ITEMS */
-        DB::table('items')->insert(
-            array(
-                             'nombre' => 'Arco Simple', 
-                        'description' => 'Arco para problemas simples',
-                              'price' => '15', 
+        DB::table('items')->insert(array(
+                             'nombre' => 'Arco de Euler',
+                        'description' => 'Nada podra detenerte, derivadas ni integrales',
+                              'price' => '30',
                          'image_path' => 'upload/items/armas/bow1.png',
                        'item_type_id' => '1',
-                  'character_type_id' => '3'
-             )
+                  'character_type_id' => '3',
+                              'handX' => '0.68',
+                              'handY' => '0.45'
+            )
         );
-
-        DB::table('items')->insert(
-            array(
-                             'nombre' => 'Arco Simple', 
-                        'description' => 'Arco para problemas simples',
-                              'price' => '150', 
-                         'image_path' => 'upload/items/armas/bone_bow.png',
+        DB::table('items')->insert(array(
+                             'nombre' => 'Arco infinito',
+                        'description' => 'Dispara hasta el mas allá',
+                              'price' => '70',
+                         'image_path' => 'upload/items/armas/bow2.png',
                        'item_type_id' => '1',
-                  'character_type_id' => '3'
-             )
+                  'character_type_id' => '3',
+                              'handX' => '0.60',
+                              'handY' => '0.49'
+            )
         );
-
-        DB::table('items')->insert(
-            array(
-                             'nombre' => 'Ballesta Epsilon', 
-                        'description' => 'Un roce tan pequeño, que tus enemigos no lo veran viniendo',
-                              'price' => '250', 
-                         'image_path' => 'upload/items/armas/crossbow.png',
-                       'item_type_id' => '1',
-                  'character_type_id' => '3'
-             )
-        );
-
-        DB::table('items')->insert(
-            array(
-                             'nombre' => 'Ballesta L´hopital', 
-                        'description' => 'Dispara hasta el infinito',
-                              'price' => '600',
-                         'image_path' => 'upload/items/armas/lightning_bow.png',
-                       'item_type_id' => '1',
-                  'character_type_id' => '3'
-             )
-        );
-
-        DB::table('items')->insert(
-            array(
-                             'nombre' => 'Collar de estabilidad', 
-                        'description' => 'Manten la calma, baja tus revoluciones, controla tu pulso',
-                              'price' => '20',
-                         'image_path' => 'upload/items/armaduras/rune_necklace.png',
-                       'item_type_id' => '2',
-                  'character_type_id' => '3'
-             )
-        );
-
-        DB::table('items')->insert(
-            array(
-                             'nombre' => 'Anillo de Estadística', 
-                        'description' => 'Tu presición nunca sera mejor que al promediar tus tiros',
+        DB::table('items')->insert(array(
+                             'nombre' => 'Arco de Newton',
+                        'description' => 'La gravedad no te afecta',
                               'price' => '100',
-                         'image_path' => 'upload/items/armaduras/techpaires_ring.png',
-                       'item_type_id' => '2',
-                  'character_type_id' => '3'
-             )
-        );
-
-        DB::table('items')->insert(
-            array(
-                             'nombre' => 'Máscara de Refracción', 
-                        'description' => 'Tu visión llegara mas allá del campo visual',
-                              'price' => '200',
-                         'image_path' => 'upload/items/armaduras/soulless_warrior_mask.png',
-                       'item_type_id' => '2',
-                  'character_type_id' => '3'
-             )
-        );
-
-
-        DB::table('items')->insert(
-            array(
-                             'nombre' => 'Túnica de Invisibilidad', 
-                        'description' => 'Para que dispares sin ser visto',
-                              'price' => '250',
-                         'image_path' => 'upload/items/armaduras/cloak_of_evasion.png',
-                       'item_type_id' => '2',
-                  'character_type_id' => '3'
-             )
+                         'image_path' => 'upload/items/armas/bow3.png',
+                       'item_type_id' => '1',
+                  'character_type_id' => '3',
+                              'handX' => '0.60',
+                              'handY' => '0.46'
+            )
         );
   }
 }

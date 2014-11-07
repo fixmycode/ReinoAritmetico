@@ -13,13 +13,23 @@ class Problem extends \Eloquent {
   protected $fillable = ['name'];
 
   /**
-   * 
+   *
    */
 
   public function problem_type(){
     return $this->belongsTo('ProblemType');
 
   }
-  
+
+  public function tags()
+  {
+    return $this->belongsToMany("Tag");
+  }
+
+  public function game_player()
+  {
+    return $this->belongsToMany('GamePlayer')->withPivot('time_elapsed', 'answer');
+  }
+
 
 }

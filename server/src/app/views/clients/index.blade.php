@@ -8,7 +8,7 @@
   <div class="col-md-6">
     <div class="box box-success">
       <div class="box-body no-padding">
-        <table class="table table-condensed table-hover">
+        <table class="table table-condensed table-hover" id="clientTable">
           <thead>
             <tr>
               <th style="width: 10px">#</th>
@@ -44,22 +44,42 @@
 
 <script>
 $(document).ready(function() {
-  $('.destroy').confirmation({
-    btnCancelLabel: 'Cancelar',
-    btnOkLabel: 'Eliminar',
-    onConfirm: function(event, element){
-      var clientId = element.data("client-id");
-      var APIurl = '{{ URL::route('clientss.index') }}' + '/' + clientId;
-      $.ajax({
-        url: APIurl,
-        type: "DELETE",
-        success: function(res) {
-          console.log(res);
-          element.closest('tr').remove();
+
+  $('#clientTable').dataTable({
+        "bFilter": false,
+        "bInfo": false,
+        "filter": true,
+        "language": {
+            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+            "zeroRecords": "Nothing found - sorry",
+            "info": "Showing page _PAGE_ of _PAGES_",
+            "infoEmpty": "No records available",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+            "paginate": {
+                  "previous": "Anterior",
+                  "next": "Siguiente"
+                }
+        },
+        "fnPreDrawCallback": function( oSettings ) {
+          $('.destroy').confirmation({
+              btnCancelLabel: 'Cancelar',
+              btnOkLabel: 'Eliminar',
+              onConfirm: function(event, element){
+                var clientId = element.data("client-id");
+                var APIurl = '{{ URL::route('clientss.index') }}' + '/' + clientId;
+                $.ajax({
+                  url: APIurl,
+                  type: "DELETE",
+                  success: function(res) {
+                    console.log(res);
+                    element.closest('tr').remove();
+                  }
+                });
+              }
+            });
         }
-      });
-    }
   });
+  
 
   $('body').on('hidden.bs.modal', '.modal', function () {
     var $this = $(this);
@@ -69,4 +89,16 @@ $(document).ready(function() {
   });
 });
 </script>
+@stop
+
+@section('css')
+@parent
+
+<link rel="stylesheet" href="//cdn.datatables.net/plug-ins/a5734b29083/integration/bootstrap/3/dataTables.bootstrap.css">
+<style>
+  .dataTables_length {
+    padding: 10px 10px 0 10px;
+  }
+  div.dataTables_paginate { float: none; margin-left: 10px;}
+</style>
 @stop

@@ -4,6 +4,7 @@ class Item extends \Eloquent {
 
   public $timestamps = false;
 
+
   // Add your validation rules here
   public static $rules = [
     // 'title' => 'required'
@@ -13,7 +14,7 @@ class Item extends \Eloquent {
   protected $fillable = ['name'];
 
   /**
-   * 
+   *
    */
 
   public function characterType(){
@@ -27,6 +28,6 @@ class Item extends \Eloquent {
   public function players(){
     return $this->belongsToMany('Player');
   }
-  
+
 
 }

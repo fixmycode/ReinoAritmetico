@@ -25,7 +25,7 @@ class CreateItemTable extends Migration {
 			$table->integer('price',0);
 			$table->string('image_path')->nullable();
 			$table->integer('item_type_id')->unsigned();
-			$table->integer('character_type_id')->unsigned();
+			$table->integer('character_type_id')->nullable()->unsigned();
 
 			$table->foreign('item_type_id')
 						->references('id')
@@ -38,7 +38,7 @@ class CreateItemTable extends Migration {
 						->on('character_type')
 						->onDelete('cascade');
 
-			$table->datetime('started');
+			$table->datetime('started')->nullable();
 			$table->datetime('ended')->nullable();
 		});
 
@@ -57,6 +57,17 @@ class CreateItemTable extends Migration {
 						->on('players')
 						->onDelete('cascade');
 		});
+
+    Schema::table('players', function($table) {
+
+        $table->foreign('armor_id')
+        		->references('id')
+            ->on('items');
+
+        $table->foreign('weapon_id')
+        		->references('id')
+            ->on('items');
+    });
 	}
 
 	/**
@@ -66,6 +77,11 @@ class CreateItemTable extends Migration {
 	 */
 	public function down()
 	{
+		Schema::table('players', function($table)
+		{
+		    $table->dropForeign('players_armor_id_foreign');
+		    $table->dropForeign('players_weapon_id_foreign');
+		});
 		Schema::drop('item_player');
 		Schema::drop('items');
 		Schema::drop('item_type');

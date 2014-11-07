@@ -1,8 +1,9 @@
 var _          = require('underscore');
 var q          = require('q');
-var io         = require('socket.io').listen(3000);
+var io         = require('socket.io').listen(3000, {log:false});
 var createGame = require('./lib/game.js');
 var ip         = require('ip');
+
 
 var game = createGame();
 var settings = {
@@ -10,7 +11,7 @@ var settings = {
     serverPort: '80'
 }
 
-io.set('log level', 1);
+
 
 angular.module('RAApp', ['ngRoute', 'timer']);
 
@@ -32,7 +33,10 @@ function getQuests() {
 }
 
 angular.module('RAApp').run(function($rootScope) {
-    // Socket comunication
+
+    $(document).bind('keydown', 'esc', function(){
+        $rootScope.$broadcast('pause game');
+    });
 
     io.on('connection', function (socket) {
 
@@ -57,7 +61,7 @@ angular.module('RAApp').run(function($rootScope) {
             $rootScope.$broadcast('update players');
         });
 
-        socket.on('submit answer', function(answer){ 
+        socket.on('submit answer', function(answer){
             $rootScope.$broadcast('player answered', {'socket': socket.id, 'answer': answer});
         });
 
@@ -66,12 +70,18 @@ angular.module('RAApp').run(function($rootScope) {
             if (game.wrong_players.length === game.players.length && game.shaken == game.players.length) { // Everyone wrong
                 game.shaken = 0;
                 $rootScope.$broadcast('player rescued');
+                game.gx.players.forEach(function(p){
+                  p.relax();
+                });
                 game.wrong_players.length = 0; // Clear waitingPlayers
                 _.each(game.players, game.sendProblem, game); // Keep playing
             }else if (game.wrong_players.length === 1 && game.shaken === game.players.length - 1) { // All those who had to shake, shook
                 game.shaken = 0;
                 $rootScope.$broadcast('player rescued', game.wrong_players[0]);
                 game.wrong_players.length = 0; // Clear waitingPlayers
+                game.gx.players.forEach(function(p){
+                  p.relax();
+                });
                 _.each(game.players, game.sendProblem, game); // Keep playing
             }
         });
@@ -105,28 +115,28 @@ angular.module('RAApp').run(function($rootScope) {
 
     win.on('close', function(){
         if (game.playing) {
-            game.end().then(function(){
-                win.close(true);    
+            game.end(true).then(function(){
+                win.close(true);
             }).fail(function(){
                 win.close(true);
-            });    
+            });
         }else {
             win.close(true);
         }
-        
+
     });
 
     $(document).on('click', '.maximize-app', function () {
-    
-        if(win.isFullscreen){
-            win.toggleFullscreen();
-        }else{
-            if (screen.availHeight <= win.height) {
-                win.unmaximize();
-            }else {
-                win.maximize();
-            }
-        }
+        win.toggleFullscreen();
+        // if(win.isFullscreen){
+        //     win.toggleFullscreen();
+        // }else{
+        //     if (screen.availHeight <= win.height) {
+        //         win.unmaximize();
+        //     }else {
+        //         win.maximize();
+        //     }
+        // }
     });
 
     $(document).on('click', '.minimize-app', function () {
