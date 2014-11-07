@@ -36,8 +36,8 @@ class ReportController extends \BaseController {
 		$player = Player::find($player_id);
 		$averageProblemArray = GamePlayer::averageProblemTime($player_id);
 		$categories = array();
-		foreach(ProblemType::getNombres() as $item){
-			array_push($categories, $item->type);
+		foreach(Tag::getNombres() as $item){
+			array_push($categories, $item->name);
 		}
 
 

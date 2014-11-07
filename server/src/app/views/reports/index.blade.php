@@ -5,54 +5,70 @@
 
 <div class="row">
 
-  <div class="col-md-7">
-    <h3>Cantidad de Juegos: {{$numberOfGames}}</h3>
-    <div class="box box-success">
-      <div id="container"></div>
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+  <li role="presentation" class="active"><a href="#curso" role="tab" data-toggle="tab">Curso</a></li>
+  <li role="presentation"><a href="#alumno" role="tab" data-toggle="tab">Alumno</a></li>
+  <li role="presentation"><a href="#grupal" role="tab" data-toggle="tab">Grupal</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane active" id="curso">
+    <div class="col-md-7">
+      <h3>Cantidad de Juegos: {{$numberOfGames}}</h3>
+      <div class="box box-success">
+        <div id="container"></div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <table class="table table-condensed table-hover" id='playersTable'>
+        <thead>
+          <tr>
+            <th style="width: 10px">#</th>
+            <th>Nombre</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          @foreach ($players as $player )
+          <tr>
+              <td> <a href="{{URL::to('reports/player')}}?player_id={{ $player->id}}">{{ $player->id}}</a></td>
+              <td> <a href="{{URL::to('reports/player')}}?player_id={{ $player->id}}">{{ $player->name}}</a></td>
+          </tr>
+          @endforeach
+        </tbody>
+      </table>
+
+      <table class="table table-condensed table-hover" id='successTable'>
+        <thead>
+          <tr>
+            <th>Tipo</th>
+            <th>Correctas</th>
+            <th>Incorrectas</th>
+            <th>Success Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          @foreach ($successRate as $type )
+          <tr>
+              <td> {{$type->tag}}</td>
+              <td> {{$type->correct}}</td>
+              <td> {{$type->wrong}}</td>
+              <td> {{$type->success_rate}}</td>
+              
+          </tr>
+          @endforeach
+        </tbody>
+      </table>
     </div>
   </div>
-  <div class="col-md-5">
-    <table class="table table-condensed table-hover" id='playersTable'>
-      <thead>
-        <tr>
-          <th style="width: 10px">#</th>
-          <th>Nombre</th>
-        </tr>
-      </thead>
-      <tbody>
+  <div role="tabpanel" class="tab-pane" id="alumno">now</div>
+  <div role="tabpanel" class="tab-pane" id="grupal">look </div>
+</div>
 
-        @foreach ($players as $player )
-        <tr>
-            <td> <a href="{{URL::to('reports/player')}}?player_id={{ $player->id}}">{{ $player->id}}</a></td>
-            <td> <a href="{{URL::to('reports/player')}}?player_id={{ $player->id}}">{{ $player->name}}</a></td>
-        </tr>
-        @endforeach
-      </tbody>
-    </table>
-
-    <table class="table table-condensed table-hover" id='successTable'>
-      <thead>
-        <tr>
-          <th>Tipo</th>
-          <th>Correctas</th>
-          <th>Incorrectas</th>
-          <th>Success Rate</th>
-        </tr>
-      </thead>
-      <tbody>
-
-        @foreach ($successRate as $type )
-        <tr>
-            <td> {{$type->tag}}</td>
-            <td> {{$type->correct}}</td>
-            <td> {{$type->wrong}}</td>
-            <td> {{$type->success_rate}}</td>
-            
-        </tr>
-        @endforeach
-      </tbody>
-    </table>
-  </div>
+  
   
 
 </div>
