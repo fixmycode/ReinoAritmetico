@@ -276,7 +276,7 @@ Game.prototype.submitAnswer = function(socketId, answer) {
   self.answers.push(answer);
 
   /* Analyse wrong answres */
-  if (answer.answer !== answer.correct_answer) {
+  if (answer.answer.toString() !== answer.correct_answer.toString()) {
     self.wrong_players.push(player);
   }
 
