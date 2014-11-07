@@ -14,7 +14,7 @@ class ItemApiController extends \BaseController {
 		// JOIN character_type ON items.`character_type_id` = character_type.id;
 		$items = Item::leftJoin('item_player', 'items.id', '=', 'item_player.item_id')
 								 ->leftJoin('players', 'players.id', '=', 'item_player.player_id')
-								 ->join('character_type', 'character_type.id', '=', 'items.character_type_id')
+								 ->leftJoin('character_type', 'character_type.id', '=', 'items.character_type_id')
 				->select('items.id',
 				         'items.nombre',
 				         'items.description',
@@ -24,20 +24,30 @@ class ItemApiController extends \BaseController {
 				         'character_type.uid as character_type_id',
                  DB::raw('(CASE WHEN (players.android_id = '.$player_uid.' AND (players.armor_id = items.id OR players.weapon_id = items.id)) THEN true ELSE false END) as equipped'),
 				         DB::raw('(CASE WHEN (players.android_id = '.$player_uid.') THEN true ELSE false END) as comprado'))
-                 ->where('items.id', '!=', 1)
-                 ->where('items.id', '!=', 2)
                  ->orderBy('equipped', 'DESC')
                  ->orderBy('comprado', 'DESC')
                  ->orderBy('id');
 
-		if ( ! is_null($type) ) {
-			$items = $items->where('character_type.uid', '=', $type);
-		}
-		if ( ! is_null($kind) ) {
-			$items = $items->where('items.item_type_id', '=', $kind);
-		}
+    if ( ! is_null($type) ) {
+      $items = $items->where('character_type.uid', '=', $type);
+      $items = $items->orWhereNull('items.character_type_id');
+    }
 
-		return Response::json($items->get());
+    $items = $items->where('items.id', '!=', 1);
+    $items = $items->where('items.id', '!=', 2);
+    if ( ! is_null($kind) ) {
+      $items = $items->where('items.item_type_id', '=', $kind);
+
+      $items = $items->get()->toArray();
+      $return = [];
+      foreach ($items as $item) {
+        if ($item['item_type_id'] == $kind) {
+          $return[] = $item;
+        }
+      }
+    }
+
+		return Response::json( $return);
 	}
 
 	public function getImage(){

@@ -16,7 +16,6 @@ public function run(){
                             'price' => '0',
                        'image_path' => 'upload/items/armaduras/default.png',
                      'item_type_id' => '2',
-                'character_type_id' => '1',
                             'headX' => '0.48',
                             'heady' => '0.60'
           )
@@ -28,7 +27,6 @@ public function run(){
                               'price' => '0',
                          'image_path' => 'upload/items/armas/default.png',
                        'item_type_id' => '1',
-                  'character_type_id' => '1',
                               'handX' => '0.60',
                               'handY' => '0.74'
             )
@@ -50,7 +48,7 @@ public function run(){
                               'price' => '15',
                          'image_path' => 'upload/items/armaduras/wizard.png',
                        'item_type_id' => '2',
-                  'character_type_id' => '3',
+                  'character_type_id' => '2',
                               'headX' => '0.56',
                               'heady' => '0.72'
             )
@@ -73,7 +71,6 @@ public function run(){
                             'price' => '18',
                        'image_path' => 'upload/items/armaduras/android.png',
                      'item_type_id' => '2',
-                'character_type_id' => '1',
                             'headX' => '0.65',
                             'heady' => '0.66'
           )
@@ -85,7 +82,6 @@ public function run(){
                             'price' => '20',
                        'image_path' => 'upload/items/armaduras/applace.png',
                      'item_type_id' => '2',
-                'character_type_id' => '1',
                             'headX' => '0.50',
                             'heady' => '0.68'
           )
@@ -97,7 +93,6 @@ public function run(){
                             'price' => '25',
                        'image_path' => 'upload/items/armaduras/bbhat.png',
                      'item_type_id' => '2',
-                'character_type_id' => '1',
                             'headX' => '0.44',
                             'heady' => '0.66'
           )
@@ -109,7 +104,6 @@ public function run(){
                             'price' => '18',
                        'image_path' => 'upload/items/armaduras/lechuza.png',
                      'item_type_id' => '2',
-                'character_type_id' => '1',
                             'headX' => '0.50',
                             'heady' => '0.565'
           )
@@ -121,7 +115,6 @@ public function run(){
                             'price' => '22',
                        'image_path' => 'upload/items/armaduras/lego.png',
                      'item_type_id' => '2',
-                'character_type_id' => '1',
                             'headX' => '0.5',
                             'heady' => '0.58'
           )
@@ -133,7 +126,6 @@ public function run(){
                             'price' => '15',
                        'image_path' => 'upload/items/armaduras/pony.png',
                      'item_type_id' => '2',
-                'character_type_id' => '1',
                             'headX' => '0.45',
                             'heady' => '0.65'
           )
@@ -145,7 +137,6 @@ public function run(){
                             'price' => '20',
                        'image_path' => 'upload/items/armaduras/wuqi.png',
                      'item_type_id' => '2',
-                'character_type_id' => '1',
                             'headX' => '0.55',
                             'heady' => '0.50'
           )
@@ -167,7 +158,7 @@ public function run(){
                               'price' => '30',
                          'image_path' => 'upload/items/armas/sword2.png',
                        'item_type_id' => '1',
-                  'character_type_id' => '2',
+                  'character_type_id' => '1',
                               'handX' => '0.5',
                               'handY' => '0.791'
             )
@@ -178,13 +169,13 @@ public function run(){
                               'price' => '22',
                          'image_path' => 'upload/items/armas/sword3.png',
                        'item_type_id' => '1',
-                  'character_type_id' => '3',
+                  'character_type_id' => '1',
                               'handX' => '0.6',
                               'handY' => '0.74'
             )
         );
         DB::table('items')->insert(array(
-                             'nombre' => 'Baston del laplaciano',
+                             'nombre' => 'Bastón del laplaciano',
                         'description' => 'Deriva sin parar',
                               'price' => '30',
                          'image_path' => 'upload/items/armas/staff1.png',
@@ -192,6 +183,28 @@ public function run(){
                   'character_type_id' => '2',
                               'handX' => '0.48',
                               'handY' => '0.40'
+            )
+        );
+        DB::table('items')->insert(array(
+                             'nombre' => 'Bastón exponencial',
+                        'description' => 'Euler esta orgulloso',
+                              'price' => '60',
+                         'image_path' => 'upload/items/armas/staff2.png',
+                       'item_type_id' => '1',
+                  'character_type_id' => '2',
+                              'handX' => '0.50',
+                              'handY' => '0.38'
+            )
+        );
+        DB::table('items')->insert(array(
+                             'nombre' => 'Bastón de la muerte',
+                        'description' => 'Aniquila a tus enemigos',
+                              'price' => '100',
+                         'image_path' => 'upload/items/armas/staff3.png',
+                       'item_type_id' => '1',
+                  'character_type_id' => '2',
+                              'handX' => '0.55',
+                              'handY' => '0.38'
             )
         );
         DB::table('items')->insert(array(
@@ -203,6 +216,28 @@ public function run(){
                   'character_type_id' => '3',
                               'handX' => '0.68',
                               'handY' => '0.45'
+            )
+        );
+        DB::table('items')->insert(array(
+                             'nombre' => 'Arco infinito',
+                        'description' => 'Dispara hasta el mas allá',
+                              'price' => '70',
+                         'image_path' => 'upload/items/armas/bow2.png',
+                       'item_type_id' => '1',
+                  'character_type_id' => '3',
+                              'handX' => '0.60',
+                              'handY' => '0.49'
+            )
+        );
+        DB::table('items')->insert(array(
+                             'nombre' => 'Arco de Newton',
+                        'description' => 'La gravedad no te afecta',
+                              'price' => '100',
+                         'image_path' => 'upload/items/armas/bow3.png',
+                       'item_type_id' => '1',
+                  'character_type_id' => '3',
+                              'handX' => '0.60',
+                              'handY' => '0.46'
             )
         );
   }

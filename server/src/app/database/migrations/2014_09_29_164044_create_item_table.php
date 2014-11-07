@@ -25,7 +25,7 @@ class CreateItemTable extends Migration {
 			$table->integer('price',0);
 			$table->string('image_path')->nullable();
 			$table->integer('item_type_id')->unsigned();
-			$table->integer('character_type_id')->unsigned();
+			$table->integer('character_type_id')->nullable()->unsigned();
 
 			$table->foreign('item_type_id')
 						->references('id')
