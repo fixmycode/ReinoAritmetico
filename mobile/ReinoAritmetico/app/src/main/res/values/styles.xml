@@ -2,7 +2,11 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Holo">
-        <!-- Customize your theme here. -->
+        <item name="android:actionBarStyle">@style/ActionBarRA</item>
+    </style>
+
+    <style name="ActionBarRA" parent="android:style/Widget.Holo.Light.ActionBar.Solid">
+        <item name="android:background">@drawable/background</item>
     </style>
 
     <style name="GameButton" parent="@android:style/Widget.Holo.Light.Button">

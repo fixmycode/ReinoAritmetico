@@ -13,16 +13,18 @@
     <string name="select_char">Selecciona tu personaje</string>
     <string name="select_school">Selecciona tu colegio</string>
     <string name="select_class">Selecciona tu clase</string>
-    <string name="full_name_hint">Tu nombre completo</string>
+    <string name="full_name_hint">Tu name completo</string>
     <string name="server_error">Ocurrió un error en el servidor, por favor reinicia la
         aplicación.</string>
     <string name="welcome_player">Que bueno verte de nuevo, %s!</string>
-    <string name="welcome_player_error">Algo extraño pasó y no pude leer tu nombre…</string>
-    <string name="register_dialog" formatted="false">Tu nombre es %s, estudiante del %s, actualmente estás en %s y elegiste ser un %s, ¿correcto?</string>
+    <string name="welcome_player_error">Algo extraño pasó y no pude leer tu name…</string>
+    <string name="register_dialog" formatted="false">Tu name es %s, estudiante del %s, actualmente estás en %s y elegiste ser un %s, ¿correcto?</string>
     <string name="register_error">Ocurrió un problema con tu registro, ¿te importaría intentarlo de
         nuevo?</string>
     <string name="yes">Sí</string>
     <string name="no">No</string>
+    <string name="title_activity_game">Jugando</string>
+    <string name="default_server">http://blackbirdsw.noip.me</string>
     <string name="character">Este es tu personaje</string>
     <string name="title_activity_lobby">Preparándose para ingresar</string>
     <string name="enter_code">Ingresa el código</string>
@@ -70,14 +72,16 @@
     <string name="ask_unequip" formatted="false">Deseas desequipar \"%s\"?</string>
     <string name="buy_success">Ítem comprado</string>
     <string name="buy_error">Ocurrió un error comprando el ítem</string>
-    <string name="equip_success">Item equipado</string>
-    <string name="equip_error">Ocurrió un error equipando el ítem</string>
+    <string name="equip_success">Has hecho cambios en tu equipamiento</string>
+    <string name="equip_error">Ocurrió un problema con tu equipo</string>
     <string name="class_changed">Clase cambiada</string>
     <string name="change_error">Ocurrió un error cambiando tu clase</string>
     <string name="change_type">Cambiar clase: $%d</string>
     <string name="same_class">Ya tienes esa clase</string>
     <string name="item_list_error">Hubo un error obteniendo la lista de ítems</string>
     <string name="getting_items">Obteniendo la lista de ítems</string>
+    <string name="cancel">Cancelar</string>
+    <string name="play">Jugar</string>
     <string-array name="characters">
         <item>Guerrero</item>
         <item>Mago</item>

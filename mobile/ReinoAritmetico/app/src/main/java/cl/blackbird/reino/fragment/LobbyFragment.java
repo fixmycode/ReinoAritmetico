@@ -24,14 +24,6 @@ import cl.blackbird.reino.model.Player;
 
 public class LobbyFragment extends Fragment implements View.OnClickListener {
     public static final String TAG = "RAFLOBBY";
-    private LobbyListener mListener;
-    private EditText lobbyCode;
-    private ImageView characterImage;
-    private Button joinButton;
-    private Player player;
-    private TextView nameText;
-    private TextView characterTypeText;
-    private TextView creditsText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,45 +34,27 @@ public class LobbyFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.lobby_layout, container, false);
-        player = (Player) getArguments().getSerializable("player");
+        Player player = (Player) getArguments().getSerializable("player");
         setupPlayer(layout, player);
-
-        checkValidForm(lobbyCode.getText(), joinButton);
-
-        lobbyCode.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                checkValidForm(s, joinButton);
-            }
-        });
         return layout;
     }
 
     public void setupPlayer(View layout, Player player) {
-        characterImage = (ImageView) layout.findViewById(R.id.character_image);
+        ImageView characterImage = (ImageView) layout.findViewById(R.id.character_image);
 
         TypedArray drawableArray = getResources().obtainTypedArray(R.array.character_list);
         int characterId = drawableArray.getResourceId(player.characterType, -1);
         characterImage.setImageResource(characterId);
-        lobbyCode = (EditText) layout.findViewById(R.id.lobby_code);
-        joinButton = (Button) layout.findViewById(R.id.join_button);
+        Button joinButton = (Button) layout.findViewById(R.id.join_button);
         joinButton.setOnClickListener(this);
 
-        nameText =(TextView) layout.findViewById(R.id.nameText);
+        TextView nameText = (TextView) layout.findViewById(R.id.nameText);
         nameText.setText(player.name);
 
-        creditsText =(TextView) layout.findViewById(R.id.creditsText);
+        TextView creditsText = (TextView) layout.findViewById(R.id.creditsText);
         creditsText.setText(getString(R.string.credits, player.credits));
 
-        characterTypeText = (TextView) layout.findViewById(R.id.characterTypeText);
+        TextView characterTypeText = (TextView) layout.findViewById(R.id.characterTypeText);
         int characterType = 0;
         if(player.characterType==0){
             characterType = R.string.warrior;
@@ -106,51 +80,10 @@ public class LobbyFragment extends Fragment implements View.OnClickListener {
         return instance;
     }
 
-    /**
-     * Checks if the field has any text and then enable the button
-     * @param text the form field
-     * @param button the button
-     */
-    private void checkValidForm(Editable text, Button button) {
-        button.setEnabled(!text.toString().isEmpty());
-    }
-
-    /**
-     * When we attach the fragment to an activity, we add it as a listener.
-     * @param activity
-     */
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (LobbyListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement LobbyListener");
-        }
-    }
-
-    /**
-     * If we take out the fragment, destroy the listener
-     */
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
     @Override
     public void onClick(View v) {
-        String code = lobbyCode.getText().toString();
-        mListener.onJoinServer(code);
-    }
-
-    /**
-     * Interface for the activity to communicate with the fragment
-     * Read about the Listener pattern!
-     */
-    public interface LobbyListener {
-        public void onJoinServer(String code);
+        GameDialogFragment dialog = new GameDialogFragment();
+        dialog.show(getFragmentManager(), "GAMEDIALOG");
     }
 
 }

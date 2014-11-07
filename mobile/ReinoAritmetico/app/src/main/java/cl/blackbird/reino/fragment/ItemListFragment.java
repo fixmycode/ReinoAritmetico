@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -23,12 +24,8 @@ public class ItemListFragment extends android.app.ListFragment {
 
     public static final String TAG = "RAFLISTITEM";
     private static final String ITEM_STRING ="ITEMS";
-    private int id_item;
     private itemListener iListener;
-    private Item newItem;
-    private List<Item> i = new ArrayList<Item>();
     ItemAdapter adapter;
-    int precio;
 
     public ItemListFragment(){
 
@@ -59,7 +56,7 @@ public class ItemListFragment extends android.app.ListFragment {
     private void buildAdapter(JSONArray itemList)throws  JSONException{
         List<Item> listItem = new ArrayList<Item>();
         for (int i = 0; i < itemList.length(); i++) {
-            newItem = Item.fromJSON(itemList.getJSONObject(i));
+            Item newItem = Item.fromJSON(itemList.getJSONObject(i));
             listItem.add(newItem);
         }
         adapter = new ItemAdapter(getActivity().getApplicationContext(),listItem);
@@ -78,20 +75,47 @@ public class ItemListFragment extends android.app.ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        Item i=(Item)getListView().getItemAtPosition(position);
-        id_item = i.id;
-        precio= i.precio;
-        Log.d(String.valueOf(i.id),String.valueOf(i.comprado));
+        Item item=(Item)getListView().getItemAtPosition(position);
+        Log.d(String.valueOf(item.id),String.valueOf(item.bought));
+        if(iListener == null) return;
+        if(item.bought==0) askToBuy(item);
+        else askToEquip(item);
+    }
 
-        if(i.comprado==0) {
+    public void askToBuy(final Item item){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(getString(R.string.ask_buy, item.name, item.price));
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                iListener.onBuyItem(item, (BaseAdapter) getListAdapter());
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 
+    public void askToEquip(final Item item){
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage(getString(R.string.ask_buy, i.nombre, precio));
+            if(item.equipped==0) {
+                builder.setMessage(getString(R.string.ask_equip, item.name));
+            } else {
+                builder.setMessage(getString(R.string.ask_unequip, item.name));
+            }
             builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    buyItem(id_item,precio);
+                    iListener.onEquipItem(item, (BaseAdapter) getListAdapter());
                     dialog.dismiss();
+
+
                 }
             });
             builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
@@ -102,68 +126,6 @@ public class ItemListFragment extends android.app.ListFragment {
             });
             AlertDialog dialog = builder.create();
             dialog.show();
-        }
-
-        else{
-
-            if(i.equipped==0) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage(getString(R.string.ask_equip, i.nombre));
-                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        equipItem(id_item);
-                        dialog.dismiss();
-
-
-                    }
-                });
-                builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-            else{
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage(getString(R.string.ask_unequip, i.nombre));
-                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        equipItem(id_item);
-                        dialog.dismiss();
-
-                    }
-                });
-                builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-
-        }
-
-    }
-
-
-
-    public void buyItem(int item_id,int price){
-        if (iListener != null){
-            iListener.onItemClick(item_id, price);
-        }
-
-    }
-    public void equipItem(int item_id){
-        if(iListener != null){
-            iListener.onItemClick(item_id);
-        }
     }
 
     @Override
@@ -172,8 +134,8 @@ public class ItemListFragment extends android.app.ListFragment {
     }
 
     public interface itemListener{
-        public void onItemClick(int item_id, int price);
-        public void onItemClick(int item_id);
+        public void onBuyItem(Item item, BaseAdapter adapter);
+        public void onEquipItem(Item item, BaseAdapter adapter);
         public void onReturn();
     }
 

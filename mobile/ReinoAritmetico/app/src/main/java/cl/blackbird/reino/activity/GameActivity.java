@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Vibrator;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -57,6 +58,7 @@ public class GameActivity extends Activity implements IOCallback,
         } else {
             gameStarted = savedInstanceState.getBoolean("gameStarted");
         }
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     @Override

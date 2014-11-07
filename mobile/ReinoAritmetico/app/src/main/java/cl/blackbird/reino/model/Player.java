@@ -13,6 +13,8 @@ public class Player implements Serializable {
     public int characterType;
     public School school;
     public ClassRoom classRoom;
+    public Item hand;
+    public Item head;
 
     public Player(String name, int characterType, School school, ClassRoom classRoom){
         this(name, 50, characterType, school, classRoom);

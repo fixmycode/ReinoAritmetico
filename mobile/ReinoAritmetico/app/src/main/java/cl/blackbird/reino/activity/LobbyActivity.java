@@ -30,6 +30,7 @@ import java.util.Map;
 import cl.blackbird.reino.Config;
 import cl.blackbird.reino.R;
 import cl.blackbird.reino.ReinoApplication;
+import cl.blackbird.reino.fragment.GameDialogFragment;
 import cl.blackbird.reino.fragment.LobbyFragment;
 import cl.blackbird.reino.model.Player;
 
@@ -37,7 +38,7 @@ import cl.blackbird.reino.model.Player;
  * This activity takes care of the Lobby API Calls.
  * REMINDER: Activities don't interact with the UI, only the fragments can interact with the UI.
  */
-public class LobbyActivity extends Activity implements LobbyFragment.LobbyListener {
+public class LobbyActivity extends Activity implements GameDialogFragment.GameDialogListener {
     private static final String TAG = "RALOBBY";
     private static final int GAME_CODE = 2;
     private static final int STORE_CODE = 3;

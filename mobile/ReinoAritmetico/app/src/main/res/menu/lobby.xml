@@ -5,9 +5,4 @@
         android:title="@string/erase_registration"
         android:orderInCategory="150"
         android:showAsAction="never" />
-    <item android:id="@+id/action_customize"
-        android:title="@string/customize_character"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:enabled="false"/>
 </menu>

@@ -2,6 +2,8 @@ package cl.blackbird.reino.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +12,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.BaseAdapter;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -31,6 +34,7 @@ import cl.blackbird.reino.fragment.ChangeTypeFragment;
 import cl.blackbird.reino.fragment.ItemListFragment;
 import cl.blackbird.reino.fragment.LoadingFragment;
 import cl.blackbird.reino.fragment.StoreFragment;
+import cl.blackbird.reino.model.Item;
 import cl.blackbird.reino.model.Player;
 
 public class StoreActivity extends Activity implements
@@ -99,7 +103,7 @@ public class StoreActivity extends Activity implements
                 .commit();
     }
     @Override
-    public void onItemClick(final int id_item, final int price) {
+    public void onBuyItem(final Item item, final BaseAdapter adapter) {
         final String androidId = Settings.Secure.getString(
                 getContentResolver(),
                 Settings.Secure.ANDROID_ID);
@@ -108,11 +112,8 @@ public class StoreActivity extends Activity implements
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(
-                                getApplicationContext(),
-                                R.string.buy_success,
-                                Toast.LENGTH_LONG).show();
-                        itemBought(price);
+                        itemBought(item);
+                        adapter.notifyDataSetChanged();
                     }
                 },
                 new Response.ErrorListener() {
@@ -128,7 +129,7 @@ public class StoreActivity extends Activity implements
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("android_id",androidId);
-                params.put("item_id", String.valueOf(id_item));
+                params.put("item_id", String.valueOf(item.id));
                 return params;
             }
         };
@@ -136,7 +137,7 @@ public class StoreActivity extends Activity implements
     }
 
     @Override
-    public void onItemClick(final int item_id) {
+    public void onEquipItem(final Item item, final BaseAdapter adapter) {
         final String androidId = Settings.Secure.getString(
                 getContentResolver(),
                 Settings.Secure.ANDROID_ID);
@@ -145,11 +146,8 @@ public class StoreActivity extends Activity implements
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(
-                                getApplicationContext(),
-                                R.string.equip_success,
-                                Toast.LENGTH_LONG).show();
-                        itemEquipped();
+                        itemEquipped(item);
+                        adapter.notifyDataSetChanged();
                     }
                 },
                 new Response.ErrorListener() {
@@ -165,7 +163,7 @@ public class StoreActivity extends Activity implements
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("android_id",androidId);
-                params.put("item_id", String.valueOf(item_id));
+                params.put("item_id", String.valueOf(item.id));
                 return params;
             }
         };
@@ -182,18 +180,32 @@ public class StoreActivity extends Activity implements
         getFragmentManager().popBackStack();
     }
 
-    public void itemBought(int price){
-        player.credits -= price;
-        Intent result = new Intent();
-        result.putExtra("player", player);
-        setResult(Activity.RESULT_OK, result);
-        finish();
+    public void itemBought(Item item){
+        player.credits -= item.price;
+        item.bought = 1;
+        Toast.makeText(
+            getApplicationContext(),
+            R.string.buy_success,
+            Toast.LENGTH_LONG).show();
+        Fragment list = getFragmentManager().findFragmentById(R.id.container);
+        if(list != null && list instanceof ItemListFragment){
+            ((ItemListFragment) list).askToEquip(item);
+        }
+//        Intent result = new Intent();
+//        result.putExtra("player", player);
+//        setResult(Activity.RESULT_OK, result);
+//        finish();
     }
-    public void itemEquipped(){
-        Intent result = new Intent();
-        result.putExtra("player", player);
-        setResult(Activity.RESULT_OK, result);
-        finish();
+    public void itemEquipped(Item item){
+        item.equipped = item.equipped == 0 ? 1 : 0;
+        Toast.makeText(
+            getApplicationContext(),
+            R.string.equip_success,
+            Toast.LENGTH_LONG).show();
+//        Intent result = new Intent();
+//        result.putExtra("player", player);
+//        setResult(Activity.RESULT_OK, result);
+//        finish();
     }
     public void typeChanged(int price, int type){
         player.credits -= price;

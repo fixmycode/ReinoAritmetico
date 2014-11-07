@@ -48,36 +48,25 @@
             android:textSize="20dp"
             android:gravity="center_horizontal" />
 
-        <Button
-            android:layout_width="@dimen/buy_items_button"
-            android:layout_height="wrap_content"
-            android:text="@string/store"
-            android:id="@+id/shopButton"
-            android:onClick="onClickShop"
-            android:textStyle="bold" />
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/lobby_instructions" />
-
-        <EditText
-            android:layout_width="@dimen/lobby_game_field"
-            android:layout_height="wrap_content"
-            android:id="@+id/lobby_code"
-            android:hint="@string/enter_code"
-            android:inputType="textNoSuggestions"
-            android:singleLine="true"
-            android:layout_gravity="center_horizontal" />
-
-        <Button
-            android:id="@+id/join_button"
-            android:layout_width="@dimen/join_game_button"
-            android:layout_height="wrap_content"
-            android:text="@string/join_game"
-            android:enabled="false"
-            android:textStyle="bold"
-            android:layout_gravity="center_horizontal" />
-
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/store"
+                android:id="@+id/shopButton"
+                android:onClick="onClickShop"
+                android:textStyle="bold"
+                android:layout_weight="1"/>
+            <Button
+                android:id="@+id/join_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/play"
+                android:textStyle="bold"
+                android:layout_weight="1"/>
+            </LinearLayout>
     </LinearLayout>
 </ScrollView>

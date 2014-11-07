@@ -38,11 +38,9 @@
     <string name="server_error_retrying" formatted="false">There was a problem connecting to the
         server, retrying in %d seconds…</string>
     <string name="press_twice">Press twice to exit</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="server_address">Server Address</string>
     <string name="default_server">http://blackbirdsw.noip.me</string>
-    <string name="title_activity_game">GameActivity</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_game">Playing</string>
     <string name="answer">Answer</string>
     <string name="erase">Erase</string>
     <string name="no_answer" />
@@ -68,14 +66,16 @@
     <string name="ask_unequip" formatted="false">Do you want to unequip \"%s\"?</string>
     <string name="buy_success">Item Bought</string>
     <string name="buy_error">There was an error buying the item</string>
-    <string name="equip_success">Item equipped</string>
-    <string name="equip_error">There was an error equipping the item</string>
+    <string name="equip_success">You\'ve changed your equipment</string>
+    <string name="equip_error">There was a problem with your equipment</string>
     <string name="class_changed">Class Changed</string>
     <string name="change_error">There was an error changing your class</string>
     <string name="change_type">Change class: $%d</string>
     <string name="same_class">You already have that class</string>
     <string name="item_list_error">There was an error obtaining the item list</string>
     <string name="getting_items">Obtaining item list</string>
+    <string name="cancel">Cancel</string>
+    <string name="play">Play</string>
 
     <string-array name="characters">
         <item>Warrior</item>
