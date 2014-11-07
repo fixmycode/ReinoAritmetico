@@ -30,7 +30,7 @@
             <th>Tipo</th>
             <th>Correctas</th>
             <th>Incorrectas</th>
-            <th>Success Rate</th>
+            <th>Tasa de Exito</th>
           </tr>
         </thead>
         <tbody>
@@ -40,7 +40,7 @@
               <td> {{$type->tag}}</td>
               <td> {{$type->correct}}</td>
               <td> {{$type->wrong}}</td>
-              <td> {{$type->success_rate}}</td>
+              <td> {{$type->success_rate}} %</td>
               
           </tr>
           @endforeach
@@ -84,8 +84,8 @@
 
           @foreach ($groups as $game )
           <tr>
-              <td> <a href="{{URL::to('reports/group')}}?gameUid={{ $game->uid }} ">{{$game->id}}</a> </td>
-              <td> <a href="{{URL::to('reports/group')}}?gameUid={{ $game->uid }} ">{{$game->uid}}</a> </td>
+              <td> <a href="{{URL::to('reports/group')}}?gameId={{ $game->id }} ">{{$game->id}}</a> </td>
+              <td> <a href="{{URL::to('reports/group')}}?gameId={{ $game->id }} ">{{$game->uid}}</a> </td>
               
           </tr>
           @endforeach
@@ -134,7 +134,12 @@ $(document).ready(function() {
             }
         },
         tooltip: {
-            
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">({series.name})  </td>' +
+                '<td style="padding:0"><b> : {point.y} [sec]</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
         },
         plotOptions: {
             

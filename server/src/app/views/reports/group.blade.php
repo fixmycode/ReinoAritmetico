@@ -9,7 +9,7 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-    <h3>Codigo del Juego: {{$game->uid}}</h3>  
+    <h3>Id Grupo: {{$game->id}}</h3>  
   </div>
 </div>
 <div class="row">
@@ -17,7 +17,9 @@
 
   <div class="col-md-7">
     <div class="box box-success">
-      <div id="container"></div>
+      <div id="container">
+          
+      </div>
     </div>
   </div>
   <div class="col-md-5">
@@ -59,8 +61,57 @@
 <script src=""></script>
 <script>
 $(document).ready(function() {
- 
-  
+ $('#container').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Tags En Usadas en Juego'
+        },
+        
+        xAxis: {
+            categories: [
+                'Suma',
+                'Resta',
+                'Multiplicación',
+                'División',
+            ]
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Rainfall (mm)'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">({series.name}) Correctas: </td>' +
+                '<td style="padding:0"><b> : {point.y}</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [
+            @foreach ($studentList as $player )
+            {
+            name: "{{$player->name}}",
+            data: [
+            @for ($i = 0; $i < 4; $i++)
+                 {{rand ( 0 , 10 )}},
+            @endfor
+            ]
+
+        },
+            @endforeach
+        
+        ]
+    });
 });
 </script>
 @stop

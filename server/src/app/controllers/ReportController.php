@@ -53,9 +53,11 @@ class ReportController extends \BaseController {
 	}
 
 	public function getGroup(){
-		$gameUid = Input::get('gameUid');
-		$game = Game::where('uid','=', $gameUid)->first();
-		$studentsInGame =  GamePlayer::getPlayersByGameUid($gameUid);
+		$gameId = Input::get('gameId');
+		$game = Game::find($gameId);
+		$studentsInGame =  GamePlayer::getPlayersByGameUid($gameId);
+		$tagsByStudents = GamePlayer::getTagsByStudents($gameId);
+		
 		return View::make("reports.group")
 					->with("studentList", $studentsInGame)
 					->with("game", $game);
