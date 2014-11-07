@@ -22,23 +22,7 @@
       </div>
     </div>
     <div class="col-md-5">
-      <table class="table table-condensed table-hover" id='playersTable'>
-        <thead>
-          <tr>
-            <th style="width: 10px">#</th>
-            <th>Nombre</th>
-          </tr>
-        </thead>
-        <tbody>
-
-          @foreach ($players as $player )
-          <tr>
-              <td> <a href="{{URL::to('reports/player')}}?player_id={{ $player->id}}">{{ $player->id}}</a></td>
-              <td> <a href="{{URL::to('reports/player')}}?player_id={{ $player->id}}">{{ $player->name}}</a></td>
-          </tr>
-          @endforeach
-        </tbody>
-      </table>
+      
 
       <table class="table table-condensed table-hover" id='successTable'>
         <thead>
@@ -64,8 +48,52 @@
       </table>
     </div>
   </div>
-  <div role="tabpanel" class="tab-pane" id="alumno">now</div>
-  <div role="tabpanel" class="tab-pane" id="grupal">look </div>
+  <div role="tabpanel" class="tab-pane" id="alumno">
+  <div class="col-md-7">
+    <table class="table table-condensed table-hover" id='playersTable'>
+          <thead>
+            <tr>
+              <th style="width: 10px">#</th>
+              <th>Nombre</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            @foreach ($players as $player )
+            <tr>
+                <td> <a href="{{URL::to('reports/player')}}?player_id={{ $player->id}}">{{ $player->id}}</a></td>
+                <td> <a href="{{URL::to('reports/player')}}?player_id={{ $player->id}}">{{ $player->name}}</a></td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>  
+  </div>
+  
+    </div>
+
+  <div role="tabpanel" class="tab-pane" id="grupal"> 
+    <div class="col-md-7">
+      <table class="table table-condensed table-hover" id='groupsTable'>
+        <thead>
+          <tr>
+            <th style="width: 10px">#</th>
+            <th>UID</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          @foreach ($groups as $game )
+          <tr>
+              <td> <a href="{{URL::to('reports/group')}}?gameUid={{ $game->uid }} ">{{$game->id}}</a> </td>
+              <td> <a href="{{URL::to('reports/group')}}?gameUid={{ $game->uid }} ">{{$game->uid}}</a> </td>
+              
+          </tr>
+          @endforeach
+        </tbody>
+      </table>  
+    </div>
+    
+  </div>
 </div>
 
   

@@ -59,6 +59,28 @@ class GamePlayer extends \Eloquent {
   	return $db;
   }
 
+  public static function correctAnswers($player_id){
+
+    $db = DB::select(DB::raw('SELECT 
+    SUM(answer = correct_answer) as correct,
+    SUM(answer != correct_answer) as wrong
+    from game_player_problem
+    join game_player on game_player.id = game_player_problem.game_player_id
+    join problems on game_player_problem.problem_id = problems.id
+    where game_player.player_id ='.$player_id));
+    return $db;
+
+  }
+
+  public static function getPlayersByGameUid($gameUid){
+    $db = DB::select(DB::raw(
+      "select players.id, players.name from players
+      join game_player on game_player.player_id = players.id
+      join games on games.id = game_player.game_id = games.id;"
+    ));
+    return $db;
+  }
+
   public function player()
   {
     return $this->belongsTo('Player');

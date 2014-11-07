@@ -2,15 +2,29 @@
 
 @section('content')
 
-
 <div class="row">
+<a class="btn" href="{{ URL::previous() }}">Atras</a>
+  
+
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <h3>Alumno: {{$player->name}}</h3>  
+  </div>
+</div>
+<div class="row">
+  
 
   <div class="col-md-7">
-  <h3>Alumno: {{$player->name}}</h3>
     <div class="box box-success">
       <div id="container"></div>
     </div>
   </div>
+  <div class="col-md-5">
+      <div class="box box-success">
+      <div id="container2"></div>
+  </div>
+
   
   
 
@@ -54,7 +68,40 @@ $(document).ready(function() {
         plotOptions: {
             
         },
-        series: {{$averageData}}
+        series: {{$averageData}}});
+  $('#container2').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: 1,//null,
+            plotShadow: false
+        },
+        title: {
+            text: 'Respuestas del Alumno'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Respuestas del Alumno',
+            data: [
+                ['Correctas',   {{$correctAnswers->correct}}],
+                ['Incorrectas', {{$correctAnswers->wrong}}],
+            ]
+        }]
     });
   
 });
