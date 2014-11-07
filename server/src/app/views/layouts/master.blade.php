@@ -22,6 +22,9 @@
             height: 60px;
             width: 60px;
         }
+        .center-text{
+            text-align: center;
+        }
         </style>
 
         @show

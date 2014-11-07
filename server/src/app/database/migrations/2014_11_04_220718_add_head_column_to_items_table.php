@@ -14,10 +14,10 @@ class AddHeadColumnToItemsTable extends Migration {
 	{
 		Schema::table('items', function(Blueprint $table)
 		{
-			$table->float('headX')->nullabel();
-			$table->float('headY')->nullabel();
-			$table->float('handX')->nullabel();
-			$table->float('handY')->nullabel();
+			$table->float('headX')->nullable()->default(0);
+			$table->float('headY')->nullabel()->default(0);
+			$table->float('handX')->nullabel()->default(0);
+			$table->float('handY')->nullabel()->default(0);
 		});
 	}
 

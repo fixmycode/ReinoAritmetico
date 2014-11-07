@@ -20,6 +20,10 @@ class Tag extends \Eloquent {
     return $this->belongsToMany('Problem');
 
   }
+
+  public static function getNombres(){
+    return DB::select(DB::raw('select tags.name from tags'));
+  }
   
 
 }
