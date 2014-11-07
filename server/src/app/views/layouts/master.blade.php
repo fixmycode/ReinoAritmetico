@@ -14,7 +14,7 @@
         {{ HTML::style('AdminLTE/css/ionicons.min.css') }}
         <!-- Theme style -->
         {{ HTML::style('AdminLTE/css/AdminLTE.css') }}
-        
+
         <style>
         .max-square{
             max-height: 60px;
@@ -28,7 +28,7 @@
         </style>
 
         @show
-        
+
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -86,7 +86,7 @@
         </header>
         <div class="wrapper row-offcanvas row-offcanvas-left">
             <!-- Left side column. contains the logo and sidebar -->
-            <aside class="left-side sidebar-offcanvas">                
+            <aside class="left-side sidebar-offcanvas">
                 <!-- sidebar: style can be found in sidebar.less -->
                 <section class="sidebar">
                     <!-- Sidebar user panel -->
@@ -127,11 +127,11 @@
                                 <i class="fa fa-th"></i> <span>Preguntas</span>
                             </a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="{{ route('items.index') }}">
                                 <i class="fa fa-th"></i> <span>Items</span>
                             </a>
-                        </li>
+                        </li> -->
                         <li>
                             <a href="{{ route('tags.index') }}">
                                 <i class="fa fa-th"></i> <span>Tags</span>
@@ -150,7 +150,7 @@
             </aside>
 
             <!-- Right side column. Contains the navbar and content of the page -->
-            <aside class="right-side">                
+            <aside class="right-side">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
@@ -164,7 +164,7 @@
                 <section class="content">
 
                     @yield('content')
-                                
+
                 </section><!-- /.content -->
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
