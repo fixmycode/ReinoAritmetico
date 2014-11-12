@@ -3,17 +3,17 @@
 @section('content')
 
 <div class="row">
-<a class="btn" href="{{ URL::previous() }}">Atras</a>
-  
+<a class="btn" href="{{ URL::previous() }}">Atrás</a>
+
 
 </div>
 <div class="row">
   <div class="col-md-12">
-    <h3>Alumno: {{$player->name}}</h3>  
+    <h3>Alumno: {{$player->name}}</h3>
   </div>
 </div>
 <div class="row">
-  
+
 
   <div class="col-md-7">
     <div class="box box-success">
@@ -25,8 +25,8 @@
       <div id="container2"></div>
   </div>
 
-  
-  
+
+
 
 </div>
 @stop
@@ -55,7 +55,7 @@ $(document).ready(function() {
         subtitle: {
             text: 'Por Tipo de Problema'
         },
-        
+
         yAxis: {
             min: 0,
             title: {
@@ -63,10 +63,10 @@ $(document).ready(function() {
             }
         },
         tooltip: {
-            
+
         },
         plotOptions: {
-            
+
         },
         series: {{$averageData}}});
   $('#container2').highcharts({
@@ -103,7 +103,7 @@ $(document).ready(function() {
             ]
         }]
     });
-  
+
 });
 </script>
 @stop
