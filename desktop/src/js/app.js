@@ -128,6 +128,11 @@ angular.module('RAApp').run(function($rootScope) {
 
     $(document).on('click', '.maximize-app', function () {
         win.toggleFullscreen();
+        $('#actions').toggleClass('full-screen');
+        $('body').toggleClass('full-screen-body');
+
+
+
         // if(win.isFullscreen){
         //     win.toggleFullscreen();
         // }else{
@@ -150,6 +155,13 @@ angular.module('RAApp').run(function($rootScope) {
 
     $(document).bind('keydown', 'ctrl+d', function(){
         win.showDevTools();
+    });
+
+    $('body').on('mouseover', '.full-screen', function(){
+        $(this).stop(true, true).animate({opacity: 1}, 300);
+    });
+    $('body').on('mouseleave', '.full-screen', function(){
+        $(this).stop(true, true).animate({opacity: 0}, 300);
     });
  });
 }) (jQuery);

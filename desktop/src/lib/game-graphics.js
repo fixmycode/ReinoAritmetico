@@ -155,7 +155,7 @@ var Game = function(engine) {
     window.addEventListener('resize', resizeCanvas, false);
     function resizeCanvas(){
         self.ctx.canvas.width = window.innerWidth;
-        self.ctx.canvas.height = window.innerHeight - 40;
+        self.ctx.canvas.height = window.innerHeight - ($('.full-screen').length == 0 ? 40 : 0);
         self.gameSize = { x: self.ctx.canvas.width, y: self.ctx.canvas.height };
         self.update();
     }
