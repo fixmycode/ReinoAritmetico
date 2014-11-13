@@ -30,7 +30,7 @@
                 <td> {{$item->nombre }}</td>
                 <td>{{ $item->description}}</td>
                 <td>{{ $item->price}}</td>
-                <td>{{$item->characterType->name}}</td>
+                <td>{{ is_null($item->characterType) ? '-' : $item->characterType->name}}</td>
                 <td>{{$item->itemType->nombre}}</td>
                 <td class="text-right">
                   <a href="#" class="label label-danger destroy" data-item-id="{{$item->id}}" title="Seguro?"><i class="fa fa-trash-o"></i></a>
