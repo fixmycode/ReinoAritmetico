@@ -49,6 +49,7 @@ Player.prototype.attack = function(){
         self.game.update();
         setTimeout(function(){
             self.pose = "attack3";
+            self.game.monster.damage();
             self.game.update();
             setTimeout(function(){
                 self.pose = "relax";
@@ -60,7 +61,7 @@ Player.prototype.attack = function(){
 
 Player.prototype.damage = function(){
     this.pose = "damage";
-    this.game.update();
+    this.game.monster.attack();
 }
 
 Player.prototype.relax = function(){
@@ -123,6 +124,38 @@ Monster.prototype.render = function(){
     var y = yt - poses['monster'][self.id].y * images['monster'].height;
 
     self.game.ctx.drawImage(images['monster'], x, y);
+}
+
+Monster.prototype.damage = function() {
+    var self = this;
+    var x = self.x;
+
+    self.x += 0.04;
+    self.game.update();
+    setTimeout(function(){
+        self.x -= 0.06;
+        self.game.update();
+        setTimeout(function(){
+            self.x = x;
+            self.game.update();
+        }, 200);
+    }, 200);
+}
+
+Monster.prototype.attack = function() {
+    var self = this;
+    var x = self.x;
+
+    self.x -= 0.2;
+    self.game.update();
+    setTimeout(function(){
+        self.x += 0.1;
+        self.game.update();
+        setTimeout(function(){
+            self.x = x;
+            self.game.update();
+        }, 200);
+    }, 200);
 }
 
 var Game = function(engine) {

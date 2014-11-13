@@ -266,6 +266,13 @@ Game.prototype.submitAnswer = function(socketId, answer) {
         p.attack();
       }
     });
+  }else {
+    self.wrong_players.push(player);
+    self.gx.players.forEach(function(p){
+      if (p.android_id === player.android_id){
+        p.damage();
+      }
+    });
   }
 
   self.answeringPlayers = _.without(self.answeringPlayers, player); // Remove player from waiting list
@@ -274,11 +281,6 @@ Game.prototype.submitAnswer = function(socketId, answer) {
   answer.player_name = player.name;
   answer.player_android_id = player.android_id;
   self.answers.push(answer);
-
-  /* Analyse wrong answres */
-  if (answer.answer.toString() !== answer.correct_answer.toString()) {
-    self.wrong_players.push(player);
-  }
 
   if (self.answeringPlayers.length === 0) {
     if (self.wrong_players.length === self.players.length) {
@@ -289,22 +291,14 @@ Game.prototype.submitAnswer = function(socketId, answer) {
     }
     // Nop, it didn't
     if (self.wrong_players.length === 1 && Math.random() <= TRAPPED_ODD) { // Trap someone!
-      self.wrong_players[0].socket.broadcast.emit('shake', {msg: '¡Rápido! Sacude para salvar a '+ self.wrong_players[0].name});
+      self.wrong_players[0].socket.broadcast.emit('shake', {msg: '¡Rápido! Sacude para salvar a '+ self.wrong_players[0].player.name});
       self.wrong_players[0].socket.emit('trapped', {msg: 'Has sido atrapado! pidele ayuda a tus amigos!'});
-      self.gx.players.forEach(function(p){
-        if (self.wrong_players[0].android_id === p.android_id){
-          p.damage();
-          console.log("d1");
-        }
-      });
+
       return 'trapped';
     }else if(self.wrong_players.length === self.players.length){ //Everyone got it wrong!!
       self.wrong_players[0].socket.broadcast.emit('shake', {msg: '¡Te están atacando! ¡Sacude!'});
       self.wrong_players[0].socket.emit('shake', {msg: '¡Te están atacando! ¡Sacude!'});
-      self.gx.players.forEach(function(p){
-          p.damage();
-          console.log("d2");
-      });
+
       return 'defend-yourselvs';
     }
     self.wrong_players.length = 0;
