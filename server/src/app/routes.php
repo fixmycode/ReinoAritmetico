@@ -5,7 +5,7 @@ Route::any('/', function(){
 });
 
 Route::get('demo',function(){
-
+  return View::make('qr');
 });
 
 Route::get('dashboard', ['as' => 'dashboard', function(){

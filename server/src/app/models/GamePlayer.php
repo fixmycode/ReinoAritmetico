@@ -14,14 +14,14 @@ class GamePlayer extends \Eloquent {
   {
   	$db = null;
   	if($player_id == null){
-  		$db = DB::select(DB::raw('select tags.name as name, floor(avg(time_elapsed)) as data from problems
+  		$db = DB::select(DB::raw('select tags.name as name, ROUND(avg(time_elapsed), 3) as data from problems
           join game_player_problem on problems.id = game_player_problem.problem_id
           join problem_tag on problem_tag.problem_id = problems.id
           join tags on tags.id = problem_tag.tag_id
           group by tags.id'));
   	}
   	else{
-  		$db = DB::select(DB::raw("select tags.name as name, floor(avg(time_elapsed)) as data from problems
+  		$db = DB::select(DB::raw("select tags.name as name, ROUND(avg(time_elapsed), 3) as data from problems
           join game_player_problem on problems.id = game_player_problem.problem_id
           join problem_tag on problem_tag.problem_id = problems.id
           join tags on tags.id = problem_tag.tag_id
@@ -31,7 +31,7 @@ class GamePlayer extends \Eloquent {
           group by tags.id")
       );
 
-      
+
 
   	}
 
@@ -46,7 +46,7 @@ class GamePlayer extends \Eloquent {
 
   public static function successRate(){
   	$db = DB::select(DB::raw('SELECT
-      FLOOR(SUM(answer = correct_answer)/COUNT(answer)*100) as success_rate,
+      ROUND(SUM(answer = correct_answer)/COUNT(answer)*100, 3) as success_rate,
       SUM(answer = correct_answer) as correct,
       SUM(answer != correct_answer) as wrong,
       tags.name as tag
@@ -61,7 +61,7 @@ class GamePlayer extends \Eloquent {
 
   public static function correctAnswers($player_id){
 
-    $db = DB::select(DB::raw('SELECT 
+    $db = DB::select(DB::raw('SELECT
     SUM(answer = correct_answer) as correct,
     SUM(answer != correct_answer) as wrong
     from game_player_problem
@@ -84,7 +84,7 @@ class GamePlayer extends \Eloquent {
 
   public static function getTagsByStudents($gameId){
     $db = DB::select(DB::raw(
-      "select  tags.name, players.name,count(*) from games 
+      "select  tags.name, players.name,count(*) from games
   join game_player on game_player.game_id = games.id
   join game_player_problem on game_player.id = game_player_problem.game_player_id
   join problems on problems.id = game_player_problem.problem_id
@@ -98,7 +98,7 @@ class GamePlayer extends \Eloquent {
     return $db;
   }
 
-  
+
 
   public function player()
   {

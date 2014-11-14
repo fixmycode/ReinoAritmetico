@@ -75,6 +75,9 @@ class ItemApiController extends \BaseController {
 		$player = Player::where('android_id','=',$android_id)->first();
 		$item = Item::find($item_id);
 
+    if ($player->hasInInventory($item->id))
+      return Response::json(array('err' => true, 'msg' => 'El jugador ya posee este item'), 404);
+
 		if($player == null || $item == null)
       return Response::json(array('err' => true, 'msg' => 'Jugador o item no encontrados'), 404);
 

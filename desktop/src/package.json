@@ -15,8 +15,8 @@
     "icon": "./html/favicon.ico",
     "toolbar": false,
     "frame": false,
-    "width": 1024,
-    "height": 768,
+    "width": 800,
+    "height": 650,
     "position": "mouse",
     "min_width": 800,
     "min_height": 600

@@ -45,12 +45,11 @@ class ProblemController extends \BaseController {
 	 */
 	public function store()
 	{
-		
-		
+
+
 		$problem = new Problem();
 		$problem->problem = Input::get('problem');
 		$problem->correct_answer = Input::get('correct_answer');
-		$problem->problem_type_id = 1; //Input::get('problem_type_id');
 		$problem->difficulty = Input::get('difficulty');
 		$problem->save();
 
@@ -59,10 +58,10 @@ class ProblemController extends \BaseController {
 		foreach ($tags as $index=>$tag_id) {
 			$problem->tags()->attach($tag_id);
 		}
-		
 
 
-		
+
+
 		return Redirect::route('problems.index');
 	}
 
@@ -90,6 +89,8 @@ class ProblemController extends \BaseController {
 		$problem = Problem::findOrFail($id);
 		$difficulty = array("1"=>"Fácil", 2 => 'Medio', 3 => 'Difícil');
 		$tags = Tag::all();
+
+
 
 
 		return View::make('problems.partials.edit')
@@ -137,7 +138,7 @@ class ProblemController extends \BaseController {
 		$problem = Problem::findOrFail($id);
 		DB::table('problem_tag')->where('problem_id', '=', $id)->delete();
 		$problem->delete();
-		
+
 	}
 
 

@@ -291,7 +291,7 @@ Game.prototype.submitAnswer = function(socketId, answer) {
     }
     // Nop, it didn't
     if (self.wrong_players.length === 1 && Math.random() <= TRAPPED_ODD) { // Trap someone!
-      self.wrong_players[0].socket.broadcast.emit('shake', {msg: '¡Rápido! Sacude para salvar a '+ self.wrong_players[0].player.name});
+      self.wrong_players[0].socket.broadcast.emit('shake', {msg: '¡Rápido! Sacude para salvar a '+ self.wrong_players[0].name});
       self.wrong_players[0].socket.emit('trapped', {msg: 'Has sido atrapado! pidele ayuda a tus amigos!'});
 
       return 'trapped';

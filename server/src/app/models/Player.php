@@ -2,7 +2,7 @@
 
 class Player extends \Eloquent {
 
-  public $timestamps = false;
+
 
 	// Add your validation rules here
 	public static $rules = [

@@ -5,7 +5,7 @@
 @include('partials.theModal')
 
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-7">
     <div class="box box-success">
       <div class="box-body no-padding">
         <table class="table table-condensed table-hover" id='questionTable'>
@@ -33,16 +33,16 @@
                 @else
                 <td class="center-text">{{ $problem->difficulty }}. Difícil</td>
                 @endif
-                
+
                 <td>
                   @foreach ($problem->tags()->get() as $tag)
-                    {{$tag->name}},    
+                    {{$tag->name}},
                   @endforeach
                 </td>
                 <td class="text-right">
                   <a href="#" class="label label-danger destroy" data-problem-id="{{$problem->id}}" title="Seguro?"><i class="fa fa-trash-o"></i></a>
                   <a href="#" class="label label-success" data-toggle="modal" data-target="#theModal" data-remote="{{ URL::route('problems.edit', $problem->id) }}"><i class="fa fa-pencil"></i></a>
-                </td> 
+                </td>
             </tr>
             @endforeach
           </tbody>
@@ -50,10 +50,10 @@
       </div><!-- /.box-body -->
     </div>
   </div>
-  <div class="col-md-4 col-md-offset-1">
+  <div class="col-md-4">
     @include('problems.partials.create', ['newProblem' => new Problem])
   </div>
-  
+
 </div>
 
 
@@ -63,7 +63,7 @@
 @parent
 {{ HTML::script('js/vendor/bootstrap-confirmation.js') }}
 {{ HTML::script('js/chosen_v1.2.0/chosen.jquery.min.js') }}
-  
+
 
 
 <script src="//cdn.datatables.net/plug-ins/a5734b29083/integration/bootstrap/3/dataTables.bootstrap.js"></script>
@@ -71,12 +71,13 @@
 <script>
 $(document).ready(function() {
 
+
   $(".tagSelect").chosen({
     width: "100%"
   });
 
   //$(".chosen-container, .chosen-choices").css("width", "311px").css("class", "form-control");
-  
+
   $('#questionTable').dataTable({
         "bFilter": false,
         "bInfo": false,
@@ -112,8 +113,10 @@ $(document).ready(function() {
           });
         }
   });
-  
-  
+  $('.dataTables_paginate').parent().prev().remove();
+  $('.dataTables_paginate').parent().removeClass('col-xs-6').addClass('col-xs-12');
+
+
 
   $('body').on('hidden.bs.modal', '.modal', function () {
     var $this = $(this);

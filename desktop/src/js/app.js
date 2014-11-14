@@ -7,8 +7,8 @@ var ip         = require('ip');
 
 var game = createGame();
 var settings = {
-    serverIpAddress: 'blackbirdsw.noip.me',
-    serverPort: '80'
+    serverIpAddress: 'localhost',//'blackbirdsw.noip.me',
+    serverPort: '8000'//'80'
 }
 
 

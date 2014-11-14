@@ -119,12 +119,12 @@
                         </li>
                         <li>
                             <a href="{{ route('clientss.index') }}">
-                                <i class="fa fa-th"></i> <span>Clientes</span>
+                                <i class="fa fa-user"></i> <span>Clientes</span>
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('problems.index') }}">
-                                <i class="fa fa-th"></i> <span>Preguntas</span>
+                                <i class="fa fa-question"></i> <span>Preguntas</span>
                             </a>
                         </li>
                         <li>
@@ -134,12 +134,12 @@
                         </li>
                         <li>
                             <a href="{{ route('tags.index') }}">
-                                <i class="fa fa-th"></i> <span>Tags</span>
+                                <i class="fa fa-tag"></i> <span>Tags</span>
                             </a>
                         </li>
                         <li>
                             <a href="{{ URL::to('reports') }}">
-                                <i class="fa fa-th"></i> <span>Reportes</span>
+                                <i class="fa fa-bar-chart"></i> <span>Reportes</span>
                             </a>
                         </li>
 

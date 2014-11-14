@@ -42,7 +42,7 @@
 <script src=""></script>
 <script>
 $(document).ready(function() {
- $('#container').highcharts({
+    $('#container').highcharts({
         chart: {
             type: 'column'
         },
@@ -50,12 +50,15 @@ $(document).ready(function() {
             text: 'Promedio Tiempo Respuesta'
         },
         xAxis: {
-          categories: {{$averageCategories}}
+            title: {text: 'Tag'},
+            categories: {{$averageCategories}},
+            labels: {
+                enabled: false
+            },
         },
         subtitle: {
             text: 'Por Tipo de Problema'
         },
-
         yAxis: {
             min: 0,
             title: {
@@ -63,13 +66,14 @@ $(document).ready(function() {
             }
         },
         tooltip: {
-
+            headerFormat: '<span style="font-size:10px"></span><table>'
         },
         plotOptions: {
 
         },
-        series: {{$averageData}}});
-  $('#container2').highcharts({
+        series: {{$averageData}}
+    });
+    $('#container2').highcharts({
         chart: {
             plotBackgroundColor: null,
             plotBorderWidth: 1,//null,
