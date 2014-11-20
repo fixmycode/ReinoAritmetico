@@ -192,17 +192,10 @@ public class LobbyActivity extends Activity implements GameDialogFragment.GameDi
                     toastRes,
                     Toast.LENGTH_LONG).show();
         } else if(requestCode == STORE_CODE){
-            switch (resultCode) {
-                case Activity.RESULT_OK:
-                    Log.d(TAG, "Store ended OK");
-                    if(data != null && data.getExtras() != null){
-                        player = (Player) data.getExtras().getSerializable("player");
-                    }
-                    break;
-                case Activity.RESULT_CANCELED:
-                    Log.d(TAG, "Store canceled");
-                    break;
-            }
+                Log.d(TAG, "Store ended");
+                if(data != null && data.getExtras() != null){
+                    player = (Player) data.getExtras().getSerializable("player");
+                }
         }
         FragmentManager manager = getFragmentManager();
         LobbyFragment fragment = (LobbyFragment) manager.findFragmentById(R.id.container);

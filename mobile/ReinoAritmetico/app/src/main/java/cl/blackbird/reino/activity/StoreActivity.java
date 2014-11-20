@@ -1,11 +1,8 @@
 package cl.blackbird.reino.activity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -257,10 +254,23 @@ public class StoreActivity extends Activity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == android.R.id.home){
-            setResult(Activity.RESULT_CANCELED);
+            savePlayer();
             finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.d(TAG, "back press");
+        savePlayer();
+        super.onBackPressed();
+    }
+
+    private void savePlayer() {
+        Intent data = new Intent();
+        data.putExtra("player", player);
+        setResult(Activity.RESULT_OK, data);
     }
 }
