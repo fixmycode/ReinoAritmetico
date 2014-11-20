@@ -3,17 +3,17 @@
 @section('content')
 
 <div class="row">
-<a class="btn" href="{{ URL::previous() }}">Atras</a>
-  
+<a class="btn" href="{{ URL::previous() }}">Atrás</a>
+
 
 </div>
 <div class="row">
   <div class="col-md-12">
-    <h3>Alumno: {{$player->name}}</h3>  
+    <h3>Alumno: {{$player->name}}</h3>
   </div>
 </div>
 <div class="row">
-  
+
 
   <div class="col-md-7">
     <div class="box box-success">
@@ -25,8 +25,8 @@
       <div id="container2"></div>
   </div>
 
-  
-  
+
+
 
 </div>
 @stop
@@ -42,7 +42,7 @@
 <script src=""></script>
 <script>
 $(document).ready(function() {
- $('#container').highcharts({
+    $('#container').highcharts({
         chart: {
             type: 'column'
         },
@@ -50,12 +50,15 @@ $(document).ready(function() {
             text: 'Promedio Tiempo Respuesta'
         },
         xAxis: {
-          categories: {{$averageCategories}}
+            title: {text: 'Tag'},
+            categories: {{$averageCategories}},
+            labels: {
+                enabled: false
+            },
         },
         subtitle: {
             text: 'Por Tipo de Problema'
         },
-        
         yAxis: {
             min: 0,
             title: {
@@ -63,13 +66,14 @@ $(document).ready(function() {
             }
         },
         tooltip: {
-            
+            headerFormat: '<span style="font-size:10px"></span><table>'
         },
         plotOptions: {
-            
+
         },
-        series: {{$averageData}}});
-  $('#container2').highcharts({
+        series: {{$averageData}}
+    });
+    $('#container2').highcharts({
         chart: {
             plotBackgroundColor: null,
             plotBorderWidth: 1,//null,
@@ -103,7 +107,7 @@ $(document).ready(function() {
             ]
         }]
     });
-  
+
 });
 </script>
 @stop

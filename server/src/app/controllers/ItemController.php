@@ -23,6 +23,7 @@ class ItemController extends \BaseController {
     foreach ($characterTypes as $characterType) {
       $selectCharacterTypes[$characterType->id]=$characterType->name;
     }
+    $selectCharacterTypes['null'] = 'Ninguno';
 
 
     return View::make('items.index')
@@ -76,6 +77,11 @@ class ItemController extends \BaseController {
     $upload_success = Input::file('image')->move($path, $name);
     if($upload_success){
       $item = new Item();
+      $chartype = Input::get('character_type');
+      if ($chartype != 'null') {
+          $item->character_type_id = $chartype;
+      }
+
       $item->nombre = Input::get('nombre');
       $item->description = Input::get('description');
       $item->headX = Input::get('headX', 0);
@@ -84,7 +90,7 @@ class ItemController extends \BaseController {
       $item->handY = Input::get('handY', 0);
       $item->item_type_id = Input::get('item_type');
       $item->price = Input::get('price');
-      $item->character_type_id = Input::get('character_type');
+
       $item->image_path = $relative_path;
       $item->save();
     }
@@ -118,6 +124,8 @@ class ItemController extends \BaseController {
     $selectItemTypes = ItemType::lists("nombre","id");
 
     $selectCharacterTypes = CharacterType::lists("name","id");
+    $selectCharacterTypes['null'] = 'Ninguno';
+
 
     return View::make('items.partials.edit')
                   ->with('item_type', $selectItemTypes)
@@ -166,7 +174,10 @@ class ItemController extends \BaseController {
     $item->handX = Input::get('handX', 0);
     $item->handY = Input::get('handY', 0);
     $item->price = Input::get('price');
-    $item->character_type_id = Input::get('character_type');
+    $chartype = Input::get('character_type');
+    if ($chartype != 'null') {
+        $item->character_type_id = $chartype;
+    }
 
     $item->save();
 

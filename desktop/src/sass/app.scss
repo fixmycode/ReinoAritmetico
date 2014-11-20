@@ -65,15 +65,18 @@ html, body{
 #screen {
     display: none;
 }
+.game {
+    font-family: Catorze;
+}
 canvas {
     background: #eee;
 }
+
 
 body {
   padding-top: 40px;
   background: $background;
   color: $text;
-  font-family: Catorze;
 }
 
 #actions {
@@ -140,6 +143,10 @@ body {
     background: yellowgreen;
 }
 
+.full-screen {
+    opacity: 0;
+}
+
 .modal {
   margin-top: 40px;
 }
@@ -152,6 +159,9 @@ body {
     background: rgba(0, 0, 0, .25);
     min-height: 100%;
     padding-top: 40px;
+}
+.full-screen-body {
+    padding-top: 0 !important;
 }
 
 .container-playing {

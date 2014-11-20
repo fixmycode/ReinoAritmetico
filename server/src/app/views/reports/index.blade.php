@@ -9,7 +9,7 @@
 <ul class="nav nav-tabs" role="tablist">
   <li role="presentation" class="active"><a href="#curso" role="tab" data-toggle="tab">Curso</a></li>
   <li role="presentation"><a href="#alumno" role="tab" data-toggle="tab">Alumno</a></li>
-  <li role="presentation"><a href="#grupal" role="tab" data-toggle="tab">Grupal</a></li>
+  <!-- <li role="presentation"><a href="#grupal" role="tab" data-toggle="tab">Grupal</a></li> -->
 </ul>
 
 <!-- Tab panes -->
@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="col-md-5">
-      
+
 
       <table class="table table-condensed table-hover" id='successTable'>
         <thead>
@@ -41,7 +41,7 @@
               <td> {{$type->correct}}</td>
               <td> {{$type->wrong}}</td>
               <td> {{$type->success_rate}} %</td>
-              
+
           </tr>
           @endforeach
         </tbody>
@@ -66,12 +66,12 @@
             </tr>
             @endforeach
           </tbody>
-        </table>  
+        </table>
   </div>
-  
+
     </div>
 
-  <div role="tabpanel" class="tab-pane" id="grupal"> 
+  <div role="tabpanel" class="tab-pane" id="grupal">
     <div class="col-md-7">
       <table class="table table-condensed table-hover" id='groupsTable'>
         <thead>
@@ -86,18 +86,18 @@
           <tr>
               <td> <a href="{{URL::to('reports/group')}}?gameId={{ $game->id }} ">{{$game->id}}</a> </td>
               <td> <a href="{{URL::to('reports/group')}}?gameId={{ $game->id }} ">{{$game->uid}}</a> </td>
-              
+
           </tr>
           @endforeach
         </tbody>
-      </table>  
+      </table>
     </div>
-    
+
   </div>
 </div>
 
-  
-  
+
+
 
 </div>
 @stop
@@ -121,12 +121,16 @@ $(document).ready(function() {
             text: 'Promedio Tiempo Respuesta'
         },
         xAxis: {
-          categories: {{$averageCategories}}
+          title: { text: 'Tag' },
+          categories: {{$averageCategories}},
+          labels: {
+                enabled: false
+            },
         },
         subtitle: {
             text: 'Por Tipo de Problema'
         },
-        
+
         yAxis: {
             min: 0,
             title: {
@@ -134,19 +138,17 @@ $(document).ready(function() {
             }
         },
         tooltip: {
-            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">({series.name})  </td>' +
+            headerFormat: '<span style="font-size:10px"></span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}  </td>' +
                 '<td style="padding:0"><b> : {point.y} [sec]</b></td></tr>',
-            footerFormat: '</table>',
-            shared: true,
-            useHTML: true
+            footerFormat: '</table>'
         },
         plotOptions: {
-            
+
         },
         series: {{$averageData}}
     });
-  
+
 });
 </script>
 @stop

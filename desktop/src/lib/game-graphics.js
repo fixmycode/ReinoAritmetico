@@ -49,6 +49,7 @@ Player.prototype.attack = function(){
         self.game.update();
         setTimeout(function(){
             self.pose = "attack3";
+            self.game.monster.damage();
             self.game.update();
             setTimeout(function(){
                 self.pose = "relax";
@@ -60,7 +61,7 @@ Player.prototype.attack = function(){
 
 Player.prototype.damage = function(){
     this.pose = "damage";
-    this.game.update();
+    this.game.monster.attack();
 }
 
 Player.prototype.relax = function(){
@@ -125,6 +126,38 @@ Monster.prototype.render = function(){
     self.game.ctx.drawImage(images['monster'], x, y);
 }
 
+Monster.prototype.damage = function() {
+    var self = this;
+    var x = self.x;
+
+    self.x += 0.04;
+    self.game.update();
+    setTimeout(function(){
+        self.x -= 0.06;
+        self.game.update();
+        setTimeout(function(){
+            self.x = x;
+            self.game.update();
+        }, 200);
+    }, 200);
+}
+
+Monster.prototype.attack = function() {
+    var self = this;
+    var x = self.x;
+
+    self.x -= 0.2;
+    self.game.update();
+    setTimeout(function(){
+        self.x += 0.1;
+        self.game.update();
+        setTimeout(function(){
+            self.x = x;
+            self.game.update();
+        }, 200);
+    }, 200);
+}
+
 var Game = function(engine) {
     engine.gx = this;
     this.engine = engine;
@@ -155,7 +188,7 @@ var Game = function(engine) {
     window.addEventListener('resize', resizeCanvas, false);
     function resizeCanvas(){
         self.ctx.canvas.width = window.innerWidth;
-        self.ctx.canvas.height = window.innerHeight - 40;
+        self.ctx.canvas.height = window.innerHeight - ($('.full-screen').length == 0 ? 40 : 0);
         self.gameSize = { x: self.ctx.canvas.width, y: self.ctx.canvas.height };
         self.update();
     }

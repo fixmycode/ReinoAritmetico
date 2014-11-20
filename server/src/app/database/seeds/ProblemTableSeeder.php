@@ -6,8 +6,8 @@ class ProblemTableSeeder extends Seeder {
   {
 
     DB::table('problems')->delete();
-    
-    
+
+
     DB::table('problems')->insert(
       array(
         array('id'=>1,'problem'=>'3+3','correct_answer'=>'6',   'difficulty'=>'1'),
@@ -82,22 +82,6 @@ class ProblemTableSeeder extends Seeder {
         )
     );
 
-
-
-    // $players = [
-    //   new Game(["uuid" => "290sdk230230", 'address' => "127.0.0.1", "started"=> "2014-01-01 00:00:00", 'ended'=>'2014-01-01 00:00:20'])
-    // ];
-    
-
-    
-    
-
-    
-
-
-
-
-    
   }
 
 }

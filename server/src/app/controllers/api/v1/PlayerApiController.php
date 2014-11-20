@@ -132,6 +132,8 @@ class PlayerApiController extends \BaseController {
     if($player->character_type->uid == $type_id)
       return Response::json(array('msg' => 'error: tipo igual al anterior'), 404);
 
+    $player->armor_id = 1;
+    $player->weapon_id = 2;
     $player->credits = $player->credits - 500;
     $character_type->players()->save($player);
 

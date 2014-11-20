@@ -85,6 +85,8 @@ $(document).ready(function() {
         }
   });
 
+  $('.dataTables_paginate').parent().prev().remove();
+  $('.dataTables_paginate').parent().removeClass('col-xs-6').addClass('col-xs-12');
 
 
 

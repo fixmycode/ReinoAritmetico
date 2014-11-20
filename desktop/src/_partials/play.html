@@ -1,36 +1,37 @@
-<div class="paused" ng-show="pauseGame">
-  El juego ha sido pausado.
-  <br>
-  <i class="fa fa-spinner fa-spin"></i>
-  <br> <br><br>
+<div class="game">
+  <div class="paused" ng-show="pauseGame">
+    El juego ha sido pausado.
+    <br>
+    <i class="fa fa-spinner fa-spin"></i>
+    <br> <br><br>
 
-  <a href="#/" class="btn btn-info btn-s">Detener Misión</a>
-  <a class="btn btn-success btn-s" ng-click="pauseGame = ! pauseGame">Seguir</a>
+    <a href="#/" class="btn btn-info btn-s">Detener Misión</a>
+    <a class="btn btn-success btn-s" ng-click="pauseGame = ! pauseGame">Seguir</a>
+  </div>
+
+  <div class="paused" ng-show="match.waitingForFallen.length > 0">
+    El juego ha sido pausado, esperando a <span ng-repeat="fallen in match.waitingForFallen track by $index">{{ fallen.name }}{{ $index + 1 < match.waitingForFallen.length ? ', ' : ''}}</span> <br>
+    <br>
+    <i class="fa fa-spinner fa-spin"></i>
+    <br> <br><br>
+
+    <a href="#/" class="btn btn-info btn-s">Detener Misión</a>
+  </div>
+
+  <div class="trapped" ng-show="an">
+    <p>Han atrapado a <span ng-repeat="trapped in match.wrong_players track by $index">{{ trapped.name }}</span>. ¡Ve en su ayuda!</p>
+    <i class="fa fa-spinner fa-spin"></i>
+    <a href="#/" class="btn btn-info btn-s">Detener Misión</a>
+  </div>
+
+  <div class="trapped" ng-show="defendYourselvs">
+    <p>¡Rápido, Defiendanse! Los están atacando...</p>
+
+    <i class="fa fa-spinner fa-spin"></i>
+
+    <a href="#/" class="btn btn-info btn-s">Detener Misión</a>
+  </div>
 </div>
-
-<div class="paused" ng-show="match.waitingForFallen.length > 0">
-  El juego ha sido pausado, esperando a <span ng-repeat="fallen in match.waitingForFallen track by $index">{{ fallen.name }}{{ $index + 1 < match.waitingForFallen.length ? ', ' : ''}}</span> <br>
-  <br>
-  <i class="fa fa-spinner fa-spin"></i>
-  <br> <br><br>
-
-  <a href="#/" class="btn btn-info btn-s">Detener Misión</a>
-</div>
-
-<div class="trapped" ng-show="an">
-  <p>Han atrapado a <span ng-repeat="trapped in match.wrong_players track by $index">{{ trapped.name }}</span>. ¡Ve en su ayuda!</p>
-  <i class="fa fa-spinner fa-spin"></i>
-  <a href="#/" class="btn btn-info btn-s">Detener Misión</a>
-</div>
-
-<div class="trapped" ng-show="defendYourselvs">
-  <p>¡Rápido, Defiendanse! Los están atacando...</p>
-
-  <i class="fa fa-spinner fa-spin"></i>
-
-  <a href="#/" class="btn btn-info btn-s">Detener Misión</a>
-</div>
-
 
 
 <div class="row" ng-show="match.waiting" id="loading">
